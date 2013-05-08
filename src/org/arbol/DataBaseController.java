@@ -95,4 +95,8 @@ public class DataBaseController {
 			}
 		}
 	}
+	
+	public ArrayList<Node> getAll() {
+		return nodes;
+	}
 }

@@ -18,7 +18,8 @@ public class MainClass {
 					Connection conn = DataBaseConnection.connect("arbol2.sqlite");
 					dataBaseController = new DataBaseController(conn);
 					dataBaseController.createTree();
-					dataBaseController.drawTree();
+					//dataBaseController.drawTree();
+					window.setFiles(dataBaseController.getAll());
 					window.drawChildren(dataBaseController.getFirstLevel());
 				} catch (Exception e) {
 					e.printStackTrace();
