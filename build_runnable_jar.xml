@@ -22,8 +22,8 @@
 			<fileset dir="res/" includes="*.*" />
 		</copy>	    	
 		
-		<copy todir="${dist}">
-			<fileset dir="." includes="*.sqlite"/>
+		<copy todir="${dist}/config">
+			<fileset dir="config/" includes="*.sqlite"/>
 		</copy>		
     	
 		<move todir="${jar_folder}/">

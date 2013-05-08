@@ -15,7 +15,7 @@ public class MainClass {
 				try {
 					View window = new View();
 					window.frame.setVisible(true);
-					Connection conn = DataBaseConnection.connect("arbol2.sqlite");
+					Connection conn = DataBaseConnection.connect("config/arbol2.sqlite");
 					dataBaseController = new DataBaseController(conn);
 					dataBaseController.createTree();
 					//dataBaseController.drawTree();
