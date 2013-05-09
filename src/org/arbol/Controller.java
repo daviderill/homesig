@@ -1,88 +1,87 @@
 package org.arbol;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
+
 public class Controller {
+	private View myView;
+	private Model myModel;
 	
-	private Connection conn = null;
-	// Llista on guardem tots els fitxers que llegirem
-	private ArrayList<Node> nodes;
-	
-	public Controller(Connection conn) {
-		this.conn = conn;
-		nodes = new ArrayList<Node>();
-	}
-	
-	public void createTree() {
-		Statement stat = null;
-		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from main;");
-			
-		    while (rs.next()) {
-		    	// llegim el fitxer i l'afegim a la nostra llista de fitxers
-		    	Node n = new Node(rs.getInt("id"),rs.getString("name"),rs.getString("link"),
-		    			rs.getInt("level"),rs.getInt("position"),rs.getInt("parent_id"),
-		    			rs.getString("extension_id"));
-		    	nodes.add(n);
-		    	
-		    	// Assignem el fill a la llista de fills del seu pare
-		    	if (n.getParent_id() != 0) {
-		    		assignParent(n);
-		    	}
-		    }
-		    rs.close();
-		    conn.close();
-		} catch (SQLException e1) {
-			
-			e1.printStackTrace();
-		}
+	public Controller(View v, Model m) {
+		myView = v;
+		myModel = m;
+		myView.addFileListener(new FileListener());
+		
+		initalizeFirstLevel();
 	}
 
-	// Per debugar i veure que les relacions pare-fill s'han fet bé
-	public void drawFamily() {
-		for (int i=0; i < nodes.size(); ++i) {
-			System.out.println("I'm node id: " + nodes.get(i).getId() + " My children are:");
-			for (int j=0; j < nodes.get(i).getChildrenSize(); ++j) {
-				System.out.println("    " + nodes.get(i).getChildren().get(j).getId());
-			}
-		}
+	private void initalizeFirstLevel() {
+		myModel.createTree();
+		ArrayList<Node> files = myModel.getFirstLevel();
+		myView.drawChildren(files);
 	}
+	
+	class FileListener implements MouseListener {
 
-	// Pinta a consola com quedaria l'arbre
-	public void drawTree() {
-		for (int i=0; i < nodes.size(); ++i) {
-			if (nodes.get(i).getLevel() == 1) {
-				System.out.print("--");
-				System.out.println(nodes.get(i).getId());
-				for (int j=0; j < nodes.get(i).getChildrenSize(); ++j) {
-					drawTreeForChildren(1,nodes.get(i).getChildren().get(j));
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			
+			//Doble click amb el botó esquerre
+			if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
+				String source = e.getComponent().getClass().getName();
+				if (source.equals("javax.swing.JLabel")) {
+					JLabel label = (JLabel)e.getSource();
+					ArrayList<Node> files = myModel.getChildrenOf(label.getText());
+					myModel.addToPath(label.getText());
+					myView.drawChildren(files);
+					myView.drawBreadcrumb(myModel.drawPath());
+				}
+				else {
+					// Hem clicat al panel_files
 				}
 			}
-		}
-		
-	}
-
-	// Mètode auxiliar de drawTree
-	private void drawTreeForChildren(int level,Node node) {
-		for (int j=0; j < level+1; ++j) {
-			System.out.print("--");
-		}
-		System.out.println(node.getId());
-		for (int i=0; i < node.getChildrenSize(); ++i) {
-			drawTreeForChildren(level+1, node.getChildren().get(i));
-		}
-	}
-
-	private void assignParent(Node children) {
-		for (int i=0; i < nodes.size(); ++i) {
-			if (nodes.get(i).getId() == children.getParent_id()) {
-				nodes.get(i).addChildren(children.getPosition(),children);
+			//Un click amb el botó dret
+			else if (e.getButton() == MouseEvent.BUTTON3) {
+				myModel.removeLastPathNode();
+				Node newParent = myModel.getCurrentParent();
+				ArrayList<Node> files;
+				if (newParent == null) {
+					files = myModel.getFirstLevel();
+				}
+				else {
+					files = newParent.getChildren();
+				}
+				myView.drawChildren(files);
+				myView.drawBreadcrumb(myModel.drawPath());
 			}
 		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 }

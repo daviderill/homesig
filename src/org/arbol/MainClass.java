@@ -1,31 +1,15 @@
 package org.arbol;
 
-import java.awt.EventQueue;
-import java.sql.Connection;
-
 public class MainClass {
 
-	private static DataBaseController dataBaseController;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					View window = new View();
-					window.frame.setVisible(true);
-					Connection conn = DataBaseConnection.connect("config/arbol2.sqlite");
-					dataBaseController = new DataBaseController(conn);
-					dataBaseController.createTree();
-					//dataBaseController.drawTree();
-					window.setFiles(dataBaseController.getAll());
-					window.drawChildren(dataBaseController.getFirstLevel());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		View window = new View();
+		Model model = new Model();
+		Controller controller = new Controller(window,model);
+		window.frame.setVisible(true);
 	}
 
 }

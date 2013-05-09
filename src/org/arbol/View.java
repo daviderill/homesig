@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -16,18 +18,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+
 import net.miginfocom.swing.MigLayout;
-import java.awt.SystemColor;
 
 public class View {
 
 	public JFrame frame;
 	private JPanel panel_files;
-	ArrayList<Node> files;
+	private JLabel label_breadcrumb;
 	ImageIcon icon_folder = new ImageIcon("res\\Imagen 3.png");
 	ImageIcon icon_pdf = new ImageIcon("res\\pdf.png");
+	private MouseListener listener;
 
 	public View() {
 		initialize();
@@ -43,6 +46,13 @@ public class View {
 			return null;
 		}
 }
+	
+	void addFileListener(MouseListener listenForFileClick){
+		listener = listenForFileClick;
+		panel_files.addMouseListener(listener);
+	}
+
+	
 	public void drawChildren(ArrayList<Node> files) {
 		panel_files.removeAll();
 		panel_files.updateUI();
@@ -59,82 +69,12 @@ public class View {
 			label_file.setVerticalTextPosition(JLabel.BOTTOM);
 			label_file.setFont(new Font("Georgia", Font.PLAIN, 15));
 			label_file.setPreferredSize(new Dimension(141, 141));
-			label_file.addMouseListener(new MouseListener() {
-				
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					if (e.getClickCount() == 2) {
-						System.out.println("Double click");
-						drawChildren(file.getChildren());
-					}
-					else if (e.getButton() == MouseEvent.BUTTON3) {
-						int id = file.getParent_id();
-						Node parent = getParentById(id);
-						if (parent != null) {
-							id = parent.getParent_id();
-							Node grandparent = getParentById(id);
-							if (grandparent != null) {
-								drawChildren(grandparent.getChildren());
-							}
-							else drawChildren(getFirstLevel());
-						} 
-						else drawChildren(getFirstLevel());
-					}
-				}
-				
-				@Override
-				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
+			label_file.addMouseListener(listener);
 			panel_files.add(label_file);
 		}
 		
 	}
 	
-	public ArrayList<Node> getFirstLevel() {
-		ArrayList<Node> result = new ArrayList<Node>();
-		for (int i=0; i < files.size(); ++i) {
-			if (files.get(i).getLevel() == 1) {
-				result.add(files.get(i));
-			}
-		}
-		return result;
-	}
-	
-	public void setFiles(ArrayList<Node> f) {
-		files = f;
-	}
-
-	private Node getParentById(int id) {
-		for (int i=0; i < files.size(); ++i) {
-			if (files.get(i).getId() == id) {
-				return files.get(i);
-			}
-		}
-		return null;
-	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -264,7 +204,13 @@ public class View {
 		JLabel lblMapaWeb = new JLabel("Mapa web");
 		lblMapaWeb.setFont(new Font("Georgia", Font.BOLD, 10));
 		panel_info.add(lblMapaWeb, "cell 2 3");
-		panel_breadcrumb.setLayout(new SpringLayout());
+		SpringLayout sl_panel_breadcrumb = new SpringLayout();
+		panel_breadcrumb.setLayout(sl_panel_breadcrumb);
+		
+		label_breadcrumb = new JLabel("/");
+		sl_panel_breadcrumb.putConstraint(SpringLayout.WEST, label_breadcrumb, 10, SpringLayout.WEST, panel_breadcrumb);
+		sl_panel_breadcrumb.putConstraint(SpringLayout.SOUTH, label_breadcrumb, -5, SpringLayout.SOUTH, panel_breadcrumb);
+		panel_breadcrumb.add(label_breadcrumb);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
 		//lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Roger\\workspace\\Arbre\\res\\logopie.gif"));
@@ -291,7 +237,7 @@ public class View {
 		frame.getContentPane().setLayout(groupLayout);
 	}
 
-	
-
-	
+	public void drawBreadcrumb(String drawPath) {
+		label_breadcrumb.setText(drawPath);
+	}
 }

@@ -12,6 +12,7 @@ public class Node {
 	private int parent_id;
 	private String extension_id;
 	private ArrayList<Node> children;
+	private Node parent;
 		
 	
 	public Node(int id, String name, String link, int level, int position,
@@ -81,6 +82,12 @@ public class Node {
 	
 	public int getChildrenSize() {
 		return children.size();
+	}
+	public Node getParent() {
+		return parent;
+	}
+	public void setParent(Node parent) {
+		this.parent = parent;
 	}
 	
 	
