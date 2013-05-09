@@ -1,10 +1,13 @@
-package org.arbol;
+package org.arbol.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import org.arbol.domain.Node;
+import org.arbol.util.DataBaseConnection;
 
 public class Model {
 	private Connection conn = null;

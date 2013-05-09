@@ -1,4 +1,4 @@
-package org.arbol;
+package org.arbol.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

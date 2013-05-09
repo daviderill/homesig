@@ -1,4 +1,4 @@
-package org.arbol;
+package org.arbol.domain;
 
 import java.util.ArrayList;
 

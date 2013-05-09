@@ -1,4 +1,4 @@
-package org.arbol;
+package org.arbol.gui;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -20,6 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
+
+import org.arbol.domain.Node;
+
 
 import net.miginfocom.swing.MigLayout;
 
@@ -47,7 +50,7 @@ public class View {
 		}
 }
 	
-	void addFileListener(MouseListener listenForFileClick){
+	public void addFileListener(MouseListener listenForFileClick){
 		listener = listenForFileClick;
 		panel_files.addMouseListener(listener);
 	}

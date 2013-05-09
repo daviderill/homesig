@@ -1,10 +1,15 @@
-package org.arbol;
+package org.arbol.controller;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
+
+import org.arbol.dao.Model;
+import org.arbol.domain.Node;
+import org.arbol.gui.View;
+
 
 public class Controller {
 	private View myView;
