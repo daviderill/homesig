@@ -16,7 +16,7 @@ public class Model {
 	private ArrayList<Node> currentPath;
 	
 	public Model() {
-		conn = DataBaseConnection.connect("config/arbol2.sqlite");
+		conn = DataBaseConnection.connect("config/arbol2-new.sqlite");
 		nodes = new ArrayList<Node>();
 		currentPath = new ArrayList<Node>();
 	}
@@ -50,18 +50,20 @@ public class Model {
 		Statement stat = null;
 		try {
 			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from main;");
+			ResultSet rs = stat.executeQuery("select * from main2;");
 			
 		    while (rs.next()) {
 		    	// llegim el fitxer i l'afegim a la nostra llista de fitxers
-		    	Node n = new Node(rs.getInt("id"),rs.getString("name"),rs.getString("link"),
-		    			rs.getInt("level"),rs.getInt("position"),rs.getInt("parent_id"),
-		    			rs.getString("extension_id"));
+		    	Node n = new Node(rs.getString("id"),rs.getString("name"),rs.getString("link"),
+		    			rs.getString("tooltip"));
 		    	nodes.add(n);
 		    	
 		    	// Assignem el fill a la llista de fills del seu pare
-		    	if (n.getParent_id() != 0) {
-		    		assignParent(n);
+		    	
+		    }
+		    for (int i=0; i < nodes.size(); ++i) {
+		    	if (nodes.get(i).getLevel() > 1) {
+		    		assignParent(nodes.get(i));
 		    	}
 		    }
 		    rs.close();
@@ -84,7 +86,8 @@ public class Model {
 	
 	private void assignParent(Node children) {
 		for (int i=0; i < nodes.size(); ++i) {
-			if (nodes.get(i).getId() == children.getParent_id()) {
+			if (nodes.get(i).getId().equals(children.getParent_id()) ) {
+				System.out.println("Jo, " + children.getId() + " soc fill de " + nodes.get(i).getId());
 				nodes.get(i).addChildren(children.getPosition(),children);
 				children.setParent(nodes.get(i));
 			}

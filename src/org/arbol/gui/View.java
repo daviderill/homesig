@@ -6,11 +6,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.SystemColor;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -20,19 +19,19 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
-
-import org.arbol.domain.Node;
-
+import javax.swing.border.Border;
 
 import net.miginfocom.swing.MigLayout;
+
+import org.arbol.domain.Node;
 
 public class View {
 
 	public JFrame frame;
 	private JPanel panel_files;
 	private JLabel label_breadcrumb;
-	ImageIcon icon_folder = new ImageIcon("res\\Imagen 3.png");
-	ImageIcon icon_pdf = new ImageIcon("res\\pdf.png");
+	ImageIcon icon_folder = new ImageIcon("res\\Imagen 3-petit.png");
+	ImageIcon icon_pdf = new ImageIcon("res\\pdf-petit.png");
 	private MouseListener listener;
 
 	public View() {
@@ -61,18 +60,28 @@ public class View {
 		panel_files.updateUI();
 		for (int i=0; i < files.size(); ++i) {
 			final Node file = files.get(i);
-			JLabel label_file;
-			if (file.getExtension_id().equals("dir")) {
-				label_file = new JLabel(file.getName(), icon_folder, SwingConstants.LEFT);
+			JLabel label_file = null;
+			if (file.getExtension_id() != null) {
+				if (file.getExtension_id().equals("dir")) {
+					label_file = new JLabel(file.getName(), icon_folder, SwingConstants.CENTER);
+				}
+				else {
+					label_file = new JLabel(file.getName(), icon_pdf, SwingConstants.CENTER);
+				}
 			}
 			else {
-				label_file = new JLabel(file.getName(), icon_pdf, SwingConstants.LEFT);
+				label_file = new JLabel(file.getName(), icon_folder, SwingConstants.CENTER);
 			}
 			label_file.setHorizontalTextPosition(SwingConstants.CENTER);
 			label_file.setVerticalTextPosition(JLabel.BOTTOM);
-			label_file.setFont(new Font("Georgia", Font.PLAIN, 15));
-			label_file.setPreferredSize(new Dimension(141, 141));
+			label_file.setFont(new Font("Georgia", Font.PLAIN, 13));
+			label_file.setPreferredSize(new Dimension(180, 90));
 			label_file.addMouseListener(listener);
+			if (file.getTooltip() != null) {
+				label_file.setToolTipText(file.getTooltip());
+			}
+			//Border border = BorderFactory.createLineBorder(Color.blue);
+			//label_file.setBorder(border);
 			panel_files.add(label_file);
 		}
 		

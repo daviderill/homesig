@@ -62,6 +62,9 @@ public class Controller {
 				myView.drawChildren(files);
 				myView.drawBreadcrumb(myModel.drawPath());
 			}
+			else if (e.getClickCount() == 1) {
+				
+			}
 		}
 
 		@Override

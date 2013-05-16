@@ -2,7 +2,8 @@
 <project default="create_run_jar" name="Create Runnable Jar for Project arbol2 with libraries in sub-folder">
 
 	<property name="dist" location="dist" />
-	<property name="jar_folder" location="C:/Dropbox/_Compartides/Sant_Sadurni/arbol2/jar" />
+	<!-- <property name="jar_folder" location="C:/Dropbox/_Compartides/Sant_Sadurni/arbol2/jar" />  -->
+	<property name="jar_folder" location="C:/Roger/arbol" />
 	
     <target name="create_run_jar">
         

@@ -4,33 +4,70 @@ import java.util.ArrayList;
 
 public class Node {
 	
-	private int id;
+	private String id;
 	private String name;
 	private String link;
+	private String tooltip;
 	private int level;
 	private int position;
-	private int parent_id;
+	private String parent_id;
 	private String extension_id;
 	private ArrayList<Node> children;
 	private Node parent;
 		
 	
-	public Node(int id, String name, String link, int level, int position,
-			int parent_id, String extension_id) {
+	public Node(String id, String name, String link, String tooltip) {
 		super();
+		System.out.println("--- TRACTAMENT DEL NODE: " + id + " ---");
 		this.id = id;
 		this.name = name;
-		this.link = link;
-		this.level = level;
-		this.position = position;
-		this.parent_id = parent_id;
-		this.extension_id = extension_id;
+		this.tooltip = tooltip;
+		extractInfoFromId(id);
+		extractInfoFromLink(link);
 		children = new ArrayList<Node>();
+		
+		
 	}
-	public int getId() {
+	private void extractInfoFromId(String id) {
+		String[] id_parts = id.split("_");	
+		level = id_parts.length;
+		System.out.println("NIVELL: " + level);
+		position = Integer.valueOf(id_parts[id_parts.length - 1]);
+		System.out.println("POSICIO: " + position);
+		String parentId = null;
+		if (id_parts.length > 1) {
+			parentId = id_parts[0];
+		}
+		for (int i=1; i < id_parts.length - 1; ++i) {
+			parentId += "_" + id_parts[i];
+		}
+		System.out.println("PARE: " + parentId);
+		parent_id = parentId;
+	}
+	
+	private void extractInfoFromLink(String name) {
+		link = name;
+		System.out.println("LINK: " + link);
+		if (name != null) {
+			String[] path = name.split(":?\\\\");
+			String file = path[path.length-1];
+			System.out.println("FILE: " + file);
+			String[] file_parts = file.split("\\.");
+			extension_id = file_parts[file_parts.length - 1];
+			System.out.println("EXTENSIO: " + extension_id);
+		}
+	}
+	
+	public String getTooltip() {
+		return tooltip;
+	}
+	public void setTooltip(String tooltip) {
+		this.tooltip = tooltip;
+	}
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -57,10 +94,10 @@ public class Node {
 	public void setPosition(int position) {
 		this.position = position;
 	}
-	public int getParent_id() {
+	public String getParent_id() {
 		return parent_id;
 	}
-	public void setParent_id(int parent_id) {
+	public void setParent_id(String parent_id) {
 		this.parent_id = parent_id;
 	}
 	public String getExtension_id() {
@@ -77,7 +114,7 @@ public class Node {
 	}
 	
 	public void addChildren(int position, Node child) {
-		children.add(position-1, child);
+		children.add(child);
 	}
 	
 	public int getChildrenSize() {

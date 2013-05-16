@@ -1,0 +1,2325 @@
+[opr]
+nom=SIG dels Serveis Tècnics de Sant Sadurní d'Anoia
+versio=0
+preguntarensortir=1
+fontnom=Tahoma
+fontsize=8
+fontbold=0
+fontitalic=0
+estilarbre=7
+voraarbre=1
+formleft=157
+formtop=79
+formwidth=1115
+formheight=724
+imatge=imatge.gif
+ratio=1
+arbre=1
+grafic=1
+bloquejat=0
+voragrafic=0
+idioma=0
+fills=1
+
+[1]
+nom=Sistema d'Informació Territorial
+obert=1
+fills=16
+
+[1_1]
+nom=Implementació del gvSIG
+enllaç=doc\gvsig\implementacio_gvsig_manual_usuari.pdf
+obert=0
+fills=0
+
+[1_2]
+nom=Mapa guia
+enllaç=gvsig\projectes_aj\1_mapa_guia.gvp
+obert=0
+fills=0
+
+[1_3]
+nom=Manual pel mapa de l'OAC
+enllaç=doc\filoxeran\cartoac_manual_usuari.pdf
+obert=0
+fills=0
+
+[1_4]
+nom=Mapa de l'OAC
+enllaç=gvsig\projectes_aj\2_cartoac.gvp
+obert=0
+fills=0
+
+[1_5]
+nom=Nova organització de dades
+enllaç=doc\esquema_arbre.pdf
+obert=0
+fills=0
+
+[1_6]
+nom=Documentació
+obert=0
+fills=8
+
+[1_6_1]
+nom=Significat de les referències cadastrals
+enllaç=doc\cadastre.pdf
+obert=0
+fills=0
+
+[1_6_2]
+nom=Com consultar el carrerer
+enllaç=doc\consultacarrerer.pdf
+obert=0
+fills=0
+
+[1_6_3]
+nom=Llistat de carrers
+enllaç=doc\llistatcarrers.pdf
+obert=0
+fills=0
+
+[1_6_4]
+nom=Memòria 2011
+enllaç=doc\memoria\2011_memoria.pdf
+obert=0
+fills=0
+
+[1_6_5]
+nom=Protocol intercanvi cartografia
+enllaç=doc\protocol.pdf
+obert=0
+fills=0
+
+[1_6_6]
+nom=Afeccions ATLL
+enllaç=doc\afeccions_atll.pdf
+obert=0
+fills=0
+
+[1_6_7]
+nom=Inventari de capes
+obert=0
+fills=3
+
+[1_6_7_1]
+nom=Arxius CAD de FECSA
+enllaç=doc\capes_fecsa.pdf
+obert=0
+fills=0
+
+[1_6_7_2]
+nom=Capes FECSA arxiu AutoCAD
+enllaç=doc\capes_dwg_fecsa.xls
+obert=0
+fills=0
+
+[1_6_7_3]
+nom=Arxius CAD de la Xarxa d'aigua
+enllaç=doc\capes_aigua.pdf
+obert=0
+fills=0
+
+[1_6_8]
+nom=Taules resum
+obert=0
+fills=2
+
+[1_6_8_1]
+nom=Patrimoni
+enllaç=patrimoni\doc\llistat_patrimoni_resum.pdf
+obert=0
+fills=0
+
+[1_6_8_2]
+nom=Enllumenat - 2011
+enllaç=doc\enllumenat_2011.pdf
+obert=0
+fills=0
+
+[1_7]
+nom=Cartografia topogràfica
+obert=0
+fills=4
+
+[1_7_1]
+nom=Topogràfic urbà escala 1:1000
+obert=1
+fills=7
+
+[1_7_1_1]
+nom=Topogràfic E. 1:1.000 (actualització 2007)
+enllaç=gvsig\projectes_aj\top1k_2007.gvp
+obert=0
+fills=0
+
+[1_7_1_2]
+nom=Topogràfic E. 1:1000 DWG (actualització 2007)
+enllaç=1000\xentregar\top_1000_feb08.dwg
+obert=0
+fills=0
+
+[1_7_1_3]
+nom=Topogràfic simplificat
+enllaç=1000\xentregar\top_1000_simplif_2009.dwg
+obert=0
+fills=0
+
+[1_7_1_4]
+nom=Topogràfic E. 1:1.000 històric (actualitzat 2005)
+enllaç=gvsig\projectes_aj\top1k_2005.gvp
+obert=0
+fills=0
+
+[1_7_1_5]
+nom=Topogràfic E. 1:1.000 històric (revisat 2002)
+enllaç=gvsig\projectes_aj\top1k_2002.gvp
+obert=0
+fills=0
+
+[1_7_1_6]
+nom=Executat
+obert=1
+fills=15
+
+[1_7_1_6_1]
+nom=Can Romeu
+enllaç=gvsig\projectes_aj\exec_canromeu.gvp
+obert=0
+fills=0
+
+[1_7_1_6_2]
+nom=Camí Covides - GISA
+enllaç=gvsig\projectes_aj\exec_camicovides.gvp
+obert=0
+fills=0
+
+[1_7_1_6_3]
+nom=Autopista AP-7
+enllaç=gvsig\projectes_aj\exec_ap7.gvp
+obert=0
+fills=0
+
+[1_7_1_6_4]
+nom=Aparcament municipal
+enllaç=gvsig\projectes_aj\exec_aparcament.gvp
+obert=0
+fills=0
+
+[1_7_1_6_5]
+nom=Plaça Església
+enllaç=gvsig\projectes_aj\exec_plesglesia.gvp
+obert=0
+fills=0
+
+[1_7_1_6_6]
+nom=Variant C-243 (versió aprovada 2006)
+enllaç=gvsig\projectes_aj\exec_variant.gvp
+obert=0
+fills=0
+
+[1_7_1_6_7]
+nom=Variant C-243 (As Built 2012)
+enllaç=gvsig\projectes_aj\exec_variant_as_built.gvp
+obert=0
+fills=0
+
+[1_7_1_6_8]
+nom=La Fàbrica - Pont de Monistrol
+enllaç=gvsig\projectes_aj\exec_fabrica.gvp
+obert=0
+fills=0
+
+[1_7_1_6_9]
+nom=C/ Ripollès
+enllaç=gvsig\projectes_aj\exec_ripolles.gvp
+obert=0
+fills=0
+
+[1_7_1_6_10]
+nom=Rotonda
+enllaç=gvsig\projectes_aj\exec_rotonda.gvp
+obert=0
+fills=0
+
+[1_7_1_6_11]
+nom=Zones verdes Pla del Mestres
+enllaç=gvsig\projectes_aj\exec_zvplamestres.gvp
+obert=0
+fills=0
+
+[1_7_1_6_12]
+nom=Plaça Montseny
+enllaç=gvsig\projectes_aj\exec_plmontseny.gvp
+obert=0
+fills=0
+
+[1_7_1_6_13]
+nom=Plaça Primer Homenatge a la Vellesa
+enllaç=gvsig\projectes_aj\exec_plhomenatge.gvp
+obert=0
+fills=0
+
+[1_7_1_6_14]
+nom=Carrer Sant Antoni
+enllaç=gvsig\projectes_aj\exec_stantoni.gvp
+obert=0
+fills=0
+
+[1_7_1_6_15]
+nom=DWG
+obert=0
+fills=6
+
+[1_7_1_6_15_1]
+nom=Camí Covides -GISA
+enllaç=1000\xentregar\annexes\cami_covides.dwg
+obert=0
+fills=0
+
+[1_7_1_6_15_2]
+nom=Parking municipal (ampliació)
+enllaç=1000\xentregar\annexes\parkingcentrefasex.dwg
+obert=0
+fills=0
+
+[1_7_1_6_15_3]
+nom=Variant C-243-II
+enllaç=1000\xentregar\annexes\c-243-ii.dwg
+obert=0
+fills=0
+
+[1_7_1_6_15_4]
+nom=La Fàbrica - Pont de Monistrol
+enllaç=1000\xentregar\executat\fabrica_pont_monistrol.dwg
+obert=0
+fills=0
+
+[1_7_1_6_15_5]
+nom=C/ Ripollès
+enllaç=1000\xentregar\executat\ripolles.dwg
+obert=0
+fills=0
+
+[1_7_1_6_15_6]
+nom=Rotonda
+enllaç=1000\xentregar\executat\rotonda.dwg
+obert=0
+fills=0
+
+[1_7_1_7]
+nom=No executat
+obert=0
+fills=7
+
+[1_7_1_7_1]
+nom=Variant C-243 (versió antiga)
+enllaç=gvsig\projectes_aj\n_exec_variant.gvp
+obert=0
+fills=0
+
+[1_7_1_7_2]
+nom=Zones verdes - Pla del Mestres (Projecte)
+enllaç=gvsig\projectes_aj\n_exec_plamestres_zv.gvp
+obert=0
+fills=0
+
+[1_7_1_7_3]
+nom=Carrer Vilarnau, Avinguda Catalunya
+enllaç=gvsig\projectes_aj\n_exec_c_vilarnau.gvp
+obert=0
+fills=0
+
+[1_7_1_7_4]
+nom=Can Romeu
+enllaç=gvsig\projectes_aj\n_exec_canromeu.gvp
+obert=0
+fills=0
+
+[1_7_1_7_5]
+nom=Carrer aparcament municipal
+enllaç=gvsig\projectes_aj\n_exec_aparcament.gvp
+obert=0
+fills=0
+
+[1_7_1_7_6]
+nom=Alineacions del POUM
+enllaç=gvsig\projectes_aj\n_exec_aliniacions.gvp
+obert=0
+fills=0
+
+[1_7_1_7_7]
+nom=DWG
+obert=0
+fills=4
+
+[1_7_1_7_7_1]
+nom=Variant C-243
+enllaç=1000\xentregar\annexes\c-243.dwg
+obert=0
+fills=0
+
+[1_7_1_7_7_2]
+nom=La Fàbrica
+enllaç=1000\xentregar\annexes\proyecto_la_fabrica.dwg
+obert=0
+fills=0
+
+[1_7_1_7_7_3]
+nom=Zones verdes - Pla del Mestres
+enllaç=1000\xentregar\annexes\zv_pladelmestres.dwg
+obert=0
+fills=0
+
+[1_7_1_7_7_4]
+nom=Carrer Vilarnau, Avinguda Catalunya
+enllaç=1000\xentregar\annexes\carrervilarnau.dwg
+obert=0
+fills=0
+
+[1_7_2]
+nom=Topogràfic municipal escala 1:5000
+obert=0
+fills=3
+
+[1_7_2_1]
+nom=2006
+obert=0
+fills=2
+
+[1_7_2_1_1]
+nom=Topogràfic E. 1:5.000 (2006)
+enllaç=gvsig\projectes_aj\top5k_2006.gvp
+obert=0
+fills=0
+
+[1_7_2_1_2]
+nom=Topogràfic E.1:5.000 DWG (2006)
+enllaç=5000\x_entregar\top_5000_x_entregar_2006.dwg
+obert=0
+fills=0
+
+[1_7_2_2]
+nom=2009
+obert=0
+fills=2
+
+[1_7_2_2_1]
+nom=Topogràfic E. 1:5.000 (2009)
+enllaç=gvsig\projectes_aj\top5k_2009.gvp
+obert=0
+fills=0
+
+[1_7_2_2_2]
+nom=Topogràfic E. 1:5.000 DWG (2009)
+enllaç=5000\x_entregar\top_5000_x_entregar_2009.dwg
+obert=0
+fills=0
+
+[1_7_2_3]
+nom=Annexes
+obert=0
+fills=2
+
+[1_7_2_3_1]
+nom=T.A.V.
+enllaç=gvsig\projectes_aj\top5k_annex_tav.gvp
+obert=0
+fills=0
+
+[1_7_2_3_2]
+nom=DWG
+obert=0
+fills=1
+
+[1_7_2_3_2_1]
+nom=T.A.V.
+enllaç=5000\x_entregar\tav.dwg
+obert=0
+fills=0
+
+[1_7_3]
+nom=Topogràfic comarcal escala 1:50000
+obert=0
+fills=1
+
+[1_7_3_1]
+nom=Topogràfic E. 1:50.000 (DWG)
+enllaç=50000\cad\50000.dwg
+obert=0
+fills=0
+
+[1_7_4]
+nom=Mapa topogràfic casc urbà
+obert=0
+fills=2
+
+[1_7_4_1]
+nom=Mapa centre
+enllaç=gvsig\projectes_aj\m_centre.gvp
+obert=0
+fills=0
+
+[1_7_4_2]
+nom=Mapa centre - PDF
+enllaç=mapa_fons\stsadurnianoia.pdf
+obert=0
+fills=0
+
+[1_8]
+nom=Cartografia cadastral
+obert=0
+fills=9
+
+[1_8_1]
+nom=Cadastre d'urbana històric 2005
+obert=0
+fills=3
+
+[1_8_1_1]
+nom=Cadastre d'urbana
+enllaç=gvsig\projectes_aj\cad_u_2005.gvp
+obert=0
+fills=0
+
+[1_8_1_2]
+nom=Base de dades
+enllaç=bd_antic\fn2005-240.mdb
+obert=0
+fills=0
+
+[1_8_1_3]
+nom=Cadastre d'urbana DWG
+enllaç=curbana\xentregar\c_urbana.dwg
+obert=0
+fills=0
+
+[1_8_2]
+nom=Cadastre d'urbana provisional 2006
+obert=0
+fills=1
+
+[1_8_2_1]
+nom=Cadastre d'urbana
+enllaç=gvsig\projectes_aj\cad_u_2006.gvp
+obert=0
+fills=0
+
+[1_8_3]
+nom=Cadastre d'urbana 2007
+obert=0
+fills=3
+
+[1_8_3_1]
+nom=Cadastre d'urbana
+enllaç=gvsig\projectes_aj\cad_u_2007.gvp
+obert=0
+fills=0
+
+[1_8_3_2]
+nom=Base de dades
+enllaç=fn2005-240.mdb
+obert=0
+fills=0
+
+[1_8_3_3]
+nom=Cadastre urbana DWG
+enllaç=curbana\xentregar\2007\curbana07.dwg
+obert=0
+fills=0
+
+[1_8_4]
+nom=Cadastre d'urbana 2010
+obert=0
+fills=2
+
+[1_8_4_1]
+nom=Cadastre d'urbana
+enllaç=gvsig\projectes_aj\cad_u_2010.gvp
+obert=0
+fills=0
+
+[1_8_4_2]
+nom=Base de dades
+enllaç=curbana\2010\cadastre2010.mdb
+obert=0
+fills=0
+
+[1_8_5]
+nom=Cadastre d'urbana 2011
+obert=0
+fills=2
+
+[1_8_5_1]
+nom=Cadastre d'urbana
+enllaç=gvsig\projectes_aj\cad_u_2011.gvp
+obert=0
+fills=0
+
+[1_8_5_2]
+nom=Base de dades
+enllaç=curbana\2011\cadastre2011.mdb
+obert=0
+fills=0
+
+[1_8_6]
+nom=Cadastre de rústica 2005
+obert=0
+fills=3
+
+[1_8_6_1]
+nom=Cadastre de rústica
+enllaç=gvsig\projectes_aj\cad_r_2005.gvp
+obert=0
+fills=0
+
+[1_8_6_2]
+nom=Base de dades
+enllaç=crustica\bd\ru2005-240.mdb
+obert=0
+fills=0
+
+[1_8_6_3]
+nom=Cadastre de rústica DWG
+enllaç=crustica\xentregar\c_rustica.dwg
+obert=0
+fills=0
+
+[1_8_7]
+nom=Cadastre de rústica 2007
+obert=0
+fills=2
+
+[1_8_7_1]
+nom=Cadastre de rústica (sense base de dades)
+enllaç=gvsig\projectes_aj\cad_r_2007.gvp
+obert=0
+fills=0
+
+[1_8_7_2]
+nom=Cadastre de rústica DWG
+enllaç=crustica\c_rustica_07.dwg
+obert=0
+fills=0
+
+[1_8_8]
+nom=Cadastre de rústica 2010
+obert=0
+fills=1
+
+[1_8_8_1]
+nom=Cadastre de rústica
+enllaç=gvsig\projectes_aj\cad_r_2010.gvp
+obert=0
+fills=0
+
+[1_8_9]
+nom=Cadastre de rústica 2011
+obert=0
+fills=1
+
+[1_8_9_1]
+nom=Cadastre de rústica
+enllaç=gvsig\projectes_aj\cad_r_2011.gvp
+obert=0
+fills=0
+
+[1_9]
+nom=Carrerer
+obert=0
+fills=5
+
+[1_9_1]
+nom=Carrerer
+enllaç=gvsig\projectes_aj\carrerer.gvp
+obert=0
+fills=0
+
+[1_9_2]
+nom=Districtes i illes
+enllaç=gvsig\projectes_aj\carrerer_districtes.gvp
+obert=0
+fills=0
+
+[1_9_3]
+nom=Numeracions històriques
+enllaç=gvsig\projectes_aj\carrerer_num.gvp
+obert=0
+fills=0
+
+[1_9_4]
+nom=Districtes i illes
+enllaç=carrerer\districtes\imprimir\districtes_i_base.dwg
+obert=0
+fills=0
+
+[1_9_5]
+nom=Base de dades
+enllaç=carrerer\carrerer.mdb
+obert=0
+fills=0
+
+[1_10]
+nom=Cartografia de referència
+obert=0
+fills=3
+
+[1_10_1]
+nom=Ortofotos Sant Sadurní
+obert=0
+fills=7
+
+[1_10_1_1]
+nom=2002
+obert=0
+fills=3
+
+[1_10_1_1_1]
+nom=Ortofoto ICC E. 1:5.000
+enllaç=gvsig\projectes_aj\orto_5k_2002.gvp
+obert=0
+fills=0
+
+[1_10_1_1_2]
+nom=Ortofoto ICC E. 1:5.000 (DWG)
+enllaç=orto5k\2002\format_tif\orto5k.dwg
+obert=0
+fills=0
+
+[1_10_1_1_3]
+nom=Ortofoto ICC E. 1:5.000 (TIFF)
+enllaç=orto5k\2002\format_tif\08240.tif
+obert=0
+fills=0
+
+[1_10_1_2]
+nom=2003 (Mitjans o principis)
+obert=0
+fills=3
+
+[1_10_1_2_1]
+nom=Ortofotomapa color E. 1:10.000 (Diputació de Barcelona)
+enllaç=gvsig\projectes_aj\orto_10k_2003.gvp
+obert=0
+fills=0
+
+[1_10_1_2_2]
+nom=Ortofotomapa color E. 1:10.000 (Diputació de Barcelona) (DWG)
+enllaç=orto10k\2003\format_tif\orto10k.dwg
+obert=0
+fills=0
+
+[1_10_1_2_3]
+nom=Ortofotomapa E. 1:10.000 (Diputació de Barcelona) (TIFF)
+enllaç=orto10k\2003\format_tif\orto.tif
+obert=0
+fills=0
+
+[1_10_1_3]
+nom=2004 (Juny)
+obert=0
+fills=3
+
+[1_10_1_3_1]
+nom=Ortofoto ICC E. 1:5.000
+enllaç=gvsig\projectes_aj\orto_5k_2004.gvp
+obert=0
+fills=0
+
+[1_10_1_3_2]
+nom=Ortofoto ICC E. 1:5.000 (DWG)
+enllaç=orto5k\2004\format_tif\orto5m.dwg
+obert=0
+fills=0
+
+[1_10_1_3_3]
+nom=Ortofoto ICC E. 1:5.000 (TIFF)
+enllaç=orto5k\2004\format_tif\orto5m.tif
+obert=0
+fills=0
+
+[1_10_1_4]
+nom=2006
+obert=0
+fills=3
+
+[1_10_1_4_1]
+nom=Ortofoto ICC E. 1:5.000
+enllaç=gvsig\projectes_aj\orto_5k_2006.gvp
+obert=0
+fills=0
+
+[1_10_1_4_2]
+nom=Ortofoto ICC E. 1:5.000 (DWG)
+enllaç=orto5k\2006\orto5k.dwg
+obert=0
+fills=0
+
+[1_10_1_4_3]
+nom=Ortofoto ICC E. 1:5.000 (TIFF)
+enllaç=orto5k\2006\format_tif\orto5m.tif
+obert=0
+fills=0
+
+[1_10_1_5]
+nom=2008
+obert=0
+fills=3
+
+[1_10_1_5_1]
+nom=Ortofoto ICC E. 1:5.000
+enllaç=gvsig\projectes_aj\orto_5k_2008.gvp
+obert=0
+fills=0
+
+[1_10_1_5_2]
+nom=Ortofoto ICC E. 1:5.000 (DWG)
+enllaç=orto5k\2008\orto5k.dwg
+obert=0
+fills=0
+
+[1_10_1_5_3]
+nom=Ortofoto ICC e. 1:5.000 (TIFF)
+enllaç=orto5k\2008\tif_complert\santsadurnia.tif
+obert=0
+fills=0
+
+[1_10_1_6]
+nom=2009
+obert=0
+fills=2
+
+[1_10_1_6_1]
+nom=Ortofoto ICC E. 1:2.500
+enllaç=gvsig\projectes_aj\orto_2_5k_2009.gvp
+obert=0
+fills=0
+
+[1_10_1_6_2]
+nom=Ortofoto ICC E. 1:2.500 (DWG)
+enllaç=orto2_5k\2009\orto2_5k.dwg
+obert=0
+fills=0
+
+[1_10_1_7]
+nom=2010
+obert=0
+fills=2
+
+[1_10_1_7_1]
+nom=Ortofoto ICC E. 1:2.500
+enllaç=gvsig\projectes_aj\orto_2_5k_2010.gvp
+obert=0
+fills=0
+
+[1_10_1_7_2]
+nom=Ortofoto ICC E. 1:2.500 (DWG)
+enllaç=orto2_5k\2011\orto_2_5.dwg
+obert=0
+fills=0
+
+[1_10_2]
+nom=Ortofotos Alt Penedès
+obert=0
+fills=4
+
+[1_10_2_1]
+nom=Ortofoto ICC E. 1:25.000 (2002)
+enllaç=gvsig\projectes_aj\orto_25k_2002.gvp
+obert=0
+fills=0
+
+[1_10_2_2]
+nom=Ortofoto ICC E. 1:25.000 (2003)
+enllaç=gvsig\projectes_aj\orto_25k_2003.gvp
+obert=0
+fills=0
+
+[1_10_2_3]
+nom=Ortofoto ICC E. 1:5.000 (2004)
+enllaç=gvsig\projectes_aj\orto_5k_2004_ap.gvp
+obert=0
+fills=0
+
+[1_10_2_4]
+nom=Ortofoto ICC E. 1:5.000 vigent
+enllaç=gvsig\projectes_aj\orto_comarcal.gvp
+obert=0
+fills=0
+
+[1_10_3]
+nom=Ràster comarcal E. 1:50.000
+obert=0
+fills=3
+
+[1_10_3_1]
+nom=Ràster Comarcal E. 1:50.000
+enllaç=gvsig\projectes_aj\raster_com.gvp
+obert=0
+fills=0
+
+[1_10_3_2]
+nom=Ràster Comarcal E. 1:50.000 (DWG)
+enllaç=auxiliars\format_tif\raster.dwg
+obert=0
+fills=0
+
+[1_10_3_3]
+nom=Ràster comarcal E. 1:50.000 (TIFF)
+enllaç=auxiliars\format_tif\alt_penedes.tif
+obert=0
+fills=0
+
+[1_11]
+nom=Cartografia històrica
+obert=0
+fills=20
+
+[1_11_1]
+nom=Esquema d'evolució històrica
+enllaç=gvsig\projectes_aj\creixements.gvp
+obert=0
+fills=0
+
+[1_11_2]
+nom=Mapa militar 1813
+enllaç=gvsig\projectes_aj\hist_militar_1813.gvp
+obert=0
+fills=0
+
+[1_11_3]
+nom=Mapa militar 1813 i noms torrents
+enllaç=gvsig\projectes_aj\hist_militar_1813_torrents.gvp
+obert=0
+fills=0
+
+[1_11_4]
+nom=Plànol Geomètric 1877
+enllaç=gvsig\projectes_aj\hist_pgeom_1877.gvp
+obert=0
+fills=0
+
+[1_11_5]
+nom=Cartografia 1925: nuclis
+enllaç=gvsig\projectes_aj\hist_1925_nuclis.gvp
+obert=0
+fills=0
+
+[1_11_6]
+nom=Cartografia 1925
+enllaç=gvsig\projectes_aj\hist_1925.gvp
+obert=0
+fills=0
+
+[1_11_7]
+nom=Plànol de la Vila, eixample 1945
+enllaç=gvsig\projectes_aj\hist_1945_pvila.gvp
+obert=0
+fills=0
+
+[1_11_8]
+nom=Cadastre històric
+enllaç=gvsig\projectes_aj\hist_cad.gvp
+obert=0
+fills=0
+
+[1_11_9]
+nom=Urbanització Est 1949
+enllaç=gvsig\projectes_aj\hist_urb_est_1949.gvp
+obert=0
+fills=0
+
+[1_11_10]
+nom=Projecte alineacions "Pla de la Creu" 1957
+enllaç=gvsig\projectes_aj\hist_pla_creu.gvp
+obert=0
+fills=0
+
+[1_11_11]
+nom=Ortofoto 1956-57
+enllaç=gvsig\projectes_aj\hist_orto_1956.gvp
+obert=0
+fills=0
+
+[1_11_12]
+nom=Cadastre 1974
+enllaç=gvsig\projectes_aj\hist_cad_1974.gvp
+obert=0
+fills=0
+
+[1_11_13]
+nom=PP Les Solanes 1974
+enllaç=gvsig\projectes_aj\hist_solanes_1974.gvp
+obert=0
+fills=0
+
+[1_11_14]
+nom=PG 1977 - Zonificació
+enllaç=gvsig\projectes_aj\hist_pg_1977.gvp
+obert=0
+fills=0
+
+[1_11_15]
+nom=PG 1977 - Zonificació àrea urbana
+enllaç=gvsig\projectes_aj\hist_pg_1977_urb.gvp
+obert=0
+fills=0
+
+[1_11_16]
+nom=Estudi de la ciutat 1980
+enllaç=gvsig\projectes_aj\hist_1980.gvp
+obert=0
+fills=0
+
+[1_11_17]
+nom=Ortofoto 1981
+enllaç=gvsig\projectes_aj\hist_orto_1981.gvp
+obert=0
+fills=0
+
+[1_11_18]
+nom=PGU 1981
+enllaç=gvsig\projectes_aj\hist_pgu_1981.gvp
+obert=0
+fills=0
+
+[1_11_19]
+nom=PGU 1994
+enllaç=gvsig\projectes_aj\hist_pgu_1994.gvp
+obert=0
+fills=0
+
+[1_11_20]
+nom=Ortofoto 1998
+enllaç=gvsig\projectes_aj\hist_orto_1998.gvp
+obert=0
+fills=0
+
+[1_12]
+nom=Sectorial
+obert=0
+fills=11
+
+[1_12_1]
+nom=Activitats
+obert=0
+fills=4
+
+[1_12_1_1]
+nom=Cens d'activitats
+obert=0
+fills=4
+
+[1_12_1_1_1]
+nom=Inventari original
+obert=0
+fills=2
+
+[1_12_1_1_1_1]
+nom=Cens d'activitats
+enllaç=gvsig\projectes_aj\cens_act.gvp
+obert=0
+fills=0
+
+[1_12_1_1_1_2]
+nom=Base de dades
+enllaç=cens_activitats\2007\bd\ca08240.mdb
+obert=0
+fills=0
+
+[1_12_1_1_2]
+nom=Actualització 2009
+obert=0
+fills=2
+
+[1_12_1_1_2_1]
+nom=Cens d'activitats
+enllaç=gvsig\projectes_aj\cens_act_2009.gvp
+obert=0
+fills=0
+
+[1_12_1_1_2_2]
+nom=Base de dades
+enllaç=cens_activitats\2009\bd\cens_2009.mdb
+obert=0
+fills=0
+
+[1_12_1_1_3]
+nom=Actualització 2010
+obert=0
+fills=2
+
+[1_12_1_1_3_1]
+nom=Cens d'activitats
+enllaç=gvsig\projectes_aj\cens_act_2010.gvp
+obert=0
+fills=0
+
+[1_12_1_1_3_2]
+nom=Base de dades
+enllaç=cens_activitats\2010\bd\cens_2010.mdb
+obert=0
+fills=0
+
+[1_12_1_1_4]
+nom=Actualització 2011
+obert=0
+fills=3
+
+[1_12_1_1_4_1]
+nom=Cens d'activitats
+enllaç=gvsig\projectes_aj\cens_act_2011.gvp
+obert=0
+fills=0
+
+[1_12_1_1_4_2]
+nom=Cens d'aparcaments
+enllaç=gvsig\projectes_aj\cens_aparcaments_2011.gvp
+obert=0
+fills=0
+
+[1_12_1_1_4_3]
+nom=Base de Dades
+enllaç=cens_activitats\2011\bd\cens_2011.mdb
+obert=0
+fills=0
+
+[1_12_1_2]
+nom=Grans cellers de cava
+obert=0
+fills=1
+
+[1_12_1_2_1]
+nom=Grans caves
+enllaç=gvsig\projectes_aj\act_gcaves.gvp
+obert=0
+fills=0
+
+[1_12_1_3]
+nom=Activitats diverses
+obert=0
+fills=1
+
+[1_12_1_3_1]
+nom=Activitats
+enllaç=gvsig\projectes_aj\act_div.gvp
+obert=0
+fills=0
+
+[1_12_1_4]
+nom=Activitats per la web
+obert=0
+fills=1
+
+[1_12_1_4_1]
+nom=Activitats per la web
+enllaç=gvsig\projectes_aj\act_web.gvp
+obert=0
+fills=0
+
+[1_12_2]
+nom=Mapes de sorolls i capacitat acústica
+obert=0
+fills=5
+
+[1_12_2_1]
+nom=Mapa de soroll diürn
+enllaç=gvsig\projectes_aj\ms_diurn.gvp
+obert=0
+fills=0
+
+[1_12_2_2]
+nom=Mapa de soroll nocturn
+enllaç=gvsig\projectes_aj\ms_nocturn.gvp
+obert=0
+fills=0
+
+[1_12_2_3]
+nom=Mapa de capacitat acústica
+enllaç=gvsig\projectes_aj\ms_capacitat.gvp
+obert=0
+fills=0
+
+[1_12_2_4]
+nom=Mapa de desviacions diürnes
+enllaç=gvsig\projectes_aj\ms_desv_dia.gvp
+obert=0
+fills=0
+
+[1_12_2_5]
+nom=Mapa de desviacions nocturnes
+enllaç=gvsig\projectes_aj\ms_desv_nit.gvp
+obert=0
+fills=0
+
+[1_12_3]
+nom=Mapa de capacitat acústica 2011
+obert=0
+fills=3
+
+[1_12_3_1]
+nom=Capacitat acústica
+enllaç=gvsig\projectes_aj\ms_capacitat_2011.gvp
+obert=0
+fills=0
+
+[1_12_3_2]
+nom=Mapa de capacitat acústica - PDF
+enllaç=sorolls\capacitat2011\pdf\santsadurni.pdf
+obert=0
+fills=0
+
+[1_12_3_3]
+nom=Mapa de capacitat acústica amb orto - PDF
+enllaç=sorolls\capacitat2011\pdf\stsadurnia_orto.pdf
+obert=0
+fills=0
+
+[1_12_4]
+nom=Pla de Mobilitat
+obert=0
+fills=8
+
+[1_12_4_1]
+nom=Xarxa de vianants
+obert=0
+fills=1
+
+[1_12_4_1_1]
+nom=Xarxa vianants completa
+enllaç=gvsig\projectes_aj\pm_xv.gvp
+obert=0
+fills=0
+
+[1_12_4_2]
+nom=Xarxa de ciclistes
+obert=0
+fills=1
+
+[1_12_4_2_1]
+nom=Xarxa ciclistes completa
+enllaç=gvsig\projectes_aj\pm_xc.gvp
+obert=0
+fills=0
+
+[1_12_4_3]
+nom=Xarxa de transport públic
+obert=0
+fills=1
+
+[1_12_4_3_1]
+nom=Línia d'autobusos urbans i cobertura
+enllaç=gvsig\projectes_aj\pm_tp.gvp
+obert=0
+fills=0
+
+[1_12_4_4]
+nom=Xarxa vehicles privats
+obert=0
+fills=1
+
+[1_12_4_4_1]
+nom=Xarxa viària completa
+enllaç=gvsig\projectes_aj\pm_vp.gvp
+obert=0
+fills=0
+
+[1_12_4_5]
+nom=Aparcament
+obert=0
+fills=1
+
+[1_12_4_5_1]
+nom=Aparcament complet
+enllaç=gvsig\projectes_aj\pm_aparcament.gvp
+obert=0
+fills=0
+
+[1_12_4_6]
+nom=Caracterització del sistema de mobilitat
+obert=0
+fills=1
+
+[1_12_4_6_1]
+nom=Caracterització del sistema de mobilitat complet
+enllaç=gvsig\projectes_aj\pm_carac.gvp
+obert=0
+fills=0
+
+[1_12_4_7]
+nom=Propostes
+obert=0
+fills=1
+
+[1_12_4_7_1]
+nom=Propostes
+enllaç=gvsig\projectes_aj\pm_propostes.gvp
+obert=0
+fills=0
+
+[1_12_4_8]
+nom=DWG
+obert=0
+fills=7
+
+[1_12_4_8_1]
+nom=Xarxa vianants
+obert=0
+fills=3
+
+[1_12_4_8_1_1]
+nom=Inventari
+enllaç=pla_mobilitat\dwg\inv_vialitat.dwg
+obert=0
+fills=0
+
+[1_12_4_8_1_2]
+nom=Amplada vorera
+enllaç=pla_mobilitat\dwg\amplada_vorera.dwg
+obert=0
+fills=0
+
+[1_12_4_8_1_3]
+nom=Amplada lliure
+enllaç=pla_mobilitat\dwg\amplada_lliure.dwg
+obert=0
+fills=0
+
+[1_12_4_8_2]
+nom=Xarxa ciclistes
+enllaç=pla_mobilitat\dwg\x_bicis.dwg
+obert=0
+fills=0
+
+[1_12_4_8_3]
+nom=Xarxa transport públic
+enllaç=pla_mobilitat\dwg\transport_pub.dwg
+obert=0
+fills=0
+
+[1_12_4_8_4]
+nom=Xarxa vehicles privats
+enllaç=pla_mobilitat\dwg\x_viaria.dwg
+obert=0
+fills=0
+
+[1_12_4_8_5]
+nom=Aparcament
+enllaç=pla_mobilitat\dwg\aparcament.dwg
+obert=0
+fills=0
+
+[1_12_4_8_6]
+nom=Caracterització sistema mobilitat
+obert=0
+fills=3
+
+[1_12_4_8_6_1]
+nom=Accidents i nivells de serveis
+enllaç=pla_mobilitat\dwg\caract_mob.dwg
+obert=0
+fills=0
+
+[1_12_4_8_6_2]
+nom=Intensitats mitjanes diàries feiners
+enllaç=pla_mobilitat\dwg\imd_feiner.dwg
+obert=0
+fills=0
+
+[1_12_4_8_6_3]
+nom=Intensitats mitjanes matí dia feiner
+enllaç=pla_mobilitat\dwg\imd_mati_feiner.dwg
+obert=0
+fills=0
+
+[1_12_4_8_7]
+nom=Propostes
+obert=0
+fills=4
+
+[1_12_4_8_7_1]
+nom=Vianants
+enllaç=pla_mobilitat\dwg\proposta_regulacio_carrers.dwg
+obert=0
+fills=0
+
+[1_12_4_8_7_2]
+nom=Ciclistes
+enllaç=pla_mobilitat\dwg\proposta_bici.dwg
+obert=0
+fills=0
+
+[1_12_4_8_7_3]
+nom=Transport públic
+enllaç=pla_mobilitat\dwg\proposta_tp.dwg
+obert=0
+fills=0
+
+[1_12_4_8_7_4]
+nom=Viària
+enllaç=pla_mobilitat\dwg\proposta_viaria.dwg
+obert=0
+fills=0
+
+[1_12_5]
+nom=Estudi d’Infraestructures de Radiocomunicació i el Pla Especial de Sant Sadurní
+obert=0
+fills=3
+
+[1_12_5_1]
+nom=EOIR
+enllaç=gvsig\projectes_aj\eoir.gvp
+obert=0
+fills=0
+
+[1_12_5_2]
+nom=PEIR
+enllaç=gvsig\projectes_aj\peir.gvp
+obert=0
+fills=0
+
+[1_12_5_3]
+nom=DWG
+obert=1
+fills=2
+
+[1_12_5_3_1]
+nom=EOIR
+enllaç=eoir_peir\dwg\eoir.dwg
+obert=0
+fills=0
+
+[1_12_5_3_2]
+nom=PEIR
+enllaç=eoir_peir\dwg\peir.dwg
+obert=0
+fills=0
+
+[1_12_6]
+nom=Mapes lumínics
+obert=0
+fills=1
+
+[1_12_6_1]
+nom=Protecció contaminació lumínica
+enllaç=gvsig\projectes_aj\prot_luminic.gvp
+obert=0
+fills=0
+
+[1_12_7]
+nom=Medi Ambient
+obert=0
+fills=3
+
+[1_12_7_1]
+nom=Transport
+obert=0
+fills=2
+
+[1_12_7_1_1]
+nom=Bus urbà
+enllaç=gvsig\projectes_aj\ma_transport.gvp
+obert=0
+fills=0
+
+[1_12_7_1_2]
+nom=Carril i parades de bici
+enllaç=gvsig\projectes_aj\ma_bici.gvp
+obert=0
+fills=0
+
+[1_12_7_2]
+nom=Residus
+obert=0
+fills=3
+
+[1_12_7_2_1]
+nom=Contenidors
+enllaç=gvsig\projectes_aj\ma_contenidors.gvp
+obert=0
+fills=0
+
+[1_12_7_2_2]
+nom=Contenidors 2011
+enllaç=gvsig\projectes_aj\ma_contenidors_2011.gvp
+obert=0
+fills=0
+
+[1_12_7_2_3]
+nom=Portamòbil
+enllaç=gvsig\projectes_aj\ma_portamobil.gvp
+obert=0
+fills=0
+
+[1_12_7_3]
+nom=Mobiliari urbà
+obert=0
+fills=1
+
+[1_12_7_3_1]
+nom=Papereres
+enllaç=gvsig\projectes_aj\ma_papereres.gvp
+obert=0
+fills=0
+
+[1_12_8]
+nom=Àrea paleontològica
+obert=0
+fills=2
+
+[1_12_8_1]
+nom=Afectació per àrea paleontològica
+enllaç=gvsig\projectes_aj\a_paleo.gvp
+obert=0
+fills=0
+
+[1_12_8_2]
+nom=Llistat propietaris afectats (cadastre rústica 2005)
+enllaç=area_paleontologica\parce_afec_paleo.xls
+obert=0
+fills=0
+
+[1_12_9]
+nom=EDAR
+obert=0
+fills=3
+
+[1_12_9_1]
+nom=Canonada Aigües Residuals - GrupETS
+enllaç=gvsig\projectes_aj\edar.gvp
+obert=0
+fills=0
+
+[1_12_9_2]
+nom=Canonada Aigües Residuals Definitiva - GrupETS
+enllaç=gvsig\projectes_aj\edar_def.gvp
+obert=0
+fills=0
+
+[1_12_9_3]
+nom=Estació de bombament i impulsió d'aigües residuals
+enllaç=altres\canonada_aigues_residuals\pdf\estacio_bombament.pdf
+obert=0
+fills=0
+
+[1_12_10]
+nom=TUC (Trama Urbana Consolidada)
+enllaç=gvsig\projectes_aj\tuc.gvp
+obert=0
+fills=0
+
+[1_12_11]
+nom=Dades de padró
+obert=0
+fills=3
+
+[1_12_11_1]
+nom=Padró d'habitants
+enllaç=padro\padro.pgv
+obert=0
+fills=0
+
+[1_12_11_2]
+nom=Padró habitants 2011
+enllaç=padro\padro_2011.pgv
+obert=0
+fills=0
+
+[1_12_11_3]
+nom=Proves creuaments cadastre - padró
+obert=0
+fills=0
+
+[1_13]
+nom=Annexes
+obert=0
+fills=12
+
+[1_13_1]
+nom=Límits municipals
+obert=0
+fills=6
+
+[1_13_1_1]
+nom=Discrepàncies Subirats
+enllaç=gvsig\projectes_aj\lm_discrep_subirats.gvp
+obert=0
+fills=0
+
+[1_13_1_2]
+nom=Límit Piera
+enllaç=gvsig\projectes_aj\lm_piera.gvp
+obert=0
+fills=0
+
+[1_13_1_3]
+nom=Límit T.M. (definitiu Juliol 2006)
+enllaç=gvsig\projectes_aj\lm_jul2006.gvp
+obert=0
+fills=0
+
+[1_13_1_4]
+nom=Límits T.M (històrics)
+enllaç=gvsig\projectes_aj\lm_hist.gvp
+obert=0
+fills=0
+
+[1_13_1_5]
+nom=Límits T.M. companyies
+enllaç=gvsig\projectes_aj\lm_companyies.gvp
+obert=0
+fills=0
+
+[1_13_1_6]
+nom=CAD
+obert=0
+fills=2
+
+[1_13_1_6_1]
+nom=Límit T.M. (definitiu Juliol 2006) - DWG
+enllaç=auxiliars\limit_juliol2006\lim_juliol2006_polilin.dwg
+obert=0
+fills=0
+
+[1_13_1_6_2]
+nom=Límit T.M. (definitiu Juliol 2006) - DGN
+enllaç=auxiliars\limit_juliol2006\lim_juliol2006_polilin.dgn
+obert=0
+fills=0
+
+[1_13_2]
+nom=Reparcel·lacions i illes de planejament
+obert=0
+fills=2
+
+[1_13_2_1]
+nom=Mas Asperó
+obert=1
+fills=2
+
+[1_13_2_1_1]
+nom=Mas Asperó
+enllaç=gvsig\projectes_aj\mas_aspero.gvp
+obert=0
+fills=0
+
+[1_13_2_1_2]
+nom=Parcel·les Mas Asperó DWG
+enllaç=crustica\mas_aspero\parc_aspero.dwg
+obert=0
+fills=0
+
+[1_13_2_2]
+nom=Reparcel·lació i illes de planejament
+enllaç=gvsig\projectes_aj\reparce.gvp
+obert=0
+fills=0
+
+[1_13_3]
+nom=Patrimoni
+obert=0
+fills=4
+
+[1_13_3_1]
+nom=Patrimoni
+enllaç=gvsig\projectes_aj\patri_muni.gvp
+obert=0
+fills=0
+
+[1_13_3_2]
+nom=Ocupacions permanents a la via pública
+enllaç=gvsig\projectes_aj\ocupacions.gvp
+obert=0
+fills=0
+
+[1_13_3_3]
+nom=Valors provisionals patrimoni
+enllaç=patrimoni\doc\valors_provisionals2.pdf
+obert=0
+fills=0
+
+[1_13_3_4]
+nom=Llistats
+obert=0
+fills=2
+
+[1_13_3_4_1]
+nom=Llistat Patrimoni
+enllaç=patrimoni\doc\llistat_patrimoni.xls
+obert=0
+fills=0
+
+[1_13_3_4_2]
+nom=Llistat valoracions provisionals
+enllaç=patrimoni\doc\llistat_valors.xls
+obert=0
+fills=0
+
+[1_13_4]
+nom=Molí del Racó
+obert=0
+fills=2
+
+[1_13_4_1]
+nom=Servituds - Molí del Racó
+enllaç=gvsig\projectes_aj\moli_raco_serv.gvp
+obert=0
+fills=0
+
+[1_13_4_2]
+nom=Pla d'emergències - Molí del Racó
+enllaç=gvsig\projectes_aj\moli_raco_pemergencies.gvp
+obert=0
+fills=0
+
+[1_13_5]
+nom=Estructura viària
+enllaç=gvsig\projectes_aj\estruct_viaria.gvp
+obert=0
+fills=0
+
+[1_13_6]
+nom=Travessies urbanes
+enllaç=gvsig\projectes_aj\trav_urba.gvp
+obert=0
+fills=0
+
+[1_13_7]
+nom=Passos de serveis
+enllaç=gvsig\projectes_aj\passos_servei.gvp
+obert=0
+fills=0
+
+[1_13_8]
+nom=Habitatges protecció oficial
+enllaç=gvsig\projectes_aj\hpo.gvp
+obert=0
+fills=0
+
+[1_13_9]
+nom=Mobiliari Passeig del Parc
+enllaç=gvsig\projectes_aj\mob_psparc.gvp
+obert=0
+fills=0
+
+[1_13_10]
+nom=Reasfaltats
+enllaç=gvsig\projectes_aj\reasfaltats.gvp
+obert=0
+fills=0
+
+[1_13_11]
+nom=Cabanes de pedra seca
+enllaç=gvsig\projectes_aj\cabanes_pedra_seca.gvp
+obert=0
+fills=0
+
+[1_13_12]
+nom=Cabenes de pedra seca (mapa en PDF)
+enllaç=patrimoni\cabanes_pedra_seca\cabanes_pedra_seca.pdf
+obert=0
+fills=0
+
+[1_14]
+nom=Serveis
+obert=1
+fills=8
+
+[1_14_1]
+nom=Serveis històrics (fins juny2006)
+obert=0
+fills=7
+
+[1_14_1_1]
+nom=Aigua
+enllaç=gvsig\projectes_aj\serv_hist_aigua.gvp
+obert=0
+fills=0
+
+[1_14_1_2]
+nom=FECSA
+enllaç=gvsig\projectes_aj\serv_hist_fecsa.gvp
+obert=0
+fills=0
+
+[1_14_1_3]
+nom=Gas
+enllaç=gvsig\projectes_aj\serv_hist_gas.gvp
+obert=0
+fills=0
+
+[1_14_1_4]
+nom=Clavegueram
+enllaç=gvsig\projectes_aj\serv_hist_clav.gvp
+obert=0
+fills=0
+
+[1_14_1_5]
+nom=Enllumenat
+enllaç=gvsig\projectes_aj\serv_hist_llum.gvp
+obert=0
+fills=0
+
+[1_14_1_6]
+nom=Jardineria
+enllaç=gvsig\projectes_aj\serv_hist_jar.gvp
+obert=0
+fills=0
+
+[1_14_1_7]
+nom=Telefònica
+enllaç=gvsig\projectes_aj\serv_hist_telef.gvp
+obert=0
+fills=0
+
+[1_14_2]
+nom=Serveis (fins juny 2007)
+obert=0
+fills=7
+
+[1_14_2_1]
+nom=Aigua
+enllaç=gvsig\projectes_aj\serv_j2007_aigua.gvp
+obert=0
+fills=0
+
+[1_14_2_2]
+nom=FECSA
+enllaç=gvsig\projectes_aj\serv_j2007_fecsa.gvp
+obert=0
+fills=0
+
+[1_14_2_3]
+nom=Gas
+enllaç=gvsig\projectes_aj\serv_j2007_gas.gvp
+obert=0
+fills=0
+
+[1_14_2_4]
+nom=Clavegueram
+enllaç=gvsig\projectes_aj\serv_j2007_gas.gvp
+obert=0
+fills=0
+
+[1_14_2_5]
+nom=Enllumenat
+enllaç=gvsig\projectes_aj\serv_j2007_llum.gvp
+obert=0
+fills=0
+
+[1_14_2_6]
+nom=Jardineria
+enllaç=gvsig\projectes_aj\serv_j2007_jar.gvp
+obert=0
+fills=0
+
+[1_14_2_7]
+nom=Telefònica
+enllaç=gvsig\projectes_aj\serv_j2007_telef.gvp
+obert=0
+fills=0
+
+[1_14_3]
+nom=Serveis 2007
+obert=0
+fills=9
+
+[1_14_3_1]
+nom=Aigua
+enllaç=gvsig\projectes_aj\serv_2007_aigua.gvp
+obert=0
+fills=0
+
+[1_14_3_2]
+nom=FECSA
+enllaç=gvsig\projectes_aj\serv_2007_fecsa.gvp
+obert=0
+fills=0
+
+[1_14_3_3]
+nom=Comentaris FECSA
+enllaç=serveis\serveis2007\fecsa\doc\fecsa.pdf
+obert=0
+fills=0
+
+[1_14_3_4]
+nom=Gas
+enllaç=gvsig\projectes_aj\serv_2007_gas.gvp
+obert=0
+fills=0
+
+[1_14_3_5]
+nom=Comentaris Gas
+enllaç=serveis\serveis2007\gas\doc\gas.pdf
+obert=0
+fills=0
+
+[1_14_3_6]
+nom=Clavegueram
+enllaç=gvsig\projectes_aj\serv_2007_clav.gvp
+obert=0
+fills=0
+
+[1_14_3_7]
+nom=Jardineria
+enllaç=gvsig\projectes_aj\serv_2007_jar.gvp
+obert=0
+fills=0
+
+[1_14_3_8]
+nom=Enllumenat
+enllaç=gvsig\projectes_aj\serv_2007_llum.gvp
+obert=0
+fills=0
+
+[1_14_3_9]
+nom=Telefònica
+enllaç=gvsig\projectes_aj\serv_2007_telef.gvp
+obert=0
+fills=0
+
+[1_14_4]
+nom=Serveis 2008
+obert=0
+fills=7
+
+[1_14_4_1]
+nom=FECSA
+enllaç=gvsig\projectes_aj\serv_2008_fecsa.gvp
+obert=0
+fills=0
+
+[1_14_4_2]
+nom=Comentaris FECSA
+enllaç=serveis\serveis2008\fecsa\doc\fecsa.pdf
+obert=0
+fills=0
+
+[1_14_4_3]
+nom=Clavegueram
+enllaç=gvsig\projectes_aj\serv_2008_clav.gvp
+obert=0
+fills=0
+
+[1_14_4_4]
+nom=Jardineria
+enllaç=gvsig\projectes_aj\serv_2008_jar.gvp
+obert=0
+fills=0
+
+[1_14_4_5]
+nom=Enllumenat
+enllaç=gvsig\projectes_aj\serv_2008_llum.gvp
+obert=0
+fills=0
+
+[1_14_4_6]
+nom=Enllumenat - juliol 2008
+enllaç=gvsig\projectes_aj\serv_2008_llum_cimne.gvp
+obert=0
+fills=0
+
+[1_14_4_7]
+nom=Telèfon
+enllaç=gvsig\projectes_aj\serv_2008_telef.gvp
+obert=0
+fills=0
+
+[1_14_5]
+nom=Serveis 2009
+obert=0
+fills=4
+
+[1_14_5_1]
+nom=Gas
+enllaç=gvsig\projectes_aj\serv_2009_gas.gvp
+obert=0
+fills=0
+
+[1_14_5_2]
+nom=Clavegueram
+enllaç=gvsig\projectes_aj\serv_2009_clav.gvp
+obert=0
+fills=0
+
+[1_14_5_3]
+nom=Jardineria
+enllaç=gvsig\projectes_aj\serv_2009_jar.gvp
+obert=0
+fills=0
+
+[1_14_5_4]
+nom=Enllumenat
+enllaç=gvsig\projectes_aj\serv_2009_llum.gvp
+obert=0
+fills=0
+
+[1_14_6]
+nom=Serveis 2010
+obert=0
+fills=8
+
+[1_14_6_1]
+nom=FECSA
+enllaç=gvsig\projectes_aj\serv_2010_fecsa.gvp
+obert=0
+fills=0
+
+[1_14_6_2]
+nom=Gas
+enllaç=gvsig\projectes_aj\serv_2010_gas.gvp
+obert=0
+fills=0
+
+[1_14_6_3]
+nom=Aigua
+enllaç=gvsig\projectes_aj\serv_2010_aigua.gvp
+obert=0
+fills=0
+
+[1_14_6_4]
+nom=Clavegueram
+enllaç=gvsig\projectes_aj\serv_2010_clav.gvp
+obert=0
+fills=0
+
+[1_14_6_5]
+nom=Jardineria - Plecs
+enllaç=gvsig\projectes_aj\serv_2010_jar.gvp
+obert=0
+fills=0
+
+[1_14_6_6]
+nom=Jardineria - Inventari Moix
+enllaç=gvsig\projectes_aj\serv_2010_jar_moix.gvp
+obert=0
+fills=0
+
+[1_14_6_7]
+nom=Llistat inventari arbres
+enllaç=serveis\serveis2010\jardineria_moix\inventari_arbres_llistats_stat.xls
+obert=0
+fills=0
+
+[1_14_6_8]
+nom=Enllumenat
+enllaç=gvsig\projectes_aj\serv_2010_llum.gvp
+obert=0
+fills=0
+
+[1_14_7]
+nom=Serveis 2011
+obert=0
+fills=7
+
+[1_14_7_1]
+nom=Gas
+enllaç=gvsig\projectes_aj\serv_2011_gas.gvp
+obert=0
+fills=0
+
+[1_14_7_2]
+nom=Clavegueram
+enllaç=gvsig\projectes_aj\serv_2011_clav.gvp
+obert=0
+fills=0
+
+[1_14_7_3]
+nom=Enllumenat
+enllaç=gvsig\projectes_aj\serv_2011_llum.gvp
+obert=0
+fills=0
+
+[1_14_7_4]
+nom=Jardineria
+obert=0
+fills=4
+
+[1_14_7_4_1]
+nom=Jardineria
+enllaç=gvsig\projectes_aj\serv_2011_jar.gvp
+obert=0
+fills=0
+
+[1_14_7_4_2]
+nom=Reg
+enllaç=gvsig\projectes_aj\serv_2011_reg.gvp
+obert=0
+fills=0
+
+[1_14_7_4_3]
+nom=Taules espècies arbres
+enllaç=serveis\serveis2011\jardineria_moix\taules\especies_20111117.xls
+obert=0
+fills=0
+
+[1_14_7_4_4]
+nom=Taules zones verdes
+enllaç=serveis\serveis2011\jardineria_moix\taules\zv_20111117.xls
+obert=0
+fills=0
+
+[1_14_7_5]
+nom=YaCom
+enllaç=gvsig\projectes_aj\serv_2011_ya.gvp
+obert=0
+fills=0
+
+[1_14_7_6]
+nom=Oleoducte
+enllaç=gvsig\projectes_aj\serv_2011_oleoducte.gvp
+obert=0
+fills=0
+
+[1_14_7_7]
+nom=Etilenoducte
+enllaç=gvsig\projectes_aj\serv_2011_etilenoducte.gvp
+obert=0
+fills=0
+
+[1_14_8]
+nom=Proposta serveis POUM
+obert=0
+fills=6
+
+[1_14_8_1]
+nom=Gas
+enllaç=gvsig\projectes_aj\serv_proposta_gas.gvp
+obert=0
+fills=0
+
+[1_14_8_2]
+nom=Clavegueram
+enllaç=gvsig\projectes_aj\serv_proposta_clav.gvp
+obert=0
+fills=0
+
+[1_14_8_3]
+nom=Aigua
+enllaç=gvsig\projectes_aj\serv_proposta_aigua.gvp
+obert=0
+fills=0
+
+[1_14_8_4]
+nom=FECSA
+enllaç=gvsig\projectes_aj\serv_proposta_fecsa.gvp
+obert=0
+fills=0
+
+[1_14_8_5]
+nom=Telèfon
+enllaç=gvsig\projectes_aj\serv_proposta_telef.gvp
+obert=0
+fills=0
+
+[1_14_8_6]
+nom=Enllumenat
+enllaç=gvsig\projectes_aj\serv_proposta_llum.gvp
+obert=0
+fills=0
+
+[1_15]
+nom=POUM
+obert=1
+fills=2
+
+[1_15_1]
+nom=Històric
+obert=0
+fills=1
+
+[1_15_1_1]
+nom=PGOU 94
+obert=0
+fills=6
+
+[1_15_1_1_1]
+nom=Plànol 1: Classificació del sòl
+enllaç=gvsig\projectes_aj\pgou94_1.gvp
+obert=0
+fills=0
+
+[1_15_1_1_2]
+nom=Plànol 4: Zonificació i qualificació
+enllaç=gvsig\projectes_aj\pgou94_4.gvp
+obert=0
+fills=0
+
+[1_15_1_1_3]
+nom=Plànol 5: Ordenació. Alineacions.
+enllaç=gvsig\projectes_aj\pgou94_5.gvp
+obert=0
+fills=0
+
+[1_15_1_1_4]
+nom=Plànol 7: Ordenació del sòl no urbanitzable - Regulació del seu accès
+enllaç=gvsig\projectes_aj\pgou94_7.gvp
+obert=0
+fills=0
+
+[1_15_1_1_5]
+nom=Bòbila d'en Mota
+enllaç=gvsig\projectes_aj\pgou94_res97.gvp
+obert=0
+fills=0
+
+[1_15_1_1_6]
+nom=DWG
+obert=0
+fills=4
+
+[1_15_1_1_6_1]
+nom=Plànol 1: Classificació del sòl
+enllaç=pgou94\cad\dwg\1.dwg
+obert=0
+fills=0
+
+[1_15_1_1_6_2]
+nom=Plànol 4: Zonificació i qualificació
+enllaç=pgou94\cad\dwg\4.dwg
+obert=0
+fills=0
+
+[1_15_1_1_6_3]
+nom=Plànol 5: Ordenació. Alineacions.
+enllaç=pgou94\cad\dwg\5.dwg
+obert=0
+fills=0
+
+[1_15_1_1_6_4]
+nom=Plànol 7: Ordenació del sòl no urbanitzable - Regulació del seu accès
+enllaç=pgou94\cad\dwg\7.dwg
+obert=0
+fills=0
+
+[1_15_2]
+nom=Vigent
+obert=1
+fills=4
+
+[1_15_2_1]
+nom=POUM: AD
+obert=0
+fills=6
+
+[1_15_2_1_1]
+nom=Sòl urbà
+enllaç=gvsig\projectes_aj\poum_su.gvp
+obert=0
+fills=0
+
+[1_15_2_1_2]
+nom=Sòl urbanitzable
+enllaç=gvsig\projectes_aj\poum_surbz.gvp
+obert=0
+fills=0
+
+[1_15_2_1_3]
+nom=Sòl no urbanitzable
+enllaç=gvsig\projectes_aj\poum_snu.gvp
+obert=0
+fills=0
+
+[1_15_2_1_4]
+nom=Varis
+obert=0
+fills=1
+
+[1_15_2_1_4_1]
+nom=Ordenació detallada Pla de la Creu
+enllaç=gvsig\projectes_aj\poum_surbz_placreu.gvp
+obert=0
+fills=0
+
+[1_15_2_1_5]
+nom=DWG
+obert=0
+fills=3
+
+[1_15_2_1_5_1]
+nom=Sòl urbà
+enllaç=poum_ad_treball\cad\su_v2000.dwg
+obert=0
+fills=0
+
+[1_15_2_1_5_2]
+nom=Sòl urbanitzable
+enllaç=poum_ad_treball\cad\surbanitz_v2000.dwg
+obert=0
+fills=0
+
+[1_15_2_1_5_3]
+nom=Sòl no urbanitzable
+enllaç=poum_ad_treball\cad\snu_v2000.dwg
+obert=0
+fills=0
+
+[1_15_2_1_6]
+nom=Informe errors
+enllaç=poum_ad_treball\inf_errors.pdf
+obert=0
+fills=0
+
+[1_15_2_2]
+nom=POUM: càlculs bàsics de superfícies
+obert=0
+fills=1
+
+[1_15_2_2_1]
+nom=Règim del sòl - taula superfícies
+enllaç=poum_ap_def\calc\sup_rs.xls
+obert=0
+fills=0
+
+[1_15_2_3]
+nom=Plans territorials
+obert=0
+fills=3
+
+[1_15_2_3_1]
+nom=Pla Territorial Metropolità de Barcelona - Ràster
+enllaç=gvsig\projectes_aj\ptmb_raster.gvp
+obert=0
+fills=0
+
+[1_15_2_3_2]
+nom=Pla Territorial Metropolità de Barcelona - SHP
+enllaç=gvsig\projectes_aj\ptmb_vect.gvp
+obert=0
+fills=0
+
+[1_15_2_3_3]
+nom=Pla Territorial General de Catalunya
+enllaç=gvsig\projectes_aj\ptgc.gvp
+obert=0
+fills=0
+
+[1_15_2_4]
+nom=GoogleEarth
+obert=0
+fills=3
+
+[1_15_2_4_1]
+nom=Aliniacions
+enllaç=poum_ad_treball\kml\aliniacions.kml
+obert=0
+fills=0
+
+[1_15_2_4_2]
+nom=Sistemes: Parcs
+enllaç=poum_ad_treball\kml\4parcs.kml
+obert=0
+fills=0
+
+[1_15_2_4_3]
+nom=Sistemes: Equipaments
+enllaç=poum_ad_treball\kml\5equipaments.kml
+obert=0
+fills=0
+
+[1_16]
+nom=Avaluació ambiental del sòl no urbanitzable de Sant Sadurní d'Anoia
+enllaç=planifiquem\ssadurni.opr
+obert=0
+fills=0
+
