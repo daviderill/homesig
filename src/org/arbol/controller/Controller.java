@@ -1,10 +1,14 @@
 package org.arbol.controller;
 
+import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import org.arbol.dao.Model;
 import org.arbol.domain.Node;
@@ -19,6 +23,7 @@ public class Controller {
 		myView = v;
 		myModel = m;
 		myView.addFileListener(new FileListener());
+		myView.addBreadcrumbListener(new BreadCrumbListener());
 		
 		initalizeFirstLevel();
 	}
@@ -39,10 +44,26 @@ public class Controller {
 				String source = e.getComponent().getClass().getName();
 				if (source.equals("javax.swing.JLabel")) {
 					JLabel label = (JLabel)e.getSource();
-					ArrayList<Node> files = myModel.getChildrenOf(label.getText());
-					myModel.addToPath(label.getText());
-					myView.drawChildren(files);
-					myView.drawBreadcrumb(myModel.drawPath());
+					Node n = myModel.getNodeNamed(label.getText());
+					if (n.getExtension_id() == null) {
+						ArrayList<Node> files = n.getChildren();
+						myModel.createPathOf(label.getText());
+						myView.drawChildren(files);
+						myView.drawBreadcrumb(myModel.drawPath());
+					}
+					else {
+						File file = new File(n.getLink());
+						System.out.println(file.getAbsolutePath());
+						try {
+							Desktop.getDesktop().open(file);
+						} 
+						catch (IOException e1) {
+							e1.printStackTrace();							
+						}
+						catch (IllegalArgumentException e2) {
+							myView.showErrorFileNotFound(n.getLink());	
+						}
+					}
 				}
 				else {
 					// Hem clicat al panel_files
@@ -62,8 +83,51 @@ public class Controller {
 				myView.drawChildren(files);
 				myView.drawBreadcrumb(myModel.drawPath());
 			}
-			else if (e.getClickCount() == 1) {
-				
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	class BreadCrumbListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			String source = e.getComponent().getClass().getName();
+			if (source.equals("javax.swing.JLabel")) {
+				JLabel label = (JLabel)e.getSource();
+				Node n = myModel.getNodeNamed(label.getText());
+				if (n.getExtension_id() == null) {
+					ArrayList<Node> files = n.getChildren();
+					myModel.createPathOf(label.getText());
+					myView.drawChildren(files);
+					myView.drawBreadcrumb(myModel.drawPath());
+				}
+				else {
+					System.out.println("Es un fitxer!");
+				}
 			}
 		}
 

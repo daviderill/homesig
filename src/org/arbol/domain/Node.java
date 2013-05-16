@@ -18,7 +18,6 @@ public class Node {
 	
 	public Node(String id, String name, String link, String tooltip) {
 		super();
-		System.out.println("--- TRACTAMENT DEL NODE: " + id + " ---");
 		this.id = id;
 		this.name = name;
 		this.tooltip = tooltip;
@@ -31,9 +30,7 @@ public class Node {
 	private void extractInfoFromId(String id) {
 		String[] id_parts = id.split("_");	
 		level = id_parts.length;
-		System.out.println("NIVELL: " + level);
 		position = Integer.valueOf(id_parts[id_parts.length - 1]);
-		System.out.println("POSICIO: " + position);
 		String parentId = null;
 		if (id_parts.length > 1) {
 			parentId = id_parts[0];
@@ -41,20 +38,16 @@ public class Node {
 		for (int i=1; i < id_parts.length - 1; ++i) {
 			parentId += "_" + id_parts[i];
 		}
-		System.out.println("PARE: " + parentId);
 		parent_id = parentId;
 	}
 	
 	private void extractInfoFromLink(String name) {
 		link = name;
-		System.out.println("LINK: " + link);
 		if (name != null) {
 			String[] path = name.split(":?\\\\");
 			String file = path[path.length-1];
-			System.out.println("FILE: " + file);
 			String[] file_parts = file.split("\\.");
 			extension_id = file_parts[file_parts.length - 1];
-			System.out.println("EXTENSIO: " + extension_id);
 		}
 	}
 	
@@ -126,6 +119,5 @@ public class Node {
 	public void setParent(Node parent) {
 		this.parent = parent;
 	}
-	
 	
 }

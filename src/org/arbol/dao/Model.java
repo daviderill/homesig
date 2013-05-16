@@ -87,7 +87,6 @@ public class Model {
 	private void assignParent(Node children) {
 		for (int i=0; i < nodes.size(); ++i) {
 			if (nodes.get(i).getId().equals(children.getParent_id()) ) {
-				System.out.println("Jo, " + children.getId() + " soc fill de " + nodes.get(i).getId());
 				nodes.get(i).addChildren(children.getPosition(),children);
 				children.setParent(nodes.get(i));
 			}
@@ -97,13 +96,8 @@ public class Model {
 	public ArrayList<Node> getAll() {
 		return nodes;
 	}
-
-	public ArrayList<Node> getChildrenOf(String fileName) {
-		Node parent = getNodeNamed(fileName);
-		return parent.getChildren();
-	}
-
-	private Node getNodeNamed(String fileName) {
+	
+	public Node getNodeNamed(String fileName) {
 		for (int i=0; i < nodes.size(); ++i) {
 			if (nodes.get(i).getName().equals(fileName)) return nodes.get(i);
 		}
@@ -130,13 +124,38 @@ public class Model {
 	}
 
 
-	public String drawPath() {
+	/*public String drawPath() {
 		String path = "/";
 		for (int i=0; i < currentPath.size(); ++i) {
 			path += currentPath.get(i).getName() + "/";
 		}
 		return path;
+	}*/
+
+	public String[] drawPath() {
+		String[] res = new String[currentPath.size()];
+		for (int i=0; i < currentPath.size(); ++i) {
+			res[i] = currentPath.get(i).getName();
+		}
+		return res;
 	}
 
+
+	public void createPathOf(String text) {
+		Node n = getNodeNamed(text);
+		currentPath.clear();
+		createPathRecursively(n);
+	}
+
+
+	private void createPathRecursively(Node n) {
+		if (n.getLevel() == 1) {
+			currentPath.add(n);
+		}
+		else {
+			createPathRecursively(n.getParent());
+			currentPath.add(n);
+		}
+	}
 
 }

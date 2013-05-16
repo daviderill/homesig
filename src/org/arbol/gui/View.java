@@ -9,17 +9,15 @@ import java.awt.SystemColor;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -29,10 +27,11 @@ public class View {
 
 	public JFrame frame;
 	private JPanel panel_files;
-	private JLabel label_breadcrumb;
+	private JPanel panel_breadcrumb;
 	ImageIcon icon_folder = new ImageIcon("res\\Imagen 3-petit.png");
 	ImageIcon icon_pdf = new ImageIcon("res\\pdf-petit.png");
 	private MouseListener listener;
+	private MouseListener breadcrumb_listener;
 
 	public View() {
 		initialize();
@@ -54,6 +53,9 @@ public class View {
 		panel_files.addMouseListener(listener);
 	}
 
+	public void addBreadcrumbListener(MouseListener listenForFileClick){
+		breadcrumb_listener = listenForFileClick;
+	}
 	
 	public void drawChildren(ArrayList<Node> files) {
 		panel_files.removeAll();
@@ -86,6 +88,25 @@ public class View {
 		}
 		
 	}
+	
+	public void drawBreadcrumb(String[] drawPath) {
+		panel_breadcrumb.removeAll();
+		panel_breadcrumb.updateUI();
+		for (int i=0; i < drawPath.length; ++i) {
+			JLabel bread = new JLabel(drawPath[i], SwingConstants.LEFT);	
+			bread.addMouseListener(breadcrumb_listener);
+			bread.setFont(new Font("Georgia", Font.PLAIN, 12));
+			JLabel separator = new JLabel(" > ", SwingConstants.LEFT);
+			separator.setFont(new Font("Georgia", Font.PLAIN, 12));
+			if (i == drawPath.length - 1) {
+				bread.setFont(new Font("Georgia", Font.BOLD, 12));
+				separator.setFont(new Font("Georgia", Font.BOLD, 12));
+			}
+			panel_breadcrumb.add(bread);
+			panel_breadcrumb.add(separator);
+		}
+	}
+	
 	
 	/**
 	 * Initialize the contents of the frame.
@@ -133,7 +154,7 @@ public class View {
 		
 		JPanel panel_links_content = new JPanel();
 		
-		JPanel panel_breadcrumb = new JPanel();
+		panel_breadcrumb = new JPanel();
 		panel_breadcrumb.setBorder(null);
 		panel_breadcrumb.setBackground(SystemColor.controlHighlight);
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -216,13 +237,7 @@ public class View {
 		JLabel lblMapaWeb = new JLabel("Mapa web");
 		lblMapaWeb.setFont(new Font("Georgia", Font.BOLD, 10));
 		panel_info.add(lblMapaWeb, "cell 2 3");
-		SpringLayout sl_panel_breadcrumb = new SpringLayout();
-		panel_breadcrumb.setLayout(sl_panel_breadcrumb);
-		
-		label_breadcrumb = new JLabel("/");
-		sl_panel_breadcrumb.putConstraint(SpringLayout.WEST, label_breadcrumb, 10, SpringLayout.WEST, panel_breadcrumb);
-		sl_panel_breadcrumb.putConstraint(SpringLayout.SOUTH, label_breadcrumb, -5, SpringLayout.SOUTH, panel_breadcrumb);
-		panel_breadcrumb.add(label_breadcrumb);
+		panel_breadcrumb.setLayout(new MigLayout("", "[4px]", "[14px]"));
 		
 		JLabel lblNewLabel_3 = new JLabel("");
 		//lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Roger\\workspace\\Arbre\\res\\logopie.gif"));
@@ -249,7 +264,7 @@ public class View {
 		frame.getContentPane().setLayout(groupLayout);
 	}
 
-	public void drawBreadcrumb(String drawPath) {
-		label_breadcrumb.setText(drawPath);
+	public void showErrorFileNotFound(String path) {
+		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no existeix", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }
