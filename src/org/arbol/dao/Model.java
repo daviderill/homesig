@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.arbol.domain.Node;
 import org.arbol.util.DataBaseConnection;
@@ -66,6 +68,7 @@ public class Model {
 		    		assignParent(nodes.get(i));
 		    	}
 		    }
+		    sortChildren();
 		    rs.close();
 		    conn.close();
 		} catch (SQLException e1) {
@@ -74,6 +77,20 @@ public class Model {
 		}
 	}
 	
+	private void sortChildren() {
+		Collections.sort(nodes, new NodeComparator());
+		for (int i=0; i < nodes.size(); ++i) {
+			Collections.sort(nodes.get(i).getChildren(), new NodeComparator());
+		}
+	}
+
+	public class NodeComparator implements Comparator<Node> {
+		@Override
+		public int compare(Node n1, Node n2) {
+			return n1.getId().compareTo(n2.getId());
+		}
+	}
+
 	public ArrayList<Node> getFirstLevel() {
 		ArrayList<Node> result = new ArrayList<Node>();
 		for (int i=0; i < nodes.size(); ++i) {
@@ -133,9 +150,10 @@ public class Model {
 	}*/
 
 	public String[] drawPath() {
-		String[] res = new String[currentPath.size()];
+		String[] res = new String[currentPath.size()+1];
+		res[0] = "INICI ";
 		for (int i=0; i < currentPath.size(); ++i) {
-			res[i] = currentPath.get(i).getName();
+			res[i+1] = currentPath.get(i).getName();
 		}
 		return res;
 	}
@@ -156,6 +174,14 @@ public class Model {
 			createPathRecursively(n.getParent());
 			currentPath.add(n);
 		}
+	}
+
+
+	public String[] drawEmptyPath() {
+		currentPath.clear();
+		String[] res = new String[1];
+		res[0] = "INICI ";
+		return res;
 	}
 
 }

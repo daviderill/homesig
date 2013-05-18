@@ -12,12 +12,14 @@ import java.util.ArrayList;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
+import javax.swing.event.HyperlinkListener;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -28,13 +30,25 @@ public class View {
 	public JFrame frame;
 	private JPanel panel_files;
 	private JPanel panel_breadcrumb;
+	private JEditorPane newsContent;
 	ImageIcon icon_folder = new ImageIcon("res\\Imagen 3-petit.png");
 	ImageIcon icon_pdf = new ImageIcon("res\\pdf-petit.png");
 	private MouseListener listener;
 	private MouseListener breadcrumb_listener;
+	private HyperlinkListener link_listener;
 
 	public View() {
 		initialize();
+		
+		String text = "Aquí tenim una notícia de prova amb un " +
+				"enllaç al fitxer <a href='doc\\cadastre.pdf'> Cadastre ";
+
+		newsContent.setContentType("text/html");
+		newsContent.setText(text);
+		newsContent.setEditable(false);  
+		newsContent.setOpaque(false);
+		newsContent.setFont(new Font("Georgia", Font.PLAIN, 13));
+		
 	}
 	
 	protected ImageIcon createImageIcon(String path, String description) {
@@ -55,6 +69,11 @@ public class View {
 
 	public void addBreadcrumbListener(MouseListener listenForFileClick){
 		breadcrumb_listener = listenForFileClick;
+	}
+	
+	public void addLinkListener(HyperlinkListener linkListener) {
+		link_listener = linkListener;
+		newsContent.addHyperlinkListener(link_listener); 
 	}
 	
 	public void drawChildren(ArrayList<Node> files) {
@@ -143,10 +162,6 @@ public class View {
 		lblNotcies.setFont(new Font("Georgia", Font.PLAIN, 25));
 		panel_news_title.add(lblNotcies);
 		
-		JPanel panel_bottom_logo = new JPanel();
-		panel_bottom_logo.setBackground(Color.WHITE);
-		panel_bottom_logo.setForeground(Color.WHITE);
-		
 		JPanel panel_info = new JPanel();
 		panel_info.setFont(new Font("Gentium Book Basic", Font.PLAIN, 10));
 		
@@ -163,21 +178,22 @@ public class View {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(panel_top_logo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(21)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-								.addComponent(panel_news_content, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
-								.addComponent(panel_bottom_logo, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, 458, GroupLayout.PREFERRED_SIZE)
-								.addComponent(panel_breadcrumb, GroupLayout.PREFERRED_SIZE, 458, GroupLayout.PREFERRED_SIZE)
-								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-									.addComponent(panel_title, GroupLayout.PREFERRED_SIZE, 576, GroupLayout.PREFERRED_SIZE)
-									.addComponent(panel_files, GroupLayout.PREFERRED_SIZE, 751, GroupLayout.PREFERRED_SIZE))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(panel_top_logo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, 888, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
+										.addComponent(panel_news_content, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
+									.addGap(30)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(panel_breadcrumb, GroupLayout.PREFERRED_SIZE, 458, GroupLayout.PREFERRED_SIZE)
+										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+											.addComponent(panel_title, GroupLayout.PREFERRED_SIZE, 576, GroupLayout.PREFERRED_SIZE)
+											.addComponent(panel_files, GroupLayout.PREFERRED_SIZE, 751, GroupLayout.PREFERRED_SIZE)))))))
 					.addGap(27)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(panel_links_content, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
@@ -203,46 +219,63 @@ public class View {
 								.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-						.addComponent(panel_files, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-						.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
-					.addGap(67)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_bottom_logo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+								.addComponent(panel_files, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
+							.addGap(67))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
-		panel_info.setLayout(new MigLayout("", "[55px][40px][30px][90px][46px]", "[14px][][][]"));
+		
+		newsContent = new JEditorPane();
+		GroupLayout gl_panel_news_content = new GroupLayout(panel_news_content);
+		gl_panel_news_content.setHorizontalGroup(
+			gl_panel_news_content.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel_news_content.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(newsContent, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel_news_content.setVerticalGroup(
+			gl_panel_news_content.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_news_content.createSequentialGroup()
+					.addGap(47)
+					.addComponent(newsContent, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(232, Short.MAX_VALUE))
+		);
+		panel_news_content.setLayout(gl_panel_news_content);
+		panel_info.setLayout(new MigLayout("", "[55px][5px][40px][5px][30px][8px][90px][6px][46px][6px][]", "[14px][]"));
 		
 		JLabel lblNewLabel_4 = new JLabel("Pla\u00E7a Ajuntament, 1  08770 Sant Sadurn\u00ED d'Anoia");
 		lblNewLabel_4.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblNewLabel_4, "cell 0 0 3 1,alignx left,aligny top");
+		panel_info.add(lblNewLabel_4, "cell 0 0 5 1,alignx left,aligny top");
 		
 		JLabel lblNewLabel_5 = new JLabel("Tel +34 938 910 325   Fax +34 938 183 470  E-mail: ajuntament@santsadurni.cat");
 		lblNewLabel_5.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblNewLabel_5, "cell 0 1 4 1,alignx left,aligny top");
+		panel_info.add(lblNewLabel_5, "cell 6 0,alignx left,aligny top");
 		
-		JLabel lblNewLabel_6 = new JLabel("Disseny web");
-		lblNewLabel_6.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblNewLabel_6, "cell 0 2");
+		JLabel lblNewLabel_3 = new JLabel("Consultor SIG: Carlos L\u00F3pez");
+		panel_info.add(lblNewLabel_3, "cell 8 0");
+		
+		JLabel lblNewLabel_9 = new JLabel("Disseny web: mm!");
+		panel_info.add(lblNewLabel_9, "cell 10 0");
 		
 		JLabel lblNewLabel_7 = new JLabel("Av\u00EDs legal");
 		lblNewLabel_7.setFont(new Font("Georgia", Font.BOLD, 10));
-		panel_info.add(lblNewLabel_7, "flowx,cell 0 3");
+		panel_info.add(lblNewLabel_7, "flowx,cell 0 1");
 		
 		JLabel lblNewLabel_8 = new JLabel("Inici");
 		lblNewLabel_8.setFont(new Font("Georgia", Font.BOLD, 10));
-		panel_info.add(lblNewLabel_8, "cell 1 3");
+		panel_info.add(lblNewLabel_8, "cell 2 1");
 		
 		JLabel lblMapaWeb = new JLabel("Mapa web");
 		lblMapaWeb.setFont(new Font("Georgia", Font.BOLD, 10));
-		panel_info.add(lblMapaWeb, "cell 2 3");
+		panel_info.add(lblMapaWeb, "cell 4 1");
 		panel_breadcrumb.setLayout(new MigLayout("", "[4px]", "[14px]"));
-		
-		JLabel lblNewLabel_3 = new JLabel("");
-		//lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Roger\\workspace\\Arbre\\res\\logopie.gif"));
-		lblNewLabel_3.setIcon(new ImageIcon("res\\logopie.gif"));
-		panel_bottom_logo.add(lblNewLabel_3);
 		panel_title.setLayout(new MigLayout("", "[450px]", "[41px][31px]"));
 		
 		JLabel lblNewLabel_1 = new JLabel("Sistema d'informaci\u00F3 territorial");
@@ -267,4 +300,6 @@ public class View {
 	public void showErrorFileNotFound(String path) {
 		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no existeix", "Error", JOptionPane.ERROR_MESSAGE);
 	}
+
+	
 }

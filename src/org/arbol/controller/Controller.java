@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 import org.arbol.dao.Model;
 import org.arbol.domain.Node;
@@ -24,6 +26,7 @@ public class Controller {
 		myModel = m;
 		myView.addFileListener(new FileListener());
 		myView.addBreadcrumbListener(new BreadCrumbListener());
+		myView.addLinkListener(new LinkListener());
 		
 		initalizeFirstLevel();
 	}
@@ -64,6 +67,8 @@ public class Controller {
 							myView.showErrorFileNotFound(n.getLink());	
 						}
 					}
+					
+					
 				}
 				else {
 					// Hem clicat al panel_files
@@ -118,15 +123,22 @@ public class Controller {
 			String source = e.getComponent().getClass().getName();
 			if (source.equals("javax.swing.JLabel")) {
 				JLabel label = (JLabel)e.getSource();
-				Node n = myModel.getNodeNamed(label.getText());
-				if (n.getExtension_id() == null) {
-					ArrayList<Node> files = n.getChildren();
-					myModel.createPathOf(label.getText());
+				if (label.getText().equals("INICI ")) {
+					ArrayList<Node> files = myModel.getFirstLevel();
 					myView.drawChildren(files);
-					myView.drawBreadcrumb(myModel.drawPath());
+					myView.drawBreadcrumb(myModel.drawEmptyPath());
 				}
 				else {
-					System.out.println("Es un fitxer!");
+					Node n = myModel.getNodeNamed(label.getText());
+					if (n.getExtension_id() == null) {
+						ArrayList<Node> files = n.getChildren();
+						myModel.createPathOf(label.getText());
+						myView.drawChildren(files);
+						myView.drawBreadcrumb(myModel.drawPath());
+					}
+					else {
+						System.out.println("Es un fitxer!");
+					}
 				}
 			}
 		}
@@ -153,6 +165,27 @@ public class Controller {
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
 			
+		}
+		
+	}
+	
+	class LinkListener implements HyperlinkListener {
+
+		@Override
+		public void hyperlinkUpdate(HyperlinkEvent hle) {  
+			if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) {  
+				File file = new File(hle.getDescription());
+				try {
+					System.out.println(hle.getDescription());
+					Desktop.getDesktop().open(file);
+				} 
+				catch (IOException e1) {
+					e1.printStackTrace();							
+				}
+				catch (IllegalArgumentException e2) {
+					myView.showErrorFileNotFound(hle.getDescription());	
+				}
+			}  
 		}
 		
 	}
