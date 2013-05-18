@@ -183,7 +183,7 @@ public class View {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(21)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, 888, GroupLayout.PREFERRED_SIZE)
+								.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, 899, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
@@ -221,12 +221,13 @@ public class View {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-								.addComponent(panel_files, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
+								.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+								.addComponent(panel_files, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
 							.addGap(67))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+							.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
@@ -259,9 +260,11 @@ public class View {
 		panel_info.add(lblNewLabel_5, "cell 6 0,alignx left,aligny top");
 		
 		JLabel lblNewLabel_3 = new JLabel("Consultor SIG: Carlos L\u00F3pez");
+		lblNewLabel_3.setFont(new Font("Georgia", Font.PLAIN, 10));
 		panel_info.add(lblNewLabel_3, "cell 8 0");
 		
 		JLabel lblNewLabel_9 = new JLabel("Disseny web: mm!");
+		lblNewLabel_9.setFont(new Font("Georgia", Font.PLAIN, 10));
 		panel_info.add(lblNewLabel_9, "cell 10 0");
 		
 		JLabel lblNewLabel_7 = new JLabel("Av\u00EDs legal");
