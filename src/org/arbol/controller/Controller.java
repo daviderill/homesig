@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
@@ -35,6 +34,27 @@ public class Controller {
 		myModel.createTree();
 		ArrayList<Node> files = myModel.getFirstLevel();
 		myView.drawChildren(files);
+		myView.drawBreadcrumb(myModel.drawPath());
+	}
+	
+	private void drawDirectory(Node n) {
+		ArrayList<Node> files = n.getChildren();
+		myModel.createPathOf(n.getName());
+		myView.drawChildren(files);
+		myView.drawBreadcrumb(myModel.drawPath());
+	}
+	
+	private void openFile(Node n) {
+		File file = new File(n.getLink());
+		try {
+			Desktop.getDesktop().open(file);
+		} 
+		catch (IOException e1) {
+			e1.printStackTrace();							
+		}
+		catch (IllegalArgumentException e2) {
+			myView.showErrorFileNotFound(n.getLink());	
+		}
 	}
 	
 	class FileListener implements MouseListener {
@@ -49,26 +69,11 @@ public class Controller {
 					JLabel label = (JLabel)e.getSource();
 					Node n = myModel.getNodeNamed(label.getText());
 					if (n.getExtension_id() == null) {
-						ArrayList<Node> files = n.getChildren();
-						myModel.createPathOf(label.getText());
-						myView.drawChildren(files);
-						myView.drawBreadcrumb(myModel.drawPath());
+						drawDirectory(n);
 					}
 					else {
-						File file = new File(n.getLink());
-						System.out.println(file.getAbsolutePath());
-						try {
-							Desktop.getDesktop().open(file);
-						} 
-						catch (IOException e1) {
-							e1.printStackTrace();							
-						}
-						catch (IllegalArgumentException e2) {
-							myView.showErrorFileNotFound(n.getLink());	
-						}
+						openFile(n);
 					}
-					
-					
 				}
 				else {
 					// Hem clicat al panel_files
@@ -88,33 +93,29 @@ public class Controller {
 				myView.drawChildren(files);
 				myView.drawBreadcrumb(myModel.drawPath());
 			}
+			else if (e.getClickCount() == 1 && e.getButton() == MouseEvent.BUTTON1) {
+				String source = e.getComponent().getClass().getName();
+				if (source.equals("javax.swing.JLabel")) {
+					JLabel label = (JLabel)e.getSource();
+					myView.paintComponent(label);
+				}
+			}
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseEntered(MouseEvent e) {}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseExited(MouseEvent e) {}
 
 		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mousePressed(MouseEvent e) {}
 
 		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseReleased(MouseEvent e) {}
 		
 	}
+	
 	
 	class BreadCrumbListener implements MouseListener {
 
@@ -131,41 +132,25 @@ public class Controller {
 				else {
 					Node n = myModel.getNodeNamed(label.getText());
 					if (n.getExtension_id() == null) {
-						ArrayList<Node> files = n.getChildren();
-						myModel.createPathOf(label.getText());
-						myView.drawChildren(files);
-						myView.drawBreadcrumb(myModel.drawPath());
+						drawDirectory(n);
 					}
 					else {
-						System.out.println("Es un fitxer!");
 					}
 				}
 			}
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseEntered(MouseEvent e) {}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseExited(MouseEvent e) {}
 
 		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mousePressed(MouseEvent e) {}
 
 		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseReleased(MouseEvent e) {}
 		
 	}
 	
@@ -176,8 +161,13 @@ public class Controller {
 			if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) {  
 				File file = new File(hle.getDescription());
 				try {
-					System.out.println(hle.getDescription());
-					Desktop.getDesktop().open(file);
+					if (file.isFile()) {
+						Desktop.getDesktop().open(file);
+					}
+					else {
+						Node n = myModel.getNodeNamed(file.getName());
+						drawDirectory(n);
+					}
 				} 
 				catch (IOException e1) {
 					e1.printStackTrace();							

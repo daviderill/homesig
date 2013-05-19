@@ -5,13 +5,17 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,38 +23,88 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
 import javax.swing.event.HyperlinkListener;
 
 import net.miginfocom.swing.MigLayout;
 
 import org.arbol.domain.Node;
+import java.awt.Toolkit;
 
-public class View {
+public class View extends JFrame{
 
 	public JFrame frame;
 	private JPanel panel_files;
 	private JPanel panel_breadcrumb;
-	private JEditorPane newsContent;
+	private JPanel panel_news_content;
+	private JEditorPane news1;
+	private JEditorPane news2;
+	private JEditorPane news3;
 	ImageIcon icon_folder = new ImageIcon("res\\Imagen 3-petit.png");
 	ImageIcon icon_pdf = new ImageIcon("res\\pdf-petit.png");
+	ImageIcon icon_folder_selected = new ImageIcon("res\\Imagen 3-petit-seleccionat.png");
+	ImageIcon icon_pdf_selected = new ImageIcon("res\\pdf-petit-seleccionat.png");
 	private MouseListener listener;
 	private MouseListener breadcrumb_listener;
 	private HyperlinkListener link_listener;
+	private String selectedLabel;
+	private ArrayList<Node> currentFiles;
 
 	public View() {
 		initialize();
-		
+		setLookAndFeel();
+		createFakeNews();
+	}
+	
+	private void setLookAndFeel() {
+		List<Image> icons  = new ArrayList<Image>();
+		icons.add(new ImageIcon("res\\icon256.png").getImage());
+	    icons.add(new ImageIcon("res\\icon48.png").getImage());
+	    icons.add(new ImageIcon("res\\icon32.png").getImage());
+	    icons.add(new ImageIcon("res\\icon24.png").getImage());
+	    icons.add(new ImageIcon("res\\icon16.png").getImage());
+	    frame.setIconImages(icons);
+		try
+		{
+		    JFrame.setDefaultLookAndFeelDecorated(true);
+		    JDialog.setDefaultLookAndFeelDecorated(true);
+		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}
+		catch (Exception e)
+		{
+		    e.printStackTrace();
+		}
+	}
+
+	private void createFakeNews() {
 		String text = "Aquí tenim una notícia de prova amb un " +
 				"enllaç al fitxer <a href='doc\\cadastre.pdf'> Cadastre ";
 
-		newsContent.setContentType("text/html");
-		newsContent.setText(text);
-		newsContent.setEditable(false);  
-		newsContent.setOpaque(false);
-		newsContent.setFont(new Font("Georgia", Font.PLAIN, 13));
+		news1.setContentType("text/html");
+		news1.setText(text);
+		news1.setEditable(false);  
+		news1.setOpaque(false);
+		news1.setFont(new Font("Georgia", Font.PLAIN, 13));
+		
+		text = "Aquí tenim un text de prova amb un " +
+				"enllaç al directori <a href='Documentació'> Documentació ";
+		news2.setContentType("text/html");
+		news2.setText(text);
+		news2.setEditable(false);  
+		news2.setOpaque(false);
+		news2.setFont(new Font("Georgia", Font.PLAIN, 13));
+		
+		text = "Aquesta és una notícia sense cap enllaç però que mostra <b>negreta</b> i <i>cursiva</i> per " +
+				"ressaltar paraules";
+		news3.setContentType("text/html");
+		news3.setText(text);
+		news3.setEditable(false);  
+		news3.setOpaque(false);
+		news3.setFont(new Font("Georgia", Font.PLAIN, 13));
 		
 	}
-	
+
 	protected ImageIcon createImageIcon(String path, String description) {
 		java.net.URL imgURL = getClass().getResource(path);
 		if (imgURL != null) {
@@ -73,10 +127,13 @@ public class View {
 	
 	public void addLinkListener(HyperlinkListener linkListener) {
 		link_listener = linkListener;
-		newsContent.addHyperlinkListener(link_listener); 
+		news1.addHyperlinkListener(link_listener);
+		news2.addHyperlinkListener(link_listener); 
+		news3.addHyperlinkListener(link_listener); 
 	}
 	
 	public void drawChildren(ArrayList<Node> files) {
+		currentFiles = files;
 		panel_files.removeAll();
 		panel_files.updateUI();
 		for (int i=0; i < files.size(); ++i) {
@@ -88,16 +145,30 @@ public class View {
 				}
 				else {
 					label_file = new JLabel(file.getName(), icon_pdf, SwingConstants.CENTER);
+					if (label_file.getText().equals(selectedLabel)) {
+						label_file.setIcon(icon_pdf_selected);
+					}
 				}
 			}
 			else {
 				label_file = new JLabel(file.getName(), icon_folder, SwingConstants.CENTER);
+				if (label_file.getText().equals(selectedLabel)) {
+					label_file.setIcon(icon_folder_selected);
+				}
 			}
 			label_file.setHorizontalTextPosition(SwingConstants.CENTER);
 			label_file.setVerticalTextPosition(JLabel.BOTTOM);
 			label_file.setFont(new Font("Georgia", Font.PLAIN, 13));
 			label_file.setPreferredSize(new Dimension(180, 90));
 			label_file.addMouseListener(listener);
+			
+			if (label_file.getText().equals(selectedLabel)) {
+				//System.out.println("Iguals");
+				Border border = BorderFactory.createLineBorder(Color.gray);
+				label_file.setBorder(border);
+				label_file.setBackground(new Color(200,200,200));
+				label_file.setOpaque(true);
+			}
 			if (file.getTooltip() != null) {
 				label_file.setToolTipText(file.getTooltip());
 			}
@@ -132,6 +203,7 @@ public class View {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		//frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Roger\\workspace\\arbol2\\res\\pdf-petit-seleccionat.png"));
 		frame.setBounds(0, 0, 1240, 700);
 		frame.setTitle("Sistema d'informaci\u00F3 territorial");
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
@@ -165,7 +237,8 @@ public class View {
 		JPanel panel_info = new JPanel();
 		panel_info.setFont(new Font("Gentium Book Basic", Font.PLAIN, 10));
 		
-		JPanel panel_news_content = new JPanel();
+		panel_news_content = new JPanel();
+		panel_news_content.setBackground(Color.WHITE);
 		
 		JPanel panel_links_content = new JPanel();
 		
@@ -219,34 +292,50 @@ public class View {
 								.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-								.addComponent(panel_files, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
-							.addGap(67))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+						.addComponent(panel_files, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
+					.addGap(67)
 					.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		
-		newsContent = new JEditorPane();
+		news1 = new JEditorPane();
+		
+		news2 = new JEditorPane();
+		news2.setText("Aqu\u00ED tenim una not\u00EDcia de prova amb un enlla\u00E7 al fitxer <a href='doc\\cadastre.pdf'> Cadastre ");
+		news2.setOpaque(false);
+		news2.setFont(new Font("Georgia", Font.PLAIN, 13));
+		news2.setEditable(false);
+		news2.setContentType("text/html");
+		
+		news3 = new JEditorPane();
+		news3.setText("Aqu\u00ED tenim una not\u00EDcia de prova amb un enlla\u00E7 al fitxer <a href='doc\\cadastre.pdf'> Cadastre ");
+		news3.setOpaque(false);
+		news3.setFont(new Font("Georgia", Font.PLAIN, 13));
+		news3.setEditable(false);
+		news3.setContentType("text/html");
 		GroupLayout gl_panel_news_content = new GroupLayout(panel_news_content);
 		gl_panel_news_content.setHorizontalGroup(
-			gl_panel_news_content.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel_news_content.createSequentialGroup()
+			gl_panel_news_content.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_news_content.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(newsContent, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+					.addGroup(gl_panel_news_content.createParallelGroup(Alignment.LEADING)
+						.addComponent(news1, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+						.addComponent(news2, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+						.addComponent(news3, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		gl_panel_news_content.setVerticalGroup(
 			gl_panel_news_content.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_news_content.createSequentialGroup()
-					.addGap(47)
-					.addComponent(newsContent, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(232, Short.MAX_VALUE))
+					.addContainerGap()
+					.addComponent(news1, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(news2, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(news3, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(64, Short.MAX_VALUE))
 		);
 		panel_news_content.setLayout(gl_panel_news_content);
 		panel_info.setLayout(new MigLayout("", "[55px][5px][40px][5px][30px][8px][90px][6px][46px][6px][]", "[14px][]"));
@@ -302,6 +391,14 @@ public class View {
 
 	public void showErrorFileNotFound(String path) {
 		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no existeix", "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	public void paintComponent(JLabel label) {
+		for (Component c : panel_files.getComponents()) {
+			if (c.equals(label)) {
+				selectedLabel = label.getText();
+				drawChildren(currentFiles);
+			}
+		}
 	}
 
 	

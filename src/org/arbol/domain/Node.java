@@ -23,10 +23,9 @@ public class Node {
 		this.tooltip = tooltip;
 		extractInfoFromId(id);
 		extractInfoFromLink(link);
-		children = new ArrayList<Node>();
-		
-		
+		children = new ArrayList<Node>();	
 	}
+	
 	private void extractInfoFromId(String id) {
 		String[] id_parts = id.split("_");	
 		level = id_parts.length;
