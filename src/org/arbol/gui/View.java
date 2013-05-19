@@ -5,9 +5,11 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +28,11 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.text.html.HTMLDocument;
 
 import net.miginfocom.swing.MigLayout;
 
 import org.arbol.domain.Node;
-import java.awt.Toolkit;
 
 public class View extends JFrame{
 
@@ -41,15 +43,14 @@ public class View extends JFrame{
 	private JEditorPane news1;
 	private JEditorPane news2;
 	private JEditorPane news3;
-	ImageIcon icon_folder = new ImageIcon("res\\Imagen 3-petit.png");
-	ImageIcon icon_pdf = new ImageIcon("res\\pdf-petit.png");
-	ImageIcon icon_folder_selected = new ImageIcon("res\\Imagen 3-petit-seleccionat.png");
-	ImageIcon icon_pdf_selected = new ImageIcon("res\\pdf-petit-seleccionat.png");
+	private String iconPath = "res\\ico_";
 	private MouseListener listener;
 	private MouseListener breadcrumb_listener;
 	private HyperlinkListener link_listener;
 	private String selectedLabel;
 	private ArrayList<Node> currentFiles;
+	private static final int LABEL_WIDTH = 180;
+	private static final int LABEL_HEIGHT = 90;
 
 	public View() {
 		initialize();
@@ -78,43 +79,40 @@ public class View extends JFrame{
 	}
 
 	private void createFakeNews() {
+		
+		Font font = new Font("Georgia", Font.PLAIN, 13);
+	    String bodyRule = "body { font-family: " + font.getFamily() + "; " +
+	            "font-size: " + font.getSize() + "pt; }";
+		
 		String text = "Aquí tenim una notícia de prova amb un " +
 				"enllaç al fitxer <a href='doc\\cadastre.pdf'> Cadastre ";
 
+		((HTMLDocument)news1.getDocument()).getStyleSheet().addRule(bodyRule);
 		news1.setContentType("text/html");
 		news1.setText(text);
 		news1.setEditable(false);  
 		news1.setOpaque(false);
-		news1.setFont(new Font("Georgia", Font.PLAIN, 13));
 		
+		((HTMLDocument)news2.getDocument()).getStyleSheet().addRule(bodyRule);
 		text = "Aquí tenim un text de prova amb un " +
 				"enllaç al directori <a href='Documentació'> Documentació ";
 		news2.setContentType("text/html");
 		news2.setText(text);
 		news2.setEditable(false);  
 		news2.setOpaque(false);
-		news2.setFont(new Font("Georgia", Font.PLAIN, 13));
 		
+		
+		
+	    ((HTMLDocument)news3.getDocument()).getStyleSheet().addRule(bodyRule);
 		text = "Aquesta és una notícia sense cap enllaç però que mostra <b>negreta</b> i <i>cursiva</i> per " +
 				"ressaltar paraules";
 		news3.setContentType("text/html");
 		news3.setText(text);
 		news3.setEditable(false);  
 		news3.setOpaque(false);
-		news3.setFont(new Font("Georgia", Font.PLAIN, 13));
+		
 		
 	}
-
-	protected ImageIcon createImageIcon(String path, String description) {
-		java.net.URL imgURL = getClass().getResource(path);
-		if (imgURL != null) {
-			return new ImageIcon(imgURL, description);
-		} 
-		else {
-			System.err.println("Couldn't find file: " + path);
-			return null;
-		}
-}
 	
 	public void addFileListener(MouseListener listenForFileClick){
 		listener = listenForFileClick;
@@ -138,42 +136,49 @@ public class View extends JFrame{
 		panel_files.updateUI();
 		for (int i=0; i < files.size(); ++i) {
 			final Node file = files.get(i);
-			JLabel label_file = null;
-			if (file.getExtension_id() != null) {
-				if (file.getExtension_id().equals("dir")) {
-					label_file = new JLabel(file.getName(), icon_folder, SwingConstants.CENTER);
-				}
-				else {
-					label_file = new JLabel(file.getName(), icon_pdf, SwingConstants.CENTER);
-					if (label_file.getText().equals(selectedLabel)) {
-						label_file.setIcon(icon_pdf_selected);
-					}
-				}
-			}
-			else {
-				label_file = new JLabel(file.getName(), icon_folder, SwingConstants.CENTER);
-				if (label_file.getText().equals(selectedLabel)) {
-					label_file.setIcon(icon_folder_selected);
-				}
-			}
+			JLabel label_file = new JLabel(file.getName(),SwingConstants.CENTER);
 			label_file.setHorizontalTextPosition(SwingConstants.CENTER);
 			label_file.setVerticalTextPosition(JLabel.BOTTOM);
-			label_file.setFont(new Font("Georgia", Font.PLAIN, 13));
-			label_file.setPreferredSize(new Dimension(180, 90));
-			label_file.addMouseListener(listener);
+			Font f = new Font("Georgia", Font.PLAIN, 13);
+			label_file.setFont(f);
 			
+			String extension = file.getExtension_id();
+			if (extension == null) extension = "dir";		
+			String path = iconPath + extension;
 			if (label_file.getText().equals(selectedLabel)) {
-				//System.out.println("Iguals");
+				path += "_sel";
+			}
+			path += ".png";
+			ImageIcon icon = new ImageIcon(iconPath + "default.png");	
+			if (new File(path).isFile()) {
+				icon = new ImageIcon(path);
+			}
+			label_file.setIcon(icon);
+
+			FontMetrics fontMetrics = label_file.getFontMetrics(label_file.getFont());
+			int text_lenght = fontMetrics.stringWidth(label_file.getText());
+		
+			if (label_file.getText().equals(selectedLabel)) {
 				Border border = BorderFactory.createLineBorder(Color.gray);
 				label_file.setBorder(border);
 				label_file.setBackground(new Color(200,200,200));
 				label_file.setOpaque(true);
 			}
+			if (text_lenght > LABEL_WIDTH) {
+				int additional_lines = ((text_lenght - LABEL_WIDTH) / LABEL_WIDTH) + 1;
+				label_file.setText("<html><center>" + label_file.getText() + "</center></html>");
+				label_file.setPreferredSize(new Dimension(LABEL_WIDTH, LABEL_HEIGHT+fontMetrics.getHeight()*additional_lines));
+			}
+			else {
+				label_file.setPreferredSize(new Dimension(LABEL_WIDTH, LABEL_HEIGHT));
+			}
+			
+			label_file.addMouseListener(listener);
+
 			if (file.getTooltip() != null) {
 				label_file.setToolTipText(file.getTooltip());
 			}
-			//Border border = BorderFactory.createLineBorder(Color.blue);
-			//label_file.setBorder(border);
+
 			panel_files.add(label_file);
 		}
 		
@@ -263,10 +268,10 @@ public class View extends JFrame{
 										.addComponent(panel_news_content, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
 									.addGap(30)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(panel_breadcrumb, GroupLayout.PREFERRED_SIZE, 458, GroupLayout.PREFERRED_SIZE)
+										.addComponent(panel_breadcrumb, GroupLayout.PREFERRED_SIZE, 458, Short.MAX_VALUE)
 										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 											.addComponent(panel_title, GroupLayout.PREFERRED_SIZE, 576, GroupLayout.PREFERRED_SIZE)
-											.addComponent(panel_files, GroupLayout.PREFERRED_SIZE, 751, GroupLayout.PREFERRED_SIZE)))))))
+											.addComponent(panel_files, GroupLayout.PREFERRED_SIZE, 751, Short.MAX_VALUE)))))))
 					.addGap(27)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(panel_links_content, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
@@ -301,6 +306,7 @@ public class View extends JFrame{
 		);
 		
 		news1 = new JEditorPane();
+		news1.setContentType("text/html");
 		
 		news2 = new JEditorPane();
 		news2.setText("Aqu\u00ED tenim una not\u00EDcia de prova amb un enlla\u00E7 al fitxer <a href='doc\\cadastre.pdf'> Cadastre ");
@@ -401,5 +407,8 @@ public class View extends JFrame{
 		}
 	}
 
+	public void setSelectedLabel(String text) {
+		selectedLabel = text;
+	}
 	
 }

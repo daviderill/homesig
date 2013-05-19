@@ -66,8 +66,12 @@ public class Controller {
 			if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
 				String source = e.getComponent().getClass().getName();
 				if (source.equals("javax.swing.JLabel")) {
-					JLabel label = (JLabel)e.getSource();
-					Node n = myModel.getNodeNamed(label.getText());
+					JLabel label = (JLabel)e.getSource();		
+					String label_text = label.getText();
+					if (label_text.contains("<html>")) {
+						label_text = label_text.substring(14, label_text.length() - 16);
+					}
+					Node n = myModel.getNodeNamed(label_text);
 					if (n.getExtension_id() == null) {
 						drawDirectory(n);
 					}
@@ -97,6 +101,11 @@ public class Controller {
 				String source = e.getComponent().getClass().getName();
 				if (source.equals("javax.swing.JLabel")) {
 					JLabel label = (JLabel)e.getSource();
+					String label_text = label.getText();
+					if (label_text.contains("<html>")) {
+						label_text = label_text.substring(14, label_text.length() - 16);
+						label.setText(label_text);
+					}
 					myView.paintComponent(label);
 				}
 			}
@@ -162,6 +171,9 @@ public class Controller {
 				File file = new File(hle.getDescription());
 				try {
 					if (file.isFile()) {
+						Node n = myModel.getNodeWithLink(hle.getDescription());
+						myView.setSelectedLabel(n.getName());
+						drawDirectory(n.getParent());
 						Desktop.getDesktop().open(file);
 					}
 					else {

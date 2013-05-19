@@ -18,7 +18,7 @@ public class Model {
 	private ArrayList<Node> currentPath;
 	
 	public Model() {
-		conn = DataBaseConnection.connect("config/arbol2-new.sqlite");
+		conn = DataBaseConnection.connect("config/arbol2.sqlite");
 		nodes = new ArrayList<Node>();
 		currentPath = new ArrayList<Node>();
 	}
@@ -120,6 +120,15 @@ public class Model {
 		}
 		return null;
 	}
+	
+	public Node getNodeWithLink(String link) {
+		for (int i=0; i < nodes.size(); ++i) {
+			if (nodes.get(i).getLink() != null) {
+				if (nodes.get(i).getLink().equals(link)) return nodes.get(i);
+			}
+		}
+		return null;
+	}
 
 	public void addToPath(String fileName) {
 		if (currentPath.isEmpty()) {
@@ -183,5 +192,8 @@ public class Model {
 		res[0] = "INICI ";
 		return res;
 	}
+
+
+	
 
 }
