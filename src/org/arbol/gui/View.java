@@ -55,6 +55,7 @@ public class View extends JFrame{
 
 	public View() {
 		initialize();
+		frame.setLocationRelativeTo(null);
 		setLookAndFeel();
 		createFakeNews();
 	}
