@@ -36,6 +36,7 @@ import org.arbol.domain.Node;
 
 public class View extends JFrame{
 
+	private static final long serialVersionUID = 6859743538922139519L;
 	public JFrame frame;
 	private JPanel panel_files;
 	private JPanel panel_breadcrumb;
@@ -130,11 +131,15 @@ public class View extends JFrame{
 		news3.addHyperlinkListener(link_listener); 
 	}
 	
+	
 	public void drawChildren(ArrayList<Node> files) {
+		
 		currentFiles = files;
 		panel_files.removeAll();
 		panel_files.updateUI();
+		
 		for (int i=0; i < files.size(); ++i) {
+			
 			final Node file = files.get(i);
 			JLabel label_file = new JLabel(file.getName(),SwingConstants.CENTER);
 			label_file.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -180,9 +185,11 @@ public class View extends JFrame{
 			}
 
 			panel_files.add(label_file);
+			
 		}
 		
 	}
+	
 	
 	public void drawBreadcrumb(String[] drawPath) {
 		panel_breadcrumb.removeAll();
@@ -207,8 +214,8 @@ public class View extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		frame = new JFrame();
-		//frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Roger\\workspace\\arbol2\\res\\pdf-petit-seleccionat.png"));
 		frame.setBounds(0, 0, 1240, 700);
 		frame.setTitle("Sistema d'informaci\u00F3 territorial");
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
@@ -246,6 +253,7 @@ public class View extends JFrame{
 		panel_news_content.setBackground(Color.WHITE);
 		
 		JPanel panel_links_content = new JPanel();
+		panel_links_content.setBackground(Color.WHITE);
 		
 		panel_breadcrumb = new JPanel();
 		panel_breadcrumb.setBorder(null);
@@ -265,13 +273,12 @@ public class View extends JFrame{
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-										.addComponent(panel_news_content, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
-									.addGap(30)
+										.addComponent(panel_news_content, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE))
+									.addGap(18)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(panel_breadcrumb, GroupLayout.PREFERRED_SIZE, 458, Short.MAX_VALUE)
-										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-											.addComponent(panel_title, GroupLayout.PREFERRED_SIZE, 576, GroupLayout.PREFERRED_SIZE)
-											.addComponent(panel_files, GroupLayout.PREFERRED_SIZE, 751, Short.MAX_VALUE)))))))
+										.addComponent(panel_breadcrumb, GroupLayout.PREFERRED_SIZE, 781, Short.MAX_VALUE)
+										.addComponent(panel_title, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 576, GroupLayout.PREFERRED_SIZE)
+										.addComponent(panel_files, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 781, Short.MAX_VALUE))))))
 					.addGap(27)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(panel_links_content, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
@@ -297,9 +304,9 @@ public class View extends JFrame{
 								.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-						.addComponent(panel_files, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
+						.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+						.addComponent(panel_files, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
 					.addGap(67)
 					.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -324,13 +331,9 @@ public class View extends JFrame{
 		GroupLayout gl_panel_news_content = new GroupLayout(panel_news_content);
 		gl_panel_news_content.setHorizontalGroup(
 			gl_panel_news_content.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_news_content.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_news_content.createParallelGroup(Alignment.LEADING)
-						.addComponent(news1, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-						.addComponent(news2, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-						.addComponent(news3, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+				.addComponent(news3, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+				.addComponent(news1, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+				.addComponent(news2, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
 		);
 		gl_panel_news_content.setVerticalGroup(
 			gl_panel_news_content.createParallelGroup(Alignment.LEADING)
@@ -341,7 +344,7 @@ public class View extends JFrame{
 					.addComponent(news2, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(news3, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(64, Short.MAX_VALUE))
+					.addContainerGap(75, Short.MAX_VALUE))
 		);
 		panel_news_content.setLayout(gl_panel_news_content);
 		panel_info.setLayout(new MigLayout("", "[55px][5px][40px][5px][30px][8px][90px][6px][46px][6px][]", "[14px][]"));
@@ -389,15 +392,16 @@ public class View extends JFrame{
 		panel_title.add(lblNewLabel_2, "cell 0 1,alignx left,aligny top");
 		
 		JLabel lblNewLabel = new JLabel("");
-		//lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Roger\\workspace\\arbol2\\res\\logo2.png"));
 		lblNewLabel.setIcon(new ImageIcon("res\\logo2.png"));
 		panel_top_logo.add(lblNewLabel);
 		frame.getContentPane().setLayout(groupLayout);
-	}
+		}
 
+	
 	public void showErrorFileNotFound(String path) {
-		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no existeix", "Error", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no existeix", "Arbol", JOptionPane.WARNING_MESSAGE);
 	}
+	
 	public void paintComponent(JLabel label) {
 		for (Component c : panel_files.getComponents()) {
 			if (c.equals(label)) {

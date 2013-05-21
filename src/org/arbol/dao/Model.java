@@ -1,6 +1,8 @@
 package org.arbol.dao;
 
+import java.io.File;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,20 +11,57 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import org.arbol.domain.Node;
-import org.arbol.util.DataBaseConnection;
+import org.arbol.util.Utils;
+
 
 public class Model {
+	
 	private Connection conn = null;
 	// Llista on guardem tots els fitxers que llegirem
 	private ArrayList<Node> nodes;
 	private ArrayList<Node> currentPath;
 	
 	public Model() {
-		conn = DataBaseConnection.connect("config/arbol2.sqlite");
+		
+        // Get log file
+        Utils.getLogger();		
+		if (!setConnection("config/arbol2.sqlite")){
+			System.exit(-1);
+		}
 		nodes = new ArrayList<Node>();
 		currentPath = new ArrayList<Node>();
+		
 	}
 	
+	
+	 /**
+	  * Connecta a una base de dades amb la ruta passada com a argument
+	  * Si el arxiu no existeix, el crea
+	  * @param ruta - La ruta de la DB a connectar.
+	  * @return La connexió a la ruta.
+	  */
+    public boolean setConnection(String fileName) {
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            File file = new File(fileName);
+            if (file.exists()) {
+            	conn = DriverManager.getConnection("jdbc:sqlite:" + fileName);
+                return true;
+            } else {
+                Utils.showError("File not found", fileName, "Arbol");
+                return false;
+            }
+        } catch (SQLException e) {
+            Utils.showError("Database Error Connection", e.getMessage(), "Arbol");
+            return false;
+        } catch (ClassNotFoundException e) {
+            Utils.showError("Database Error Connection", "ClassNotFoundException", "Arbol");
+            return false;
+        }
+
+    }  
+    
 	
 	public ArrayList<Node> getCurrentPath() {
 		return currentPath;
@@ -49,19 +88,17 @@ public class Model {
 
 
 	public void createTree() {
+		
 		Statement stat = null;
+		String sql = "select * from main;";
 		try {
 			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from main2;");
-			
+			ResultSet rs = stat.executeQuery(sql);
 		    while (rs.next()) {
 		    	// llegim el fitxer i l'afegim a la nostra llista de fitxers
-		    	Node n = new Node(rs.getString("id"),rs.getString("name"),rs.getString("link"),
-		    			rs.getString("tooltip"));
+		    	Node n = new Node(rs.getString("id"),rs.getString("name"),rs.getString("link"),	rs.getString("tooltip"));
 		    	nodes.add(n);
-		    	
 		    	// Assignem el fill a la llista de fills del seu pare
-		    	
 		    }
 		    for (int i=0; i < nodes.size(); ++i) {
 		    	if (nodes.get(i).getLevel() > 1) {
@@ -72,10 +109,11 @@ public class Model {
 		    rs.close();
 		    conn.close();
 		} catch (SQLException e1) {
-			
-			e1.printStackTrace();
+			Utils.showError(e1.getMessage(), sql, "");
 		}
+		
 	}
+	
 	
 	private void sortChildren() {
 		Collections.sort(nodes, new NodeComparator());
@@ -84,6 +122,7 @@ public class Model {
 		}
 	}
 
+	
 	public class NodeComparator implements Comparator<Node> {
 		@Override
 		public int compare(Node n1, Node n2) {
@@ -150,14 +189,6 @@ public class Model {
 	}
 
 
-	/*public String drawPath() {
-		String path = "/";
-		for (int i=0; i < currentPath.size(); ++i) {
-			path += currentPath.get(i).getName() + "/";
-		}
-		return path;
-	}*/
-
 	public String[] drawPath() {
 		String[] res = new String[currentPath.size()+1];
 		res[0] = "INICI ";
@@ -193,7 +224,5 @@ public class Model {
 		return res;
 	}
 
-
 	
-
 }

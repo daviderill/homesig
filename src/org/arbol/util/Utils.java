@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
+import java.security.CodeSource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.MissingResourceException;
@@ -30,7 +32,7 @@ public class Utils {
 
     	if (logger == null) {
             try {
-            	String folderRoot = new File(".").getCanonicalPath() + File.separator;            	
+            	String folderRoot = Utils.getAppPath();                	
                 String folder = folderRoot + LOG_FOLDER;
                 (new File(folder)).mkdirs();
                 String logFile = folder + "log_" + getCurrentTimeStamp() + ".log";
@@ -46,6 +48,23 @@ public class Utils {
         return logger;
 
     }
+    
+    
+    public static String getAppPath(){
+    	
+    	CodeSource codeSource = Utils.class.getProtectionDomain().getCodeSource();
+    	File jarFile;
+    	String appPath = "";
+    	try {
+    		jarFile = new File(codeSource.getLocation().toURI().getPath());
+    	   	appPath = jarFile.getParentFile().getPath() + File.separator;  
+    	}
+    	catch (URISyntaxException e) {
+    		e.printStackTrace();
+    	}
+    	return appPath;
+    	
+    }    
     
     
 	public static ResourceBundle getBundleText() {

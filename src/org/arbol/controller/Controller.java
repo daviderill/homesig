@@ -17,6 +17,7 @@ import org.arbol.gui.View;
 
 
 public class Controller {
+	
 	private View myView;
 	private Model myModel;
 	
@@ -26,7 +27,6 @@ public class Controller {
 		myView.addFileListener(new FileListener());
 		myView.addBreadcrumbListener(new BreadCrumbListener());
 		myView.addLinkListener(new LinkListener());
-		
 		initalizeFirstLevel();
 	}
 
@@ -178,7 +178,9 @@ public class Controller {
 					}
 					else {
 						Node n = myModel.getNodeNamed(file.getName());
-						drawDirectory(n);
+						if (n != null){
+							drawDirectory(n);
+						}
 					}
 				} 
 				catch (IOException e1) {
@@ -191,4 +193,5 @@ public class Controller {
 		}
 		
 	}
+	
 }
