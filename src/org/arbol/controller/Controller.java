@@ -15,7 +15,11 @@ import org.arbol.dao.Model;
 import org.arbol.domain.Node;
 import org.arbol.gui.View;
 
-
+/**
+ * Classe que té accés a la vista i al model. Ella crea els listeners, que assigna a la vista
+ * @author Roger Erill Carrera
+ *
+ */
 public class Controller {
 	
 	private View myView;
@@ -57,6 +61,11 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Classe que fa de listener pels fitxers
+	 * @author Roger Erill Carrera
+	 *
+	 */
 	class FileListener implements MouseListener {
 
 		@Override
@@ -68,6 +77,7 @@ public class Controller {
 				if (source.equals("javax.swing.JLabel")) {
 					JLabel label = (JLabel)e.getSource();		
 					String label_text = label.getText();
+					// Si el label conté html perquè el seu nom s'ha de truncar, li treiem
 					if (label_text.contains("<html>")) {
 						label_text = label_text.substring(14, label_text.length() - 16);
 					}
@@ -83,7 +93,7 @@ public class Controller {
 					// Hem clicat al panel_files
 				}
 			}
-			//Un click amb el botó dret
+			//Un click amb el botó dret, pugem un nivell de directori
 			else if (e.getButton() == MouseEvent.BUTTON3) {
 				myModel.removeLastPathNode();
 				Node newParent = myModel.getCurrentParent();
@@ -97,11 +107,13 @@ public class Controller {
 				myView.drawChildren(files);
 				myView.drawBreadcrumb(myModel.drawPath());
 			}
+			// Un clic de botó esquerre, seleccionem el fitxer
 			else if (e.getClickCount() == 1 && e.getButton() == MouseEvent.BUTTON1) {
 				String source = e.getComponent().getClass().getName();
 				if (source.equals("javax.swing.JLabel")) {
 					JLabel label = (JLabel)e.getSource();
 					String label_text = label.getText();
+					// Si el label conté html perquè el seu nom s'ha de truncar, li treiem
 					if (label_text.contains("<html>")) {
 						label_text = label_text.substring(14, label_text.length() - 16);
 						label.setText(label_text);
@@ -125,7 +137,11 @@ public class Controller {
 		
 	}
 	
-	
+	/**
+	 * Classe que fa de listener pels labels del breadcrumb
+	 * @author Roger Erill Carrera
+	 *
+	 */
 	class BreadCrumbListener implements MouseListener {
 
 		@Override
@@ -133,7 +149,7 @@ public class Controller {
 			String source = e.getComponent().getClass().getName();
 			if (source.equals("javax.swing.JLabel")) {
 				JLabel label = (JLabel)e.getSource();
-				if (label.getText().equals("INICI ")) {
+				if (label.getText().equals("Inici ")) {
 					ArrayList<Node> files = myModel.getFirstLevel();
 					myView.drawChildren(files);
 					myView.drawBreadcrumb(myModel.drawEmptyPath());
@@ -163,6 +179,11 @@ public class Controller {
 		
 	}
 	
+	/**
+	 * Classe que fa de listener pels links dins de les notícies
+	 * @author Roger Erill Carrera
+	 *
+	 */
 	class LinkListener implements HyperlinkListener {
 
 		@Override

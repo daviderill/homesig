@@ -37,7 +37,7 @@ public class Model {
 	 /**
 	  * Connecta a una base de dades amb la ruta passada com a argument
 	  * Si el arxiu no existeix, el crea
-	  * @param ruta - La ruta de la DB a connectar.
+	  * @param fileName - La ruta de la DB a connectar.
 	  * @return La connexió a la ruta.
 	  */
     public boolean setConnection(String fileName) {
@@ -86,7 +86,10 @@ public class Model {
 		}
 	}
 
-
+	/** 
+	 * Funció principal. Llegim de la base de dades i guardem a memòria els nodes i les seves
+	 * relacions paterno-filials
+	*/
 	public void createTree() {
 		
 		Statement stat = null;
@@ -98,13 +101,15 @@ public class Model {
 		    	// llegim el fitxer i l'afegim a la nostra llista de fitxers
 		    	Node n = new Node(rs.getString("id"),rs.getString("name"),rs.getString("link"),	rs.getString("tooltip"));
 		    	nodes.add(n);
-		    	// Assignem el fill a la llista de fills del seu pare
+		    	
 		    }
+		    // Assignem el fill a la llista de fills del seu pare
 		    for (int i=0; i < nodes.size(); ++i) {
 		    	if (nodes.get(i).getLevel() > 1) {
 		    		assignParent(nodes.get(i));
 		    	}
 		    }
+		    // Ordenem els fills segons la posició
 		    sortChildren();
 		    rs.close();
 		    conn.close();
@@ -114,7 +119,9 @@ public class Model {
 		
 	}
 	
-	
+	/**
+	 * Ordena els fills segons la posició que han de tenir
+	 */
 	private void sortChildren() {
 		Collections.sort(nodes, new NodeComparator());
 		for (int i=0; i < nodes.size(); ++i) {
@@ -122,7 +129,11 @@ public class Model {
 		}
 	}
 
-	
+	/** 
+	 * Classe que fa el comparador entre nodes
+	 * @author Roger Erill
+	 *
+	 */
 	public class NodeComparator implements Comparator<Node> {
 		@Override
 		public int compare(Node n1, Node n2) {
@@ -130,6 +141,10 @@ public class Model {
 		}
 	}
 
+	/**
+	 * 
+	 * @return Una llista de nodes que formen part del primer nivell de l'arbre
+	 */
 	public ArrayList<Node> getFirstLevel() {
 		ArrayList<Node> result = new ArrayList<Node>();
 		for (int i=0; i < nodes.size(); ++i) {
@@ -140,6 +155,11 @@ public class Model {
 		return result;
 	}
 	
+	/**
+	  * Donat un node children, busquem el seu pare i li assignem com a pare
+	  * i al seu pare com a fill
+	  * @param children - El node al qui busquem el pare per assignar-li com a fill.
+	  */ 
 	private void assignParent(Node children) {
 		for (int i=0; i < nodes.size(); ++i) {
 			if (nodes.get(i).getId().equals(children.getParent_id()) ) {
@@ -153,6 +173,11 @@ public class Model {
 		return nodes;
 	}
 	
+	/**
+	 * 
+	 * @param fileName nom del node
+	 * @return El node amb nom fileName
+	 */
 	public Node getNodeNamed(String fileName) {
 		for (int i=0; i < nodes.size(); ++i) {
 			if (nodes.get(i).getName().equals(fileName)) return nodes.get(i);
@@ -160,6 +185,11 @@ public class Model {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param link ruta del node
+	 * @return El node amb ruta link
+	 */
 	public Node getNodeWithLink(String link) {
 		for (int i=0; i < nodes.size(); ++i) {
 			if (nodes.get(i).getLink() != null) {
@@ -169,29 +199,13 @@ public class Model {
 		return null;
 	}
 
-	public void addToPath(String fileName) {
-		if (currentPath.isEmpty()) {
-			ArrayList<Node> candidatesToAdd = getFirstLevel();
-			for (int i=0; i < candidatesToAdd.size(); ++i) {
-				if (candidatesToAdd.get(i).getName().equals(fileName)) {
-					currentPath.add(candidatesToAdd.get(i));
-				}
-			}
-		}
-		else {
-			Node lastParent = currentPath.get(currentPath.size()-1);
-			for (int i=0; i < lastParent.getChildrenSize(); ++i) {
-				if (lastParent.getChildren().get(i).getName().equals(fileName)) {
-					currentPath.add(lastParent.getChildren().get(i));
-				}
-			}
-		}
-	}
-
-
+	/**
+	 * 
+	 * @return Array de Strings amb el nom dels nodes que formen part del current path
+	 */
 	public String[] drawPath() {
 		String[] res = new String[currentPath.size()+1];
-		res[0] = "INICI ";
+		res[0] = "Inici ";
 		for (int i=0; i < currentPath.size(); ++i) {
 			res[i+1] = currentPath.get(i).getName();
 		}
@@ -199,6 +213,10 @@ public class Model {
 	}
 
 
+	/**
+	 * Donat un nom de node, creem el path on estem actualment
+	 * @param text Nom del node a partir del qui crearem la ruta
+	 */
 	public void createPathOf(String text) {
 		Node n = getNodeNamed(text);
 		currentPath.clear();
@@ -220,7 +238,7 @@ public class Model {
 	public String[] drawEmptyPath() {
 		currentPath.clear();
 		String[] res = new String[1];
-		res[0] = "INICI ";
+		res[0] = "Inici ";
 		return res;
 	}
 

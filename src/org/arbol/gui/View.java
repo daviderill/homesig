@@ -34,6 +34,11 @@ import net.miginfocom.swing.MigLayout;
 
 import org.arbol.domain.Node;
 
+/**
+ * Classe que mostra un explorador de fitxers, i una secció de notícies i una d'enllaços
+ * @author Roger Erill Carrera
+ *
+ */
 public class View extends JFrame{
 
 	private static final long serialVersionUID = 6859743538922139519L;
@@ -41,17 +46,23 @@ public class View extends JFrame{
 	private JPanel panel_files;
 	private JPanel panel_breadcrumb;
 	private JPanel panel_news_content;
+	
 	private JEditorPane news1;
 	private JEditorPane news2;
 	private JEditorPane news3;
+	
 	private String iconPath = "res\\ico_";
+	private String selectedLabel;
+	
 	private MouseListener listener;
 	private MouseListener breadcrumb_listener;
 	private HyperlinkListener link_listener;
-	private String selectedLabel;
+	
 	private ArrayList<Node> currentFiles;
 	private static final int LABEL_WIDTH = 180;
 	private static final int LABEL_HEIGHT = 90;
+	private static final int FONT_SIZE = 11;
+	private static final Font FONT = new Font("Georgia", Font.PLAIN, FONT_SIZE);
 
 	public View() {
 		initialize();
@@ -82,9 +93,8 @@ public class View extends JFrame{
 
 	private void createFakeNews() {
 		
-		Font font = new Font("Georgia", Font.PLAIN, 13);
-	    String bodyRule = "body { font-family: " + font.getFamily() + "; " +
-	            "font-size: " + font.getSize() + "pt; }";
+	    String bodyRule = "body { font-family: " + FONT.getFamily() + "; " +
+	            "font-size: " + FONT.getSize() + "pt; }";
 		
 		String text = "Aquí tenim una notícia de prova amb un " +
 				"enllaç al fitxer <a href='doc\\cadastre.pdf'> Cadastre ";
@@ -132,7 +142,10 @@ public class View extends JFrame{
 		news3.addHyperlinkListener(link_listener); 
 	}
 	
-	
+	/**
+	 * Donats uns nodes files, dibuixar-los en el panell panel_files
+	 * @param files - Llista de nodes a dibuixar
+	 */
 	public void drawChildren(ArrayList<Node> files) {
 		
 		currentFiles = files;
@@ -145,31 +158,30 @@ public class View extends JFrame{
 			JLabel label_file = new JLabel(file.getName(),SwingConstants.CENTER);
 			label_file.setHorizontalTextPosition(SwingConstants.CENTER);
 			label_file.setVerticalTextPosition(JLabel.BOTTOM);
-			Font f = new Font("Georgia", Font.PLAIN, 13);
-			label_file.setFont(f);
+			label_file.setFont(FONT);
 			
 			String extension = file.getExtension_id();
 			if (extension == null) extension = "dir";		
-			String path = iconPath + extension;
-			if (label_file.getText().equals(selectedLabel)) {
-				path += "_sel";
-			}
-			path += ".png";
+			String path = iconPath + extension + ".png";
+			
+			// Creem una icona per defecte, i si el path de la imatge existeix, l'apliquem
 			ImageIcon icon = new ImageIcon(iconPath + "default.png");	
 			if (new File(path).isFile()) {
 				icon = new ImageIcon(path);
 			}
 			label_file.setIcon(icon);
-
+			
+			// Medim l'ample de la part escrita al label per saber si cal truncar-lo
 			FontMetrics fontMetrics = label_file.getFontMetrics(label_file.getFont());
 			int text_lenght = fontMetrics.stringWidth(label_file.getText());
-		
+			
 			if (label_file.getText().equals(selectedLabel)) {
 				Border border = BorderFactory.createLineBorder(Color.gray);
 				label_file.setBorder(border);
 				label_file.setBackground(new Color(200,200,200));
 				label_file.setOpaque(true);
 			}
+			// Si és massa llarg, trunquem fent servir html, que trunca pel millor lloc
 			if (text_lenght > LABEL_WIDTH) {
 				int additional_lines = ((text_lenght - LABEL_WIDTH) / LABEL_WIDTH) + 1;
 				label_file.setText("<html><center>" + label_file.getText() + "</center></html>");
@@ -195,19 +207,37 @@ public class View extends JFrame{
 	public void drawBreadcrumb(String[] drawPath) {
 		panel_breadcrumb.removeAll();
 		panel_breadcrumb.updateUI();
-		for (int i=0; i < drawPath.length; ++i) {
-			JLabel bread = new JLabel(drawPath[i], SwingConstants.LEFT);	
-			bread.addMouseListener(breadcrumb_listener);
-			bread.setFont(new Font("Georgia", Font.PLAIN, 12));
-			JLabel separator = new JLabel(" > ", SwingConstants.LEFT);
-			separator.setFont(new Font("Georgia", Font.PLAIN, 12));
+		for (int i=0; i < drawPath.length; ++i) {		
 			if (i == drawPath.length - 1) {
-				bread.setFont(new Font("Georgia", Font.BOLD, 12));
-				separator.setFont(new Font("Georgia", Font.BOLD, 12));
+				drawInBreadCrumb(drawPath[i],true);
 			}
-			panel_breadcrumb.add(bread);
-			panel_breadcrumb.add(separator);
+			else {
+				drawInBreadCrumb(drawPath[i],false);
+			}
 		}
+	}
+	
+	/**
+	 * Dibuixar el string s en el breadcrumb
+	 * @param s - String a pintar al breadcrumb
+	 * @param bold - Si s'ha de pintar en negreta
+	 */
+	private void drawInBreadCrumb(String s, boolean bold) {
+		JLabel bread = new JLabel(s, SwingConstants.LEFT);		
+		if (s.equals("Inici ")) bread.setForeground(Color.blue);
+		bread.addMouseListener(breadcrumb_listener);
+		JLabel separator = new JLabel(" > ", SwingConstants.LEFT);
+		
+		if (bold) {
+			bread.setFont(new Font("Georgia", Font.BOLD, FONT_SIZE));
+			separator.setFont(new Font("Georgia", Font.BOLD, FONT_SIZE));
+		}
+		else {
+			bread.setFont(FONT);
+			separator.setFont(FONT);
+		}
+		panel_breadcrumb.add(bread);
+		panel_breadcrumb.add(separator);
 	}
 	
 	
@@ -227,6 +257,7 @@ public class View extends JFrame{
 		
 		FlowLayout fl_panel_files = new FlowLayout(FlowLayout.LEFT);
 		panel_files = new JPanel(fl_panel_files);
+		panel_files.setBackground(new Color(245, 245, 245));
 		panel_files.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		JPanel panel_title = new JPanel();
@@ -248,7 +279,7 @@ public class View extends JFrame{
 		panel_news_title.add(lblNotcies);
 		
 		JPanel panel_info = new JPanel();
-		panel_info.setFont(new Font("Gentium Book Basic", Font.PLAIN, 10));
+		panel_info.setFont(new Font("Georgia", Font.PLAIN, FONT_SIZE-2));
 		
 		panel_news_content = new JPanel();
 		panel_news_content.setBackground(Color.WHITE);
@@ -360,19 +391,20 @@ public class View extends JFrame{
 		
 		JLabel lblNewLabel_3 = new JLabel("Consultor SIG: Carlos L\u00F3pez");
 		lblNewLabel_3.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblNewLabel_3, "cell 8 0");
+		panel_info.add(lblNewLabel_3, "cell 8 0,aligny top");
 		
 		JLabel lblNewLabel_9 = new JLabel("Disseny web: mm!");
 		lblNewLabel_9.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblNewLabel_9, "cell 10 0");
+		panel_info.add(lblNewLabel_9, "cell 10 0,aligny top");
 		
 		JLabel lblNewLabel_7 = new JLabel("Av\u00EDs legal");
 		lblNewLabel_7.setFont(new Font("Georgia", Font.BOLD, 10));
 		panel_info.add(lblNewLabel_7, "flowx,cell 0 1");
 		
 		JLabel lblNewLabel_8 = new JLabel("Inici");
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_8.setFont(new Font("Georgia", Font.BOLD, 10));
-		panel_info.add(lblNewLabel_8, "cell 2 1");
+		panel_info.add(lblNewLabel_8, "cell 2 1,alignx center");
 		
 		JLabel lblMapaWeb = new JLabel("Mapa web");
 		lblMapaWeb.setFont(new Font("Georgia", Font.BOLD, 10));
@@ -384,7 +416,7 @@ public class View extends JFrame{
 		lblNewLabel_1.setForeground(Color.GRAY);
 		panel_title.add(lblNewLabel_1, "cell 0 0,alignx left,aligny top");
 		lblNewLabel_1.setBackground(Color.LIGHT_GRAY);
-		lblNewLabel_1.setFont(new Font("Georgia", Font.PLAIN, 33));
+		lblNewLabel_1.setFont(new Font("Georgia", Font.PLAIN, 35));
 		
 		JLabel lblNewLabel_2 = new JLabel("SIG dels Serveis T\u00E8cnics");
 		lblNewLabel_2.setForeground(Color.GRAY);

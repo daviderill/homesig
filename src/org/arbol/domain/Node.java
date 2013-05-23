@@ -2,6 +2,11 @@ package org.arbol.domain;
 
 import java.util.ArrayList;
 
+/**
+ * Classe que defineix un fitxer en l'aplicació
+ * @author Roger Erill Carrera
+ *
+ */
 public class Node {
 	
 	private String id;
