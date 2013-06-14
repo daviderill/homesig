@@ -33,8 +33,17 @@ public class Model {
 		
 	}
 	
-	
-	 /**
+	public Connection getConn() {
+		return conn;
+	}
+
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
+
+
+
+	/**
 	  * Connecta a una base de dades amb la ruta passada com a argument
 	  * Si el arxiu no existeix, el crea
 	  * @param fileName - La ruta de la DB a connectar.
@@ -118,6 +127,8 @@ public class Model {
 		}
 		
 	}
+	
+	
 	
 	/**
 	 * Ordena els fills segons la posició que han de tenir
