@@ -109,6 +109,9 @@ public class Model {
 		    while (rs.next()) {
 		    	// llegim el fitxer i l'afegim a la nostra llista de fitxers
 		    	Node n = new Node(rs.getString("id"),rs.getString("name"),rs.getString("link"),	rs.getString("tooltip"));
+		    	if (n.getTooltip() == null) {
+		    		n.setTooltip(n.getName());
+		    	}
 		    	nodes.add(n);
 		    	
 		    }
