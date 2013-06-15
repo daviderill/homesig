@@ -101,6 +101,12 @@ public class DatabaseScript {
 	  protected void processLine(String aLine){
 		Scanner scanner = new Scanner(aLine);
 		if (aLine.startsWith("[")) {	
+			// resetegem tot, per a un nou registre
+			id = null;
+			name = null;
+			tooltip = null;
+			link = null;
+			parentId = null;
 			
 			// Afegim el id 
 		    if (aLine.length() > 3) id = aLine.substring(3, aLine.length()-1);
@@ -149,6 +155,7 @@ public class DatabaseScript {
 			  	stat.setString(5, parent_id);
 				stat.executeUpdate();
 				Utils.getLogger().info("Insertat registre: " + id + ", " + name + ", " + link + ", " + parent_id);
+				
 			} catch (SQLException e) {
 				Utils.getLogger().warning("Error de SQL " + e.getMessage());
 			}
