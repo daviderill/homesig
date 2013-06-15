@@ -14,6 +14,7 @@ import javax.swing.event.HyperlinkListener;
 import org.arbol.dao.Model;
 import org.arbol.domain.Node;
 import org.arbol.gui.View;
+import org.arbol.util.Utils;
 
 /**
  * Classe que té accés a la vista i al model. Ella crea els listeners, que assigna a la vista
@@ -93,6 +94,7 @@ public class Controller {
 					// Hem clicat al panel_files
 				}
 			}
+			
 			//Un click amb el botó dret, pugem un nivell de directori
 			else if (e.getButton() == MouseEvent.BUTTON3) {
 				myModel.removeLastPathNode();
@@ -107,6 +109,7 @@ public class Controller {
 				myView.drawChildren(files);
 				myView.drawBreadcrumb(myModel.drawPath());
 			}
+			
 			// Un clic de botó esquerre, seleccionem el fitxer
 			else if (e.getClickCount() == 1 && e.getButton() == MouseEvent.BUTTON1) {
 				String source = e.getComponent().getClass().getName();
@@ -121,6 +124,7 @@ public class Controller {
 					myView.paintComponent(label);
 				}
 			}
+			
 		}
 
 		@Override
@@ -136,6 +140,7 @@ public class Controller {
 		public void mouseReleased(MouseEvent e) {}
 		
 	}
+	
 	
 	/**
 	 * Classe que fa de listener pels labels del breadcrumb
@@ -159,8 +164,6 @@ public class Controller {
 					if (n.getExtension_id() == null) {
 						drawDirectory(n);
 					}
-					else {
-					}
 				}
 			}
 		}
@@ -178,6 +181,7 @@ public class Controller {
 		public void mouseReleased(MouseEvent e) {}
 		
 	}
+	
 	
 	/**
 	 * Classe que fa de listener pels links dins de les notícies
@@ -205,7 +209,7 @@ public class Controller {
 					}
 				} 
 				catch (IOException e1) {
-					e1.printStackTrace();							
+					Utils.getLogger().warning(e1.getMessage());						
 				}
 				catch (IllegalArgumentException e2) {
 					myView.showErrorFileNotFound(hle.getDescription());	
@@ -214,5 +218,6 @@ public class Controller {
 		}
 		
 	}
+	
 	
 }

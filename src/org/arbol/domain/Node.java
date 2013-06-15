@@ -32,6 +32,7 @@ public class Node {
 	}
 	
 	private void extractInfoFromId(String id) {
+		
 		String[] id_parts = id.split("_");	
 		level = id_parts.length;
 		position = Integer.valueOf(id_parts[id_parts.length - 1]);
@@ -43,9 +44,12 @@ public class Node {
 			parentId += "_" + id_parts[i];
 		}
 		parent_id = parentId;
+		
 	}
 	
+	
 	private void extractInfoFromLink(String name) {
+		
 		link = name;
 		if (name != null) {
 			String[] path = name.split(":?\\\\");
@@ -53,59 +57,76 @@ public class Node {
 			String[] file_parts = file.split("\\.");
 			extension_id = file_parts[file_parts.length - 1];
 		}
+		
 	}
 	
 	public String getTooltip() {
 		return tooltip;
 	}
+	
 	public void setTooltip(String tooltip) {
 		this.tooltip = tooltip;
 	}
+	
 	public String getId() {
 		return id;
 	}
+	
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public String getLink() {
 		return link;
 	}
+	
 	public void setLink(String link) {
 		this.link = link;
 	}
 	public int getLevel() {
 		return level;
 	}
+	
 	public void setLevel(int level) {
 		this.level = level;
 	}
+	
 	public int getPosition() {
 		return position;
 	}
+	
 	public void setPosition(int position) {
 		this.position = position;
 	}
+	
 	public String getParent_id() {
 		return parent_id;
 	}
+	
 	public void setParent_id(String parent_id) {
 		this.parent_id = parent_id;
 	}
+	
 	public String getExtension_id() {
 		return extension_id;
 	}
+	
 	public void setExtension_id(String extension_id) {
 		this.extension_id = extension_id;
 	}
+	
 	public ArrayList<Node> getChildren() {
 		return children;
 	}
+	
 	public void setChildren(ArrayList<Node> children) {
 		this.children = children;
 	}
@@ -117,11 +138,14 @@ public class Node {
 	public int getChildrenSize() {
 		return children.size();
 	}
+	
 	public Node getParent() {
 		return parent;
 	}
+	
 	public void setParent(Node parent) {
 		this.parent = parent;
 	}
+	
 	
 }

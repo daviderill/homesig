@@ -20,12 +20,15 @@ public class Model {
 	// Llista on guardem tots els fitxers que llegirem
 	private ArrayList<Node> nodes;
 	private ArrayList<Node> currentPath;
+	private static final String DB_PATH = "config/BDProva.sqlite";
+	//private static final String DB_PATH = "config/arbol2.sqlite";
+	
 	
 	public Model() {
 		
         // Get log file
         Utils.getLogger();		
-		if (!setConnection("config/arbol2.sqlite")){
+		if (!setConnection(DB_PATH)){
 			System.exit(-1);
 		}
 		nodes = new ArrayList<Node>();
@@ -113,7 +116,6 @@ public class Model {
 		    		n.setTooltip(n.getName());
 		    	}
 		    	nodes.add(n);
-		    	
 		    }
 		    // Assignem el fill a la llista de fills del seu pare
 		    for (int i=0; i < nodes.size(); ++i) {
@@ -132,7 +134,6 @@ public class Model {
 	}
 	
 	
-	
 	/**
 	 * Ordena els fills segons la posició que han de tenir
 	 */
@@ -143,6 +144,7 @@ public class Model {
 		}
 	}
 
+	
 	/** 
 	 * Classe que fa el comparador entre nodes
 	 * @author Roger Erill
@@ -154,6 +156,7 @@ public class Model {
 			return n1.getId().compareTo(n2.getId());
 		}
 	}
+	
 
 	/**
 	 * 
@@ -169,6 +172,7 @@ public class Model {
 		return result;
 	}
 	
+	
 	/**
 	  * Donat un node children, busquem el seu pare i li assignem com a pare
 	  * i al seu pare com a fill
@@ -177,15 +181,17 @@ public class Model {
 	private void assignParent(Node children) {
 		for (int i=0; i < nodes.size(); ++i) {
 			if (nodes.get(i).getId().equals(children.getParent_id()) ) {
-				nodes.get(i).addChildren(children.getPosition(),children);
+				nodes.get(i).addChildren(children.getPosition(), children);
 				children.setParent(nodes.get(i));
 			}
 		}
 	}
 	
+	
 	public ArrayList<Node> getAll() {
 		return nodes;
 	}
+	
 	
 	/**
 	 * 
@@ -198,6 +204,7 @@ public class Model {
 		}
 		return null;
 	}
+	
 	
 	/**
 	 * 
@@ -213,6 +220,7 @@ public class Model {
 		return null;
 	}
 
+	
 	/**
 	 * 
 	 * @return Array de Strings amb el nom dels nodes que formen part del current path

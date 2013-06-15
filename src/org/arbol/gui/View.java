@@ -33,6 +33,7 @@ import javax.swing.text.html.HTMLDocument;
 import net.miginfocom.swing.MigLayout;
 
 import org.arbol.domain.Node;
+import org.arbol.util.Utils;
 
 /**
  * Classe que mostra un explorador de fitxers, i una secció de notícies i una d'enllaços
@@ -59,11 +60,12 @@ public class View extends JFrame{
 	private HyperlinkListener link_listener;
 	
 	private ArrayList<Node> currentFiles;
-	private static final int LABEL_WIDTH = 180;
+	private static final int LABEL_WIDTH = 150;
 	private static final int LABEL_HEIGHT = 90;
 	private static final int FONT_SIZE = 11;
 	private static final Font FONT = new Font("Georgia", Font.PLAIN, FONT_SIZE);
 
+	
 	public View() {
 		initialize();
 		frame.setLocationRelativeTo(null);
@@ -71,7 +73,9 @@ public class View extends JFrame{
 		createFakeNews();
 	}
 	
+	
 	private void setLookAndFeel() {
+		
 		List<Image> icons  = new ArrayList<Image>();
 		icons.add(new ImageIcon("res\\icon256.png").getImage());
 	    icons.add(new ImageIcon("res\\icon48.png").getImage());
@@ -79,16 +83,14 @@ public class View extends JFrame{
 	    icons.add(new ImageIcon("res\\icon24.png").getImage());
 	    icons.add(new ImageIcon("res\\icon16.png").getImage());
 	    frame.setIconImages(icons);
-		try
-		{
+		try	{
 		    JFrame.setDefaultLookAndFeelDecorated(true);
 		    JDialog.setDefaultLookAndFeelDecorated(true);
 		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+		    Utils.getLogger().warning(e.getMessage());
 		}
-		catch (Exception e)
-		{
-		    e.printStackTrace();
-		}
+		
 	}
 
 	private void createFakeNews() {
@@ -113,8 +115,6 @@ public class View extends JFrame{
 		news2.setEditable(false);  
 		news2.setOpaque(false);
 		
-		
-		
 	    ((HTMLDocument)news3.getDocument()).getStyleSheet().addRule(bodyRule);
 		text = "Aquesta és una notícia sense cap enllaç però que mostra <b>negreta</b> i <i>cursiva</i> per " +
 				"ressaltar paraules";
@@ -123,17 +123,19 @@ public class View extends JFrame{
 		news3.setEditable(false);  
 		news3.setOpaque(false);
 		
-		
 	}
+	
 	
 	public void addFileListener(MouseListener listenForFileClick){
 		listener = listenForFileClick;
 		panel_files.addMouseListener(listener);
 	}
 
+	
 	public void addBreadcrumbListener(MouseListener listenForFileClick){
 		breadcrumb_listener = listenForFileClick;
 	}
+	
 	
 	public void addLinkListener(HyperlinkListener linkListener) {
 		link_listener = linkListener;
@@ -141,6 +143,7 @@ public class View extends JFrame{
 		news2.addHyperlinkListener(link_listener); 
 		news3.addHyperlinkListener(link_listener); 
 	}
+	
 	
 	/**
 	 * Donats uns nodes files, dibuixar-los en el panell panel_files
@@ -155,13 +158,15 @@ public class View extends JFrame{
 		for (int i=0; i < files.size(); ++i) {
 			
 			final Node file = files.get(i);
-			JLabel label_file = new JLabel(file.getName(),SwingConstants.CENTER);
+			JLabel label_file = new JLabel(file.getName(), SwingConstants.CENTER);
 			label_file.setHorizontalTextPosition(SwingConstants.CENTER);
 			label_file.setVerticalTextPosition(JLabel.BOTTOM);
 			label_file.setFont(FONT);
 			
 			String extension = file.getExtension_id();
-			if (extension == null) extension = "dir";		
+			if (extension == null) {
+				extension = "dir";		
+			}
 			String path = iconPath + extension + ".png";
 			
 			// Creem una icona per defecte, i si el path de la imatge existeix, l'apliquem
@@ -204,6 +209,7 @@ public class View extends JFrame{
 	}
 	
 	
+	
 	public void drawBreadcrumb(String[] drawPath) {
 		panel_breadcrumb.removeAll();
 		panel_breadcrumb.updateUI();
@@ -217,17 +223,18 @@ public class View extends JFrame{
 		}
 	}
 	
+	
 	/**
 	 * Dibuixar el string s en el breadcrumb
 	 * @param s - String a pintar al breadcrumb
 	 * @param bold - Si s'ha de pintar en negreta
 	 */
 	private void drawInBreadCrumb(String s, boolean bold) {
+		
 		JLabel bread = new JLabel(s, SwingConstants.LEFT);		
 		if (s.equals("Inici ")) bread.setForeground(Color.blue);
 		bread.addMouseListener(breadcrumb_listener);
 		JLabel separator = new JLabel(" > ", SwingConstants.LEFT);
-		
 		if (bold) {
 			bread.setFont(new Font("Georgia", Font.BOLD, FONT_SIZE));
 			separator.setFont(new Font("Georgia", Font.BOLD, FONT_SIZE));
@@ -238,6 +245,7 @@ public class View extends JFrame{
 		}
 		panel_breadcrumb.add(bread);
 		panel_breadcrumb.add(separator);
+		
 	}
 	
 	
@@ -304,13 +312,13 @@ public class View extends JFrame{
 								.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, 899, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-										.addComponent(panel_news_content, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE))
+										.addComponent(panel_news_content, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
+										.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
 									.addGap(18)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(panel_breadcrumb, GroupLayout.PREFERRED_SIZE, 781, Short.MAX_VALUE)
-										.addComponent(panel_title, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 576, GroupLayout.PREFERRED_SIZE)
-										.addComponent(panel_files, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 781, Short.MAX_VALUE))))))
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(panel_files, GroupLayout.PREFERRED_SIZE, 781, Short.MAX_VALUE)
+										.addComponent(panel_breadcrumb, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 781, Short.MAX_VALUE)
+										.addComponent(panel_title, GroupLayout.PREFERRED_SIZE, 576, GroupLayout.PREFERRED_SIZE))))))
 					.addGap(27)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(panel_links_content, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
@@ -324,22 +332,19 @@ public class View extends JFrame{
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(panel_top_logo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(panel_title, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(4)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_links_title, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addGap(50)
-								.addComponent(panel_breadcrumb, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
-							.addGroup(groupLayout.createSequentialGroup()
-								.addGap(38)
-								.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))))
+					.addGap(24)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(panel_news_title, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_breadcrumb, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel_links_title, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-						.addComponent(panel_files, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
-					.addGap(67)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(panel_files, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addGap(27)
 					.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
@@ -428,7 +433,8 @@ public class View extends JFrame{
 		lblNewLabel.setIcon(new ImageIcon("res\\logo2.png"));
 		panel_top_logo.add(lblNewLabel);
 		frame.getContentPane().setLayout(groupLayout);
-		}
+		
+	}
 
 	
 	public void showErrorFileNotFound(String path) {
@@ -447,5 +453,6 @@ public class View extends JFrame{
 	public void setSelectedLabel(String text) {
 		selectedLabel = text;
 	}
+	
 	
 }
