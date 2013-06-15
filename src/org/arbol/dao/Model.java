@@ -153,7 +153,9 @@ public class Model {
 	public class NodeComparator implements Comparator<Node> {
 		@Override
 		public int compare(Node n1, Node n2) {
-			return n1.getId().compareTo(n2.getId());
+			Integer id1 = Integer.valueOf(n1.getPosition());
+			Integer id2 = Integer.valueOf(n2.getPosition());
+			return id1.compareTo(id2);
 		}
 	}
 	
@@ -196,15 +198,41 @@ public class Model {
 	/**
 	 * 
 	 * @param fileName nom del node
+	 * @param pare nom del pare del fileName
 	 * @return El node amb nom fileName
 	 */
-	public Node getNodeNamed(String fileName) {
+	public Node getNodeNamed(String fileName, String pare) {
 		for (int i=0; i < nodes.size(); ++i) {
-			if (nodes.get(i).getName().equals(fileName)) return nodes.get(i);
+			if (nodes.get(i).getName().equals(fileName)) {
+				if (nodes.get(i).getParent() != null && pare != null) {
+					if (pare.equals(nodes.get(i).getParent().getName())) {
+						return nodes.get(i);
+					}
+				}
+				else if (nodes.get(i).getParent() == null && pare == null) {
+					return nodes.get(i);
+				}
+				else {
+					
+				}
+			}
 		}
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param fileName nom del node
+	 * @return El node amb nom fileName
+	 */
+	public Node getNodeDirectoryNamed(String fileName) {
+		for (int i=0; i < nodes.size(); ++i) {
+			if (nodes.get(i).getName().equals(fileName)) {
+				return nodes.get(i);
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * 
@@ -239,8 +267,8 @@ public class Model {
 	 * Donat un nom de node, creem el path on estem actualment
 	 * @param text Nom del node a partir del qui crearem la ruta
 	 */
-	public void createPathOf(String text) {
-		Node n = getNodeNamed(text);
+	public void createPathOf(String text, String pare) {
+		Node n = getNodeNamed(text, pare);
 		currentPath.clear();
 		createPathRecursively(n);
 	}

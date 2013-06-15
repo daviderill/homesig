@@ -1,5 +1,6 @@
 package org.arbol.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -23,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -267,6 +269,10 @@ public class View extends JFrame{
 		panel_files = new JPanel(fl_panel_files);
 		panel_files.setBackground(new Color(245, 245, 245));
 		panel_files.setAlignmentX(Component.LEFT_ALIGNMENT);
+		JScrollPane editorScroll = new JScrollPane(panel_files);
+		panel_files.setPreferredSize(new Dimension(777,600));
+		editorScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		editorScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		JPanel panel_title = new JPanel();
 		
@@ -316,7 +322,7 @@ public class View extends JFrame{
 										.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
 									.addGap(18)
 									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(panel_files, GroupLayout.PREFERRED_SIZE, 781, Short.MAX_VALUE)
+										.addComponent(editorScroll, GroupLayout.PREFERRED_SIZE, 781, Short.MAX_VALUE)
 										.addComponent(panel_breadcrumb, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 781, Short.MAX_VALUE)
 										.addComponent(panel_title, GroupLayout.PREFERRED_SIZE, 576, GroupLayout.PREFERRED_SIZE))))))
 					.addGap(27)
@@ -342,7 +348,7 @@ public class View extends JFrame{
 						.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
 						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(panel_files, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+							.addComponent(editorScroll, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addGap(27)
 					.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)

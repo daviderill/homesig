@@ -44,7 +44,9 @@ public class Controller {
 	
 	private void drawDirectory(Node n) {
 		ArrayList<Node> files = n.getChildren();
-		myModel.createPathOf(n.getName());
+		String parent_name = null;
+		if (n.getParent() != null) parent_name = n.getParent().getName();
+		myModel.createPathOf(n.getName(), parent_name);
 		myView.drawChildren(files);
 		myView.drawBreadcrumb(myModel.drawPath());
 	}
@@ -82,7 +84,12 @@ public class Controller {
 					if (label_text.contains("<html>")) {
 						label_text = label_text.substring(14, label_text.length() - 16);
 					}
-					Node n = myModel.getNodeNamed(label_text);
+					int s = myModel.getCurrentPath().size();
+					String pare = null;
+					if (s > 0) {
+						pare = myModel.getCurrentPath().get(s-1).getName();
+					}
+					Node n = myModel.getNodeNamed(label_text, pare);
 					if (n.getExtension_id() == null) {
 						drawDirectory(n);
 					}
@@ -160,10 +167,21 @@ public class Controller {
 					myView.drawBreadcrumb(myModel.drawEmptyPath());
 				}
 				else {
-					Node n = myModel.getNodeNamed(label.getText());
+					ArrayList<Node> path = myModel.getCurrentPath();
+					int s = path.size();
+					String pare = null;
+					for (int i=0; i < s; ++i) {
+						if (path.get(i).getName().equals(label.getText())) {
+							if (i > 0) {
+								pare = path.get(i-1).getName();
+							}
+						}
+					}
+					Node n = myModel.getNodeNamed(label.getText(),pare);
 					if (n.getExtension_id() == null) {
 						drawDirectory(n);
 					}
+					
 				}
 			}
 		}
@@ -202,9 +220,12 @@ public class Controller {
 						Desktop.getDesktop().open(file);
 					}
 					else {
-						Node n = myModel.getNodeNamed(file.getName());
+						Node n = myModel.getNodeDirectoryNamed(file.getName());
 						if (n != null){
 							drawDirectory(n);
+						}
+						else {
+							openFile(n);
 						}
 					}
 				} 
