@@ -53,6 +53,8 @@ public class View extends JFrame{
 	private JEditorPane news1;
 	private JEditorPane news2;
 	private JEditorPane news3;
+	private JEditorPane links1;
+	private JEditorPane links2;
 	
 	private String iconPath = "res\\ico_";
 	private String selectedLabel;
@@ -100,8 +102,9 @@ public class View extends JFrame{
 	    String bodyRule = "body { font-family: " + FONT.getFamily() + "; " +
 	            "font-size: " + FONT.getSize() + "pt; }";
 		
-		String text = "Aquí tenim una notícia de prova amb un " +
-				"enllaç al fitxer <a href='doc\\cadastre.pdf'> Cadastre ";
+		String text = "S'ha creat el mapa guia, accés a tota" +
+				" la cartografia en un sòl mapa" 
+				+ " <a href='QGIS_projectes\\1_Mapa_guia_v2.qgs'>Mapa guia</a>";
 
 		((HTMLDocument)news1.getDocument()).getStyleSheet().addRule(bodyRule);
 		news1.setContentType("text/html");
@@ -109,7 +112,20 @@ public class View extends JFrame{
 		news1.setEditable(false);  
 		news1.setOpaque(false);
 		
-		((HTMLDocument)news2.getDocument()).getStyleSheet().addRule(bodyRule);
+		text = "<a href='http://www.santsadurni.cat'> Web de l'ajuntament </a>";
+
+		((HTMLDocument)links1.getDocument()).getStyleSheet().addRule(bodyRule);
+		links1.setContentType("text/html");
+		links1.setText(text);
+		links1.setEditable(false);  
+		links1.setOpaque(false);
+		
+		((HTMLDocument)links2.getDocument()).getStyleSheet().addRule(bodyRule);
+		links2.setText("<a href='http://oslo.geodata.es/stsadurnia/planejament.php'> Web de plantejament </a>");
+		links2.setOpaque(false);
+		links2.setEditable(false);
+		
+		/*((HTMLDocument)news2.getDocument()).getStyleSheet().addRule(bodyRule);
 		text = "Aquí tenim un text de prova amb un " +
 				"enllaç al directori <a href='Documentació'> Documentació ";
 		news2.setContentType("text/html");
@@ -123,7 +139,7 @@ public class View extends JFrame{
 		news3.setContentType("text/html");
 		news3.setText(text);
 		news3.setEditable(false);  
-		news3.setOpaque(false);
+		news3.setOpaque(false);*/
 		
 	}
 	
@@ -144,6 +160,8 @@ public class View extends JFrame{
 		news1.addHyperlinkListener(link_listener);
 		news2.addHyperlinkListener(link_listener); 
 		news3.addHyperlinkListener(link_listener); 
+		links1.addHyperlinkListener(linkListener);
+		links2.addHyperlinkListener(linkListener);
 	}
 	
 	
@@ -357,6 +375,31 @@ public class View extends JFrame{
 					.addContainerGap())
 		);
 		
+		links1 = new JEditorPane();
+		links1.setContentType("text/html");
+		
+		links2 = new JEditorPane();
+		links2.setContentType("text/html");
+		GroupLayout gl_panel_links_content = new GroupLayout(panel_links_content);
+		gl_panel_links_content.setHorizontalGroup(
+			gl_panel_links_content.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_links_content.createSequentialGroup()
+					.addGroup(gl_panel_links_content.createParallelGroup(Alignment.LEADING)
+						.addComponent(links1, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
+						.addComponent(links2, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(29, Short.MAX_VALUE))
+		);
+		gl_panel_links_content.setVerticalGroup(
+			gl_panel_links_content.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_links_content.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(links1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(links2, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(316, Short.MAX_VALUE))
+		);
+		panel_links_content.setLayout(gl_panel_links_content);
+		
 		news1 = new JEditorPane();
 		news1.setContentType("text/html");
 		
@@ -376,9 +419,12 @@ public class View extends JFrame{
 		GroupLayout gl_panel_news_content = new GroupLayout(panel_news_content);
 		gl_panel_news_content.setHorizontalGroup(
 			gl_panel_news_content.createParallelGroup(Alignment.TRAILING)
-				.addComponent(news3, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-				.addComponent(news1, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-				.addComponent(news2, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+				.addGroup(Alignment.LEADING, gl_panel_news_content.createSequentialGroup()
+					.addGroup(gl_panel_news_content.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(news3, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+						.addComponent(news2, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+						.addComponent(news1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 187, Short.MAX_VALUE))
+					.addContainerGap(155, Short.MAX_VALUE))
 		);
 		gl_panel_news_content.setVerticalGroup(
 			gl_panel_news_content.createParallelGroup(Alignment.LEADING)
@@ -389,7 +435,7 @@ public class View extends JFrame{
 					.addComponent(news2, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(news3, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(75, Short.MAX_VALUE))
+					.addContainerGap(124, Short.MAX_VALUE))
 		);
 		panel_news_content.setLayout(gl_panel_news_content);
 		panel_info.setLayout(new MigLayout("", "[55px][5px][40px][5px][30px][8px][90px][6px][46px][6px][]", "[14px][]"));
@@ -449,6 +495,12 @@ public class View extends JFrame{
 		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no existeix", "Arbol", JOptionPane.WARNING_MESSAGE);
 	}
 	
+	public void showErrorFileNotOpeneable(String path) {
+		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no es pot obrir. És possible que no hi hagi cap aplicació configurada " +
+				"per obrir aquest tipus de fitxer", "Arbol", JOptionPane.WARNING_MESSAGE);
+	}
+	
+	
 	public void paintComponent(JLabel label) {
 		for (Component c : panel_files.getComponents()) {
 			if (c.equals(label)) {
@@ -461,6 +513,4 @@ public class View extends JFrame{
 	public void setSelectedLabel(String text) {
 		selectedLabel = text;
 	}
-	
-	
 }

@@ -13,13 +13,15 @@ public class MainClass {
 	 */
 	public static void main(String[] args) {
 		
+		/*DatabaseScript dbs = new DatabaseScript();
+		dbs.processLineByLine();*/
+		
 		View window = new View();
 		Model model = new Model();
 		new Controller(window, model);
 		window.frame.setVisible(true);
 		
-		/*DatabaseScript dbs = new DatabaseScript();
-		dbs.processLineByLine();*/
+		
 	}
 
 }

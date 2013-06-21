@@ -131,7 +131,7 @@ public class DatabaseScript {
 		    }
 		    else {
 		      // S'ha acabat, guardem a BD
-		      insertEntry(id, name, tooltip, link, parentId);
+		      if (!id.equals("0")) insertEntry(id, name, tooltip, link, parentId);
 		    }
 		}
 	  }

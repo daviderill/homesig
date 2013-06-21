@@ -5,6 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -52,15 +54,22 @@ public class Controller {
 	}
 	
 	private void openFile(Node n) {
+		Utils.getLogger().info("Obrim el node " + n.getName() + " que te enllaç " + n.getLink());
 		File file = new File(n.getLink());
 		try {
 			Desktop.getDesktop().open(file);
 		} 
 		catch (IOException e1) {
-			e1.printStackTrace();							
+			Utils.getLogger().warning("Error al obrir el fitxer: " + e1.getMessage() + "\n" +
+					"Pot ser que no tinguis cap aplicació associada a l'extensió ." + n.getExtension_id() + "?");
+			myView.showErrorFileNotOpeneable(n.getLink());
 		}
 		catch (IllegalArgumentException e2) {
+			Utils.getLogger().warning("No hi ha cap fitxer a la ruta " + n.getLink());	
 			myView.showErrorFileNotFound(n.getLink());	
+		}
+		catch (UnsupportedOperationException e3) {
+			Utils.getLogger().warning("El sistema no accepta aquesta operació");
 		}
 	}
 	
@@ -213,19 +222,39 @@ public class Controller {
 			if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) {  
 				File file = new File(hle.getDescription());
 				try {
+					
 					if (file.isFile()) {
+						Utils.getLogger().info("Considerem " + hle.getDescription() + " un fitxer");
 						Node n = myModel.getNodeWithLink(hle.getDescription());
-						myView.setSelectedLabel(n.getName());
-						drawDirectory(n.getParent());
-						Desktop.getDesktop().open(file);
+						if (n == null) {
+							Utils.getLogger().warning("No s'ha trobat el fitxer " + hle.getDescription());
+							myView.showErrorFileNotFound(hle.getDescription());
+						}
+						else {
+							myView.setSelectedLabel(n.getName());
+							drawDirectory(n.getParent());
+							Desktop.getDesktop().open(file);
+						}
+					}
+					else if (hle.getDescription().contains("http")) {
+						try {
+							Utils.getLogger().info("Considerem " + hle.getDescription() + " un enllaç extern");
+							Desktop.getDesktop().browse(hle.getURL().toURI());
+						} catch (URISyntaxException e) {
+							Utils.getLogger().warning("Error en obrir la URL " + hle.getDescription());
+							Utils.getLogger().warning("Motiu: " + e.getMessage());
+						}
 					}
 					else {
+						Utils.getLogger().info("Considerem " + hle.getDescription() + " un directori");
 						Node n = myModel.getNodeDirectoryNamed(file.getName());
 						if (n != null){
 							drawDirectory(n);
 						}
 						else {
-							openFile(n);
+							
+							Utils.getLogger().warning("No s'ha trobat el directori " + hle.getDescription());
+							myView.showErrorFileNotFound(hle.getDescription());
 						}
 					}
 				} 
