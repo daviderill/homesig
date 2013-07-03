@@ -123,7 +123,7 @@ public class View extends JFrame{
 		links1.setOpaque(false);
 		
 		((HTMLDocument)links2.getDocument()).getStyleSheet().addRule(bodyRule);
-		links2.setText("<a href='http://oslo.geodata.es/stsadurnia/planejament.php'> Web de plantejament </a>");
+		links2.setText("<a href='http://oslo.geodata.es/stsadurnia/planejament.php'> Web de planejament </a>");
 		links2.setOpaque(false);
 		links2.setEditable(false);
 	}
