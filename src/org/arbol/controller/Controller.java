@@ -34,7 +34,9 @@ public class Controller {
 		myView.addFileListener(new FileListener());
 		myView.addBreadcrumbListener(new BreadCrumbListener());
 		myView.addLinkListener(new LinkListener());
+		myView.setUpperLogo(myModel.getUpperLogoPath());
 		initalizeFirstLevel();
+		initializeNews();
 	}
 
 	private void initalizeFirstLevel() {
@@ -42,6 +44,12 @@ public class Controller {
 		ArrayList<Node> files = myModel.getFirstLevel();
 		myView.drawChildren(files);
 		myView.drawBreadcrumb(myModel.drawPath());
+	}
+	
+	private void initializeNews() {
+		myModel.createNews();
+		ArrayList<String> news = myModel.createHtlm();
+		myView.drawNews(news);
 	}
 	
 	private void drawDirectory(Node n) {
@@ -246,14 +254,13 @@ public class Controller {
 						}
 					}
 					else {
-						Utils.getLogger().info("Considerem " + hle.getDescription() + " un directori");
+						Utils.getLogger().info("Considerem " + hle.getDescription() + " un directori o fitxer inexistent");
 						Node n = myModel.getNodeDirectoryNamed(file.getName());
 						if (n != null){
 							drawDirectory(n);
 						}
 						else {
-							
-							Utils.getLogger().warning("No s'ha trobat el directori " + hle.getDescription());
+							Utils.getLogger().warning("No existeix cap fitxer o directori a " + hle.getDescription());
 							myView.showErrorFileNotFound(hle.getDescription());
 						}
 					}

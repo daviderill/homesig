@@ -49,6 +49,7 @@ public class View extends JFrame{
 	private JPanel panel_files;
 	private JPanel panel_breadcrumb;
 	private JPanel panel_news_content;
+	private JLabel upperLogoLabel;
 	
 	private JEditorPane news1;
 	private JEditorPane news2;
@@ -56,7 +57,8 @@ public class View extends JFrame{
 	private JEditorPane links1;
 	private JEditorPane links2;
 	
-	private String iconPath = "res\\ico_";
+	private String iconPath = "res/ico_";
+	private String upperLogoPath;
 	private String selectedLabel;
 	
 	private MouseListener listener;
@@ -74,18 +76,18 @@ public class View extends JFrame{
 		initialize();
 		frame.setLocationRelativeTo(null);
 		setLookAndFeel();
-		createFakeNews();
+		createFakeLinks();
 	}
 	
 	
 	private void setLookAndFeel() {
 		
 		List<Image> icons  = new ArrayList<Image>();
-		icons.add(new ImageIcon("res\\icon256.png").getImage());
-	    icons.add(new ImageIcon("res\\icon48.png").getImage());
-	    icons.add(new ImageIcon("res\\icon32.png").getImage());
-	    icons.add(new ImageIcon("res\\icon24.png").getImage());
-	    icons.add(new ImageIcon("res\\icon16.png").getImage());
+		icons.add(new ImageIcon("res/icon256.png").getImage());
+	    icons.add(new ImageIcon("res/icon48.png").getImage());
+	    icons.add(new ImageIcon("res/icon32.png").getImage());
+	    icons.add(new ImageIcon("res/icon24.png").getImage());
+	    icons.add(new ImageIcon("res/icon16.png").getImage());
 	    frame.setIconImages(icons);
 		try	{
 		    JFrame.setDefaultLookAndFeelDecorated(true);
@@ -97,12 +99,12 @@ public class View extends JFrame{
 		
 	}
 
-	private void createFakeNews() {
+	private void createFakeLinks() {
 		
 	    String bodyRule = "body { font-family: " + FONT.getFamily() + "; " +
 	            "font-size: " + FONT.getSize() + "pt; }";
 		
-		String text = "S'ha creat el mapa guia, accés a tota" +
+		/*String text = "S'ha creat el mapa guia, accés a tota" +
 				" la cartografia en un sòl mapa" 
 				+ " <a href='QGIS_projectes\\1_Mapa_guia_v2.qgs'>Mapa guia</a>";
 
@@ -110,9 +112,9 @@ public class View extends JFrame{
 		news1.setContentType("text/html");
 		news1.setText(text);
 		news1.setEditable(false);  
-		news1.setOpaque(false);
+		news1.setOpaque(false);*/
 		
-		text = "<a href='http://www.santsadurni.cat'> Web de l'ajuntament </a>";
+		String text = "<a href='http://www.santsadurni.cat'> Web de l'ajuntament </a>";
 
 		((HTMLDocument)links1.getDocument()).getStyleSheet().addRule(bodyRule);
 		links1.setContentType("text/html");
@@ -124,25 +126,7 @@ public class View extends JFrame{
 		links2.setText("<a href='http://oslo.geodata.es/stsadurnia/planejament.php'> Web de plantejament </a>");
 		links2.setOpaque(false);
 		links2.setEditable(false);
-		
-		/*((HTMLDocument)news2.getDocument()).getStyleSheet().addRule(bodyRule);
-		text = "Aquí tenim un text de prova amb un " +
-				"enllaç al directori <a href='Documentació'> Documentació ";
-		news2.setContentType("text/html");
-		news2.setText(text);
-		news2.setEditable(false);  
-		news2.setOpaque(false);
-		
-	    ((HTMLDocument)news3.getDocument()).getStyleSheet().addRule(bodyRule);
-		text = "Aquesta és una notícia sense cap enllaç però que mostra <b>negreta</b> i <i>cursiva</i> per " +
-				"ressaltar paraules";
-		news3.setContentType("text/html");
-		news3.setText(text);
-		news3.setEditable(false);  
-		news3.setOpaque(false);*/
-		
 	}
-	
 	
 	public void addFileListener(MouseListener listenForFileClick){
 		listener = listenForFileClick;
@@ -164,6 +148,28 @@ public class View extends JFrame{
 		links2.addHyperlinkListener(linkListener);
 	}
 	
+	public void drawNews(ArrayList<String> news) {
+		if (news.size() > 0) {
+			setNews(news1,news.get(0));
+			if (news.size() > 1) {
+				setNews(news2,news.get(1));
+				if (news.size() > 2) {
+					setNews(news2,news.get(2));
+				}
+			}
+		}
+	}
+	
+	private void setNews(JEditorPane newspanel, String text) {
+		String bodyRule = "body { font-family: " + FONT.getFamily() + "; " +
+	            "font-size: " + FONT.getSize() + "pt; }";
+		((HTMLDocument)news1.getDocument()).getStyleSheet().addRule(bodyRule);
+		newspanel.setContentType("text/html");
+		newspanel.setEditable(false);  
+		newspanel.setOpaque(false);
+		newspanel.setText(text);
+	}
+
 	
 	/**
 	 * Donats uns nodes files, dibuixar-los en el panell panel_files
@@ -483,9 +489,9 @@ public class View extends JFrame{
 		lblNewLabel_2.setFont(new Font("Georgia", Font.PLAIN, 25));
 		panel_title.add(lblNewLabel_2, "cell 0 1,alignx left,aligny top");
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("res\\logo2.png"));
-		panel_top_logo.add(lblNewLabel);
+		upperLogoLabel = new JLabel("");
+		//lblNewLabel.setIcon(new ImageIcon("res\\logo2.png"));
+		panel_top_logo.add(upperLogoLabel);
 		frame.getContentPane().setLayout(groupLayout);
 		
 	}
@@ -512,5 +518,11 @@ public class View extends JFrame{
 
 	public void setSelectedLabel(String text) {
 		selectedLabel = text;
+	}
+
+
+	public void setUpperLogo(String path) {
+		upperLogoPath = path;
+		upperLogoLabel.setIcon(new ImageIcon(upperLogoPath));
 	}
 }

@@ -1,6 +1,9 @@
 package org.arbol.dao;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,7 +12,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Properties;
 
+import org.arbol.domain.News;
 import org.arbol.domain.Node;
 import org.arbol.util.Utils;
 
@@ -19,6 +24,7 @@ public class Model {
 	private Connection conn = null;
 	// Llista on guardem tots els fitxers que llegirem
 	private ArrayList<Node> nodes;
+	private ArrayList<News> news;
 	private ArrayList<Node> currentPath;
 	private static final String DB_PATH = "config/BDProva.sqlite";
 	//private static final String DB_PATH = "config/arbol2.sqlite";
@@ -32,6 +38,7 @@ public class Model {
 			System.exit(-1);
 		}
 		nodes = new ArrayList<Node>();
+		news = new ArrayList<News>();
 		currentPath = new ArrayList<Node>();
 		
 	}
@@ -125,14 +132,30 @@ public class Model {
 		    }
 		    // Ordenem els fills segons la posició
 		    sortChildren();
-		    rs.close();
-		    conn.close();
+		    //rs.close();
+		    //conn.close();
 		} catch (SQLException e1) {
 			Utils.showError(e1.getMessage(), sql, "");
 		}
 		
 	}
 	
+	public void createNews() {		
+		Statement stat = null;
+		String sql = "select * from news;";
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(sql);
+		    while (rs.next()) {
+		    	News n = new News(rs.getString("id"),rs.getString("title"),rs.getString("description"),rs.getString("link"));
+		    	news.add(n);
+		    }
+		    rs.close();
+		    conn.close();
+		} catch (SQLException e1) {
+			Utils.showError(e1.getMessage(), sql, "");
+		}	
+	}
 	
 	/**
 	 * Ordena els fills segons la posició que han de tenir
@@ -247,6 +270,18 @@ public class Model {
 		}
 		return null;
 	}
+	
+	/**
+	 * 
+	 * @param link ruta del node
+	 * @return El node amb ruta link
+	 */
+	public Node getNodeWithId(String id) {
+		for (int i=0; i < nodes.size(); ++i) {
+			if (nodes.get(i).getId().equals(id)) return nodes.get(i);
+		}
+		return null;
+	}
 
 	
 	/**
@@ -289,6 +324,32 @@ public class Model {
 		currentPath.clear();
 		String[] res = new String[1];
 		res[0] = "Inici ";
+		return res;
+	}
+
+	public ArrayList<String> createHtlm() {
+		ArrayList<String> res = new ArrayList<String>();
+		for (int i=0; i < news.size(); ++i) {
+			News n = news.get(i);
+			Node linked = getNodeWithId(n.getLink());
+			String link = linked.getLink();
+			String htmlNews = "<b><a href='" + link + "'> " + n.getTitle() + " </a></b><br>";
+			htmlNews += n.getDesc();
+			res.add(htmlNews);
+		}
+		return res;
+	}
+
+	public String getUpperLogoPath() {
+		Properties prop = new Properties();
+		String res = null;
+		try {
+			prop.load(new FileInputStream("config/config.properties"));
+			res = prop.getProperty("upperLogo");
+
+		} catch (IOException ex) {
+			Utils.getLogger().warning("Error al llegir el fitxer config.properties");
+		}
 		return res;
 	}
 
