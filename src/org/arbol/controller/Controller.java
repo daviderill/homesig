@@ -6,8 +6,8 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.swing.JLabel;
 import javax.swing.event.HyperlinkEvent;
@@ -34,11 +34,26 @@ public class Controller {
 		myView.addFileListener(new FileListener());
 		myView.addBreadcrumbListener(new BreadCrumbListener());
 		myView.addLinkListener(new LinkListener());
-		myView.setUpperLogo(myModel.getUpperLogoPath());
+		
+		initializeProperties();
 		initalizeFirstLevel();
 		initializeNews();
 	}
 
+	private void initializeProperties() {
+		myModel.openProperties();	
+		myView.setBackgroundColor(myModel.getBackground());
+		myView.setUpperLogo(myModel.getUpperLogoPath());
+		myView.setTitle(myModel.getTitle());
+		myView.setSubtitle(myModel.getSubtitle());
+		myView.setAddress(myModel.getAddress());
+		myView.setTelephone(myModel.getTelephone());
+		myView.setFax(myModel.getFax());
+		myView.setEmail(myModel.getEmail());
+		myView.setConsultor(myModel.getConsultor());
+		myView.setWebDesign(myModel.getWebDesign());
+	}
+	
 	private void initalizeFirstLevel() {
 		myModel.createTree();
 		ArrayList<Node> files = myModel.getFirstLevel();
@@ -241,7 +256,12 @@ public class Controller {
 						else {
 							myView.setSelectedLabel(n.getName());
 							drawDirectory(n.getParent());
-							Desktop.getDesktop().open(file);
+							try {
+								Desktop.getDesktop().open(file);
+							}
+							catch (IOException e) {
+								Utils.getLogger().warning("No es pot obrir el fitxer " + file.getCanonicalPath());
+							}
 						}
 					}
 					else if (hle.getDescription().contains("http")) {
@@ -260,8 +280,17 @@ public class Controller {
 							drawDirectory(n);
 						}
 						else {
-							Utils.getLogger().warning("No existeix cap fitxer o directori a " + hle.getDescription());
-							myView.showErrorFileNotFound(hle.getDescription());
+							Utils.getLogger().info(file.getName() + "No és un directori, mirem si aconseguim obrir com a fitxer");
+							n = myModel.getNodeWithLink(hle.getDescription());
+							if (n != null) {
+								myView.setSelectedLabel(n.getName());
+								drawDirectory(n.getParent());
+								Desktop.getDesktop().open(file);
+							}
+							else {
+								Utils.getLogger().warning("No existeix cap fitxer o directori a " + hle.getDescription());
+								myView.showErrorFileNotFound(hle.getDescription());
+							}
 						}
 					}
 				} 

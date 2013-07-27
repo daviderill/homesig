@@ -49,13 +49,21 @@ public class View extends JFrame{
 	private JPanel panel_files;
 	private JPanel panel_breadcrumb;
 	private JPanel panel_news_content;
+	private JPanel panel_links_content;
 	private JLabel upperLogoLabel;
 	
 	private JEditorPane news1;
 	private JEditorPane news2;
 	private JEditorPane news3;
-	private JEditorPane links1;
-	private JEditorPane links2;
+	
+	private JLabel lblNumber;
+	private JLabel lblFaxnumber;
+	private JLabel lblEmail;
+	private JLabel lblConsultor;
+	private JLabel lblDissenyWeb;
+	private JLabel lblAdreca;
+	private JLabel lblTitle;
+	private JLabel lblSubtitle;
 	
 	private String iconPath = "res/ico_";
 	private String upperLogoPath;
@@ -66,6 +74,7 @@ public class View extends JFrame{
 	private HyperlinkListener link_listener;
 	
 	private ArrayList<Node> currentFiles;
+	
 	private static final int LABEL_WIDTH = 150;
 	private static final int LABEL_HEIGHT = 80;
 	private static final int FONT_SIZE = 11;
@@ -98,6 +107,7 @@ public class View extends JFrame{
 		}
 		
 	}
+	
 
 	private void createFakeLinks() {
 		
@@ -115,17 +125,44 @@ public class View extends JFrame{
 		news1.setOpaque(false);*/
 		
 		String text = "<a href='http://www.santsadurni.cat'> Web de l'ajuntament </a>";
-
-		((HTMLDocument)links1.getDocument()).getStyleSheet().addRule(bodyRule);
+		String imgsrc = "../res/test.jpg";
+		String htmlIcon = "<img src=\"" + imgsrc + "\">";
+		JEditorPane links1 = new JEditorPane();
+		JEditorPane links2 = new JEditorPane();
+		
+		
 		links1.setContentType("text/html");
-		links1.setText(text);
+		((HTMLDocument)links1.getDocument()).getStyleSheet().addRule(bodyRule);
+		links1.setText(htmlIcon + text);
 		links1.setEditable(false);  
 		links1.setOpaque(false);
 		
+		links2.setContentType("text/html");
 		((HTMLDocument)links2.getDocument()).getStyleSheet().addRule(bodyRule);
 		links2.setText("<a href='http://oslo.geodata.es/stsadurnia/planejament.php'> Web de planejament </a>");
 		links2.setOpaque(false);
 		links2.setEditable(false);
+		
+		GroupLayout gl_panel_links_content = new GroupLayout(panel_links_content);
+		gl_panel_links_content.setHorizontalGroup(
+			gl_panel_links_content.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_panel_links_content.createSequentialGroup()
+					.addGroup(gl_panel_links_content.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(links1, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+						.addComponent(links2, Alignment.LEADING, 0, 0, Short.MAX_VALUE))
+					.addContainerGap(155, Short.MAX_VALUE))
+		);
+		gl_panel_links_content.setVerticalGroup(
+			gl_panel_links_content.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_links_content.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(links1, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(links2, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED))
+		);
+		panel_links_content.setLayout(gl_panel_links_content);
+		
 	}
 	
 	public void addFileListener(MouseListener listenForFileClick){
@@ -144,8 +181,6 @@ public class View extends JFrame{
 		news1.addHyperlinkListener(link_listener);
 		news2.addHyperlinkListener(link_listener); 
 		news3.addHyperlinkListener(link_listener); 
-		links1.addHyperlinkListener(linkListener);
-		links2.addHyperlinkListener(linkListener);
 	}
 	
 	public void drawNews(ArrayList<String> news) {
@@ -163,7 +198,7 @@ public class View extends JFrame{
 	private void setNews(JEditorPane newspanel, String text) {
 		String bodyRule = "body { font-family: " + FONT.getFamily() + "; " +
 	            "font-size: " + FONT.getSize() + "pt; }";
-		((HTMLDocument)news1.getDocument()).getStyleSheet().addRule(bodyRule);
+		((HTMLDocument)newspanel.getDocument()).getStyleSheet().addRule(bodyRule);
 		newspanel.setContentType("text/html");
 		newspanel.setEditable(false);  
 		newspanel.setOpaque(false);
@@ -322,7 +357,7 @@ public class View extends JFrame{
 		panel_news_content = new JPanel();
 		panel_news_content.setBackground(Color.WHITE);
 		
-		JPanel panel_links_content = new JPanel();
+		panel_links_content = new JPanel();
 		panel_links_content.setBackground(Color.WHITE);
 		
 		panel_breadcrumb = new JPanel();
@@ -339,7 +374,7 @@ public class View extends JFrame{
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(21)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, 899, GroupLayout.PREFERRED_SIZE)
+								.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addComponent(panel_news_content, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
@@ -371,40 +406,25 @@ public class View extends JFrame{
 						.addComponent(panel_links_title, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
-						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+						.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(editorScroll, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+							.addComponent(editorScroll, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addGap(27)
 					.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
-		
-		links1 = new JEditorPane();
-		links1.setContentType("text/html");
-		
-		links2 = new JEditorPane();
-		links2.setContentType("text/html");
-		GroupLayout gl_panel_links_content = new GroupLayout(panel_links_content);
+		/*GroupLayout gl_panel_links_content = new GroupLayout(panel_links_content);
 		gl_panel_links_content.setHorizontalGroup(
 			gl_panel_links_content.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_links_content.createSequentialGroup()
-					.addGroup(gl_panel_links_content.createParallelGroup(Alignment.LEADING)
-						.addComponent(links1, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
-						.addComponent(links2, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(29, Short.MAX_VALUE))
+				.addGap(0, 183, Short.MAX_VALUE)
 		);
 		gl_panel_links_content.setVerticalGroup(
 			gl_panel_links_content.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_links_content.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(links1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(links2, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(316, Short.MAX_VALUE))
+				.addGap(0, 409, Short.MAX_VALUE)
 		);
-		panel_links_content.setLayout(gl_panel_links_content);
+		panel_links_content.setLayout(gl_panel_links_content);*/
 		
 		news1 = new JEditorPane();
 		news1.setContentType("text/html");
@@ -444,23 +464,51 @@ public class View extends JFrame{
 					.addContainerGap(124, Short.MAX_VALUE))
 		);
 		panel_news_content.setLayout(gl_panel_news_content);
-		panel_info.setLayout(new MigLayout("", "[55px][5px][40px][5px][30px][8px][90px][6px][46px][6px][]", "[14px][]"));
+		panel_info.setLayout(new MigLayout("", "[55px][5px][40px][5px][][8px][][][8px][][][8px][][][8px][][][8px][][]", "[14px][]"));
 		
-		JLabel lblNewLabel_4 = new JLabel("Pla\u00E7a Ajuntament, 1  08770 Sant Sadurn\u00ED d'Anoia");
-		lblNewLabel_4.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblNewLabel_4, "cell 0 0 5 1,alignx left,aligny top");
+		lblAdreca = new JLabel("Pla\u00E7a Ajuntament, 1  08770 Sant Sadurn\u00ED d'Anoia");
+		lblAdreca.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblAdreca, "cell 0 0 5 1,alignx left,aligny top");
 		
-		JLabel lblNewLabel_5 = new JLabel("Tel +34 938 910 325   Fax +34 938 183 470  E-mail: ajuntament@santsadurni.cat");
-		lblNewLabel_5.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblNewLabel_5, "cell 6 0,alignx left,aligny top");
+		JLabel lblTel = new JLabel("Tel: ");
+		lblTel.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblTel, "cell 6 0");
 		
-		JLabel lblNewLabel_3 = new JLabel("Consultor SIG: Carlos L\u00F3pez");
-		lblNewLabel_3.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblNewLabel_3, "cell 8 0,aligny top");
+		lblNumber = new JLabel("NUMBER");
+		lblNumber.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblNumber, "cell 7 0");
 		
-		JLabel lblNewLabel_9 = new JLabel("Disseny web: mm!");
-		lblNewLabel_9.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblNewLabel_9, "cell 10 0,aligny top");
+		JLabel lblFax = new JLabel("Fax: ");
+		lblFax.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblFax, "cell 9 0");
+		
+		lblFaxnumber = new JLabel("FAX_NUMBER");
+		lblFaxnumber.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblFaxnumber, "cell 10 0");
+		
+		JLabel lblEmailfix = new JLabel("E-mail: ");
+		lblEmailfix.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblEmailfix, "cell 12 0");
+		
+		lblEmail = new JLabel("EMAIL");
+		lblEmail.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblEmail, "cell 13 0");
+		
+		JLabel lblConsultorSig = new JLabel("Consultor SIG: ");
+		lblConsultorSig.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblConsultorSig, "cell 15 0");
+		
+		lblConsultor = new JLabel("CONSULTOR");
+		lblConsultor.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblConsultor, "cell 16 0");
+		
+		JLabel lblDisseny = new JLabel("Disseny web: ");
+		lblDisseny.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblDisseny, "cell 18 0");
+		
+		lblDissenyWeb = new JLabel("DISSENY_WEB");
+		lblDissenyWeb.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblDissenyWeb, "cell 19 0");
 		
 		JLabel lblNewLabel_7 = new JLabel("Av\u00EDs legal");
 		lblNewLabel_7.setFont(new Font("Georgia", Font.BOLD, 10));
@@ -477,17 +525,17 @@ public class View extends JFrame{
 		panel_breadcrumb.setLayout(new MigLayout("", "[4px]", "[14px]"));
 		panel_title.setLayout(new MigLayout("", "[450px]", "[41px][31px]"));
 		
-		JLabel lblNewLabel_1 = new JLabel("Sistema d'informaci\u00F3 territorial");
-		lblNewLabel_1.setForeground(Color.GRAY);
-		panel_title.add(lblNewLabel_1, "cell 0 0,alignx left,aligny top");
-		lblNewLabel_1.setBackground(Color.LIGHT_GRAY);
-		lblNewLabel_1.setFont(new Font("Georgia", Font.PLAIN, 35));
+		lblTitle = new JLabel("TITLE");
+		lblTitle.setForeground(Color.GRAY);
+		panel_title.add(lblTitle, "cell 0 0,alignx left,aligny top");
+		lblTitle.setBackground(Color.LIGHT_GRAY);
+		lblTitle.setFont(new Font("Georgia", Font.PLAIN, 35));
 		
-		JLabel lblNewLabel_2 = new JLabel("SIG dels Serveis T\u00E8cnics");
-		lblNewLabel_2.setForeground(Color.GRAY);
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_2.setFont(new Font("Georgia", Font.PLAIN, 25));
-		panel_title.add(lblNewLabel_2, "cell 0 1,alignx left,aligny top");
+		lblSubtitle = new JLabel("SUBTITLE");
+		lblSubtitle.setForeground(Color.GRAY);
+		lblSubtitle.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSubtitle.setFont(new Font("Georgia", Font.PLAIN, 25));
+		panel_title.add(lblSubtitle, "cell 0 1,alignx left,aligny top");
 		
 		upperLogoLabel = new JLabel("");
 		//lblNewLabel.setIcon(new ImageIcon("res\\logo2.png"));
@@ -524,5 +572,42 @@ public class View extends JFrame{
 	public void setUpperLogo(String path) {
 		upperLogoPath = path;
 		upperLogoLabel.setIcon(new ImageIcon(upperLogoPath));
+	}
+
+
+	public void setBackgroundColor(Color background) {
+		frame.getContentPane().setBackground(background);
+	}
+
+	public void setTitle(String s) {
+		lblTitle.setText(s);
+	}
+	
+	public void setSubtitle(String s) {
+		lblSubtitle.setText(s);
+	}
+	
+	public void setAddress(String s) {
+		lblAdreca.setText(s);
+	}
+	
+	public void setTelephone(String telephone) {
+		lblNumber.setText(telephone);
+	}
+	
+	public void setFax(String s) {
+		lblFaxnumber.setText(s);
+	}
+	
+	public void setEmail(String s) {
+		lblEmail.setText(s);
+	}
+	
+	public void setConsultor(String s) {
+		lblConsultor.setText(s);
+	}
+	
+	public void setWebDesign(String s) {
+		lblDissenyWeb.setText(s);
 	}
 }

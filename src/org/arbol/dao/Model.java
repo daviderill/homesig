@@ -1,5 +1,6 @@
 package org.arbol.dao;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,6 +23,7 @@ import org.arbol.util.Utils;
 public class Model {
 	
 	private Connection conn = null;
+	private Properties prop = null;
 	// Llista on guardem tots els fitxers que llegirem
 	private ArrayList<Node> nodes;
 	private ArrayList<News> news;
@@ -340,18 +342,59 @@ public class Model {
 		return res;
 	}
 
-	public String getUpperLogoPath() {
-		Properties prop = new Properties();
-		String res = null;
+	public void openProperties() {
+		prop = new Properties();
 		try {
 			prop.load(new FileInputStream("config/config.properties"));
-			res = prop.getProperty("upperLogo");
 
 		} catch (IOException ex) {
 			Utils.getLogger().warning("Error al llegir el fitxer config.properties");
 		}
+	}
+	
+	public String getUpperLogoPath() {
+		return prop.getProperty("upperLogo");
+	}
+
+	public Color getBackground() {
+		String color = prop.getProperty("backgroundColor");
+		String[] rgb = color.split(",");
+		Float red = Float.valueOf(rgb[0])/255f;
+		Float green = Float.valueOf(rgb[1])/255f;
+		Float blue = Float.valueOf(rgb[2])/255f;
+		Color res = new Color(red,green,blue);
 		return res;
 	}
 
+	public String getTitle() {
+		return prop.getProperty("title");
+	}
 	
+	public String getSubtitle() {
+		return prop.getProperty("subtitle");
+	}
+	
+	public String getAddress() {
+		return prop.getProperty("address");
+	}
+	
+	public String getTelephone() {
+		return prop.getProperty("telephone");
+	}
+
+	public String getFax() {
+		return prop.getProperty("fax");
+	}
+	
+	public String getEmail() {
+		return prop.getProperty("email");
+	}
+	
+	public String getConsultor() {
+		return prop.getProperty("consultor");
+	}
+	
+	public String getWebDesign() {
+		return prop.getProperty("webDesign");
+	}
 }
