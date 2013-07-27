@@ -3,7 +3,6 @@ package org.arbol.dao;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,8 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Properties;
 
+import org.arbol.domain.Links;
 import org.arbol.domain.News;
 import org.arbol.domain.Node;
 import org.arbol.util.Utils;
@@ -23,10 +22,9 @@ import org.arbol.util.Utils;
 public class Model {
 	
 	private Connection conn = null;
-	private Properties prop = null;
-	// Llista on guardem tots els fitxers que llegirem
 	private ArrayList<Node> nodes;
 	private ArrayList<News> news;
+	private ArrayList<Links> links;
 	private ArrayList<Node> currentPath;
 	private static final String DB_PATH = "config/BDProva.sqlite";
 	//private static final String DB_PATH = "config/arbol2.sqlite";
@@ -41,6 +39,7 @@ public class Model {
 		}
 		nodes = new ArrayList<Node>();
 		news = new ArrayList<News>();
+		links = new ArrayList<Links>();
 		currentPath = new ArrayList<Node>();
 		
 	}
@@ -134,7 +133,7 @@ public class Model {
 		    }
 		    // Ordenem els fills segons la posició
 		    sortChildren();
-		    //rs.close();
+		    rs.close();
 		    //conn.close();
 		} catch (SQLException e1) {
 			Utils.showError(e1.getMessage(), sql, "");
@@ -144,7 +143,7 @@ public class Model {
 	
 	public void createNews() {		
 		Statement stat = null;
-		String sql = "select * from news;";
+		String sql = "select * from news ORDER BY date_act DESC;";
 		try {
 			stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(sql);
@@ -154,6 +153,23 @@ public class Model {
 		    }
 		    rs.close();
 		    conn.close();
+		} catch (SQLException e1) {
+			Utils.showError(e1.getMessage(), sql, "");
+		}	
+	}
+	
+	public void createLinks() {		
+		Statement stat = null;
+		String sql = "select * from links;";
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(sql);
+		    while (rs.next()) {
+		    	Links n = new Links(rs.getString("id"),rs.getString("title"),rs.getString("path"),rs.getString("image"));
+		    	links.add(n);
+		    }
+		    rs.close();
+		    //conn.close();
 		} catch (SQLException e1) {
 			Utils.showError(e1.getMessage(), sql, "");
 		}	
@@ -334,30 +350,62 @@ public class Model {
 		for (int i=0; i < news.size(); ++i) {
 			News n = news.get(i);
 			Node linked = getNodeWithId(n.getLink());
-			String link = linked.getLink();
-			String htmlNews = "<b><a href='" + link + "'> " + n.getTitle() + " </a></b><br>";
+			String link = "";
+			try {
+				link = linked.getLink();
+			}
+			catch (NullPointerException e) {
+				link = "";
+				//Utils.getLogger().info("El link " + n.getLink() + " de la notícia " + n.getTitle() + " no existeix");
+			}
+			String htmlNews = null;
+			if (link.isEmpty()) {
+				htmlNews = "<b>" + n.getTitle() + "</b><br>";
+			}
+			else {
+				htmlNews = "<b><a href='" + link + "'> " + n.getTitle() + " </a></b><br>";
+			}
 			htmlNews += n.getDesc();
 			res.add(htmlNews);
 		}
 		return res;
 	}
-
-	public void openProperties() {
-		prop = new Properties();
-		try {
-			prop.load(new FileInputStream("config/config.properties"));
-
-		} catch (IOException ex) {
-			Utils.getLogger().warning("Error al llegir el fitxer config.properties");
+	
+	public ArrayList<Links> createLinksHtlm() {
+		ArrayList<Links> res = new ArrayList<Links>();
+		for (int i=0; i < links.size(); ++i) {
+			Links l = links.get(i);
+			String htmlLinks = "<a href='" + l.getPath() + "'> " + l.getName() + " </a><br>";
+			links.get(i).setHtmlcode(htmlLinks);
+			res.add(links.get(i));
 		}
+		return res;
+	}
+	
+	
+
+	private String getValueOf(String field) {
+		Statement stat = null;
+		String sql = "select value from properties where field = \"" + field + "\"";
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(sql);
+			if (rs.next()) {
+				return rs.getString("value");
+			}
+		}
+		catch (SQLException e) {
+			Utils.showError(e.getMessage(), sql, "");
+		}
+		return "ERROR";
 	}
 	
 	public String getUpperLogoPath() {
-		return prop.getProperty("upperLogo");
+		return getValueOf("upperLogo");
 	}
-
+	
 	public Color getBackground() {
-		String color = prop.getProperty("backgroundColor");
+		String color = getValueOf("backgroundColor");
 		String[] rgb = color.split(",");
 		Float red = Float.valueOf(rgb[0])/255f;
 		Float green = Float.valueOf(rgb[1])/255f;
@@ -367,34 +415,34 @@ public class Model {
 	}
 
 	public String getTitle() {
-		return prop.getProperty("title");
+		return getValueOf("title");
 	}
 	
 	public String getSubtitle() {
-		return prop.getProperty("subtitle");
+		return getValueOf("subtitle");
 	}
 	
 	public String getAddress() {
-		return prop.getProperty("address");
+		return getValueOf("address");
 	}
 	
 	public String getTelephone() {
-		return prop.getProperty("telephone");
+		return getValueOf("telephone");
 	}
 
 	public String getFax() {
-		return prop.getProperty("fax");
+		return getValueOf("fax");
 	}
 	
 	public String getEmail() {
-		return prop.getProperty("email");
+		return getValueOf("email");
 	}
 	
 	public String getConsultor() {
-		return prop.getProperty("consultor");
+		return getValueOf("consultor");
 	}
 	
 	public String getWebDesign() {
-		return prop.getProperty("webDesign");
+		return getValueOf("webDesign");
 	}
 }

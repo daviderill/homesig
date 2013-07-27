@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
+import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.MissingResourceException;
@@ -25,30 +26,53 @@ public class Utils {
 
 	private static final ResourceBundle BUNDLE_TEXT = ResourceBundle.getBundle("text"); //$NON-NLS-1$
     private static Logger logger;
+    private static Logger mapLogger;
     private static final String LOG_FOLDER = "log/";
 
     
     public static Logger getLogger() {
 
     	if (logger == null) {
-            try {
-            	String folderRoot = Utils.getAppPath();                	
-                String folder = folderRoot + LOG_FOLDER;
-                (new File(folder)).mkdirs();
-                String logFile = folder + "log_" + getCurrentTimeStamp() + ".log";
-                FileHandler fh = new FileHandler(logFile, true);
-                LogFormatter lf = new LogFormatter();
-                fh.setFormatter(lf);
-                logger = Logger.getLogger(logFile);
-                logger.addHandler(fh);
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error al crear el fitxer de log", JOptionPane.ERROR_MESSAGE);
-            }
+        	String logFile = createPath("log_");
+            logger = Logger.getLogger(logFile);
+            logger.addHandler(createHandler(logFile));
         }
         return logger;
 
     }
     
+    public static Logger getMapLogger() {
+
+    	if (mapLogger == null) {
+    		String logFile = createPath("maplog_");
+            mapLogger = Logger.getLogger(logFile);
+            mapLogger.addHandler(createHandler(logFile));
+        }
+        return mapLogger;
+
+    }
+    
+    public static String createPath(String prefix) {
+    	String folderRoot = Utils.getAppPath();                	
+        String folder = folderRoot + LOG_FOLDER;
+        String logFile = folder + prefix + getCurrentTimeStamp() + ".log";
+        return logFile;
+    }
+    
+    public static FileHandler createHandler(String path) {
+    	FileHandler fh = null;
+		try {
+			fh = new FileHandler(path, true);
+			LogFormatter lf = new LogFormatter();
+	        fh.setFormatter(lf);
+	        return fh;
+		} catch (SecurityException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error al crear el fitxer de log, excepció de seguretat", JOptionPane.ERROR_MESSAGE);
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error al crear el fitxer de log", JOptionPane.ERROR_MESSAGE);
+		}
+        return null;
+    }
     
     public static String getAppPath(){
     	

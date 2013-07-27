@@ -34,6 +34,7 @@ import javax.swing.text.html.HTMLDocument;
 
 import net.miginfocom.swing.MigLayout;
 
+import org.arbol.domain.Links;
 import org.arbol.domain.Node;
 import org.arbol.util.Utils;
 
@@ -51,10 +52,6 @@ public class View extends JFrame{
 	private JPanel panel_news_content;
 	private JPanel panel_links_content;
 	private JLabel upperLogoLabel;
-	
-	private JEditorPane news1;
-	private JEditorPane news2;
-	private JEditorPane news3;
 	
 	private JLabel lblNumber;
 	private JLabel lblFaxnumber;
@@ -85,7 +82,6 @@ public class View extends JFrame{
 		initialize();
 		frame.setLocationRelativeTo(null);
 		setLookAndFeel();
-		createFakeLinks();
 	}
 	
 	
@@ -108,63 +104,6 @@ public class View extends JFrame{
 		
 	}
 	
-
-	private void createFakeLinks() {
-		
-	    String bodyRule = "body { font-family: " + FONT.getFamily() + "; " +
-	            "font-size: " + FONT.getSize() + "pt; }";
-		
-		/*String text = "S'ha creat el mapa guia, accés a tota" +
-				" la cartografia en un sòl mapa" 
-				+ " <a href='QGIS_projectes\\1_Mapa_guia_v2.qgs'>Mapa guia</a>";
-
-		((HTMLDocument)news1.getDocument()).getStyleSheet().addRule(bodyRule);
-		news1.setContentType("text/html");
-		news1.setText(text);
-		news1.setEditable(false);  
-		news1.setOpaque(false);*/
-		
-		String text = "<a href='http://www.santsadurni.cat'> Web de l'ajuntament </a>";
-		String imgsrc = "../res/test.jpg";
-		String htmlIcon = "<img src=\"" + imgsrc + "\">";
-		JEditorPane links1 = new JEditorPane();
-		JEditorPane links2 = new JEditorPane();
-		
-		
-		links1.setContentType("text/html");
-		((HTMLDocument)links1.getDocument()).getStyleSheet().addRule(bodyRule);
-		links1.setText(htmlIcon + text);
-		links1.setEditable(false);  
-		links1.setOpaque(false);
-		
-		links2.setContentType("text/html");
-		((HTMLDocument)links2.getDocument()).getStyleSheet().addRule(bodyRule);
-		links2.setText("<a href='http://oslo.geodata.es/stsadurnia/planejament.php'> Web de planejament </a>");
-		links2.setOpaque(false);
-		links2.setEditable(false);
-		
-		GroupLayout gl_panel_links_content = new GroupLayout(panel_links_content);
-		gl_panel_links_content.setHorizontalGroup(
-			gl_panel_links_content.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panel_links_content.createSequentialGroup()
-					.addGroup(gl_panel_links_content.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(links1, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-						.addComponent(links2, Alignment.LEADING, 0, 0, Short.MAX_VALUE))
-					.addContainerGap(155, Short.MAX_VALUE))
-		);
-		gl_panel_links_content.setVerticalGroup(
-			gl_panel_links_content.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_links_content.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(links1, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(links2, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED))
-		);
-		panel_links_content.setLayout(gl_panel_links_content);
-		
-	}
-	
 	public void addFileListener(MouseListener listenForFileClick){
 		listener = listenForFileClick;
 		panel_files.addMouseListener(listener);
@@ -178,33 +117,47 @@ public class View extends JFrame{
 	
 	public void addLinkListener(HyperlinkListener linkListener) {
 		link_listener = linkListener;
-		news1.addHyperlinkListener(link_listener);
-		news2.addHyperlinkListener(link_listener); 
-		news3.addHyperlinkListener(link_listener); 
 	}
 	
 	public void drawNews(ArrayList<String> news) {
-		if (news.size() > 0) {
-			setNews(news1,news.get(0));
-			if (news.size() > 1) {
-				setNews(news2,news.get(1));
-				if (news.size() > 2) {
-					setNews(news2,news.get(2));
-				}
-			}
+		int index = 1;
+		for (int i=0; i < news.size(); ++i) {
+			createHtmlElement(index,news.get(i),panel_news_content);
+			++index;
 		}
 	}
 	
-	private void setNews(JEditorPane newspanel, String text) {
+	public void drawLinks(ArrayList<Links> links) {
+		int index = 1;
+		for (int i=0; i < links.size(); ++i) {
+			Links l = links.get(i);
+			if (l.getImagesrc() != null) {
+				JLabel image = new JLabel();
+				ImageIcon icon = new ImageIcon(l.getImagesrc());
+				image.setIcon(icon);
+				String pos = String.valueOf(index);
+				Object constraint = "cell 1 " + pos + ",grow";
+				panel_links_content.add(image, constraint);
+				++index;
+			} 
+			createHtmlElement(index,l.getHtmlcode(),panel_links_content);
+			++index;
+		}
+	}
+	
+	private void createHtmlElement(int position, String htmltext, JPanel parent) {
+		JEditorPane element = new JEditorPane();
 		String bodyRule = "body { font-family: " + FONT.getFamily() + "; " +
 	            "font-size: " + FONT.getSize() + "pt; }";
-		((HTMLDocument)newspanel.getDocument()).getStyleSheet().addRule(bodyRule);
-		newspanel.setContentType("text/html");
-		newspanel.setEditable(false);  
-		newspanel.setOpaque(false);
-		newspanel.setText(text);
+		element.setContentType("text/html");
+		((HTMLDocument)element.getDocument()).getStyleSheet().addRule(bodyRule);
+		element.setText(htmltext);
+		element.setEditable(false);		
+		element.addHyperlinkListener(link_listener);
+		String pos = String.valueOf(position);
+		Object constraint = "cell 1 " + pos + ",grow";
+		parent.add(element, constraint);
 	}
-
 	
 	/**
 	 * Donats uns nodes files, dibuixar-los en el panell panel_files
@@ -316,7 +269,7 @@ public class View extends JFrame{
 	private void initialize() {
 		
 		frame = new JFrame();
-		frame.setBounds(0, 0, 1240, 700);
+		frame.setBounds(0, 0, 1267, 700);
 		frame.setTitle("Sistema d'informaci\u00F3 territorial");
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -381,16 +334,16 @@ public class View extends JFrame{
 										.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
 									.addGap(18)
 									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(editorScroll, GroupLayout.PREFERRED_SIZE, 781, Short.MAX_VALUE)
-										.addComponent(panel_breadcrumb, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 781, Short.MAX_VALUE)
+										.addComponent(editorScroll, GroupLayout.PREFERRED_SIZE, 795, Short.MAX_VALUE)
+										.addComponent(panel_breadcrumb, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 795, Short.MAX_VALUE)
 										.addGroup(groupLayout.createSequentialGroup()
 											.addComponent(panel_title, GroupLayout.PREFERRED_SIZE, 588, GroupLayout.PREFERRED_SIZE)
 											.addPreferredGap(ComponentPlacement.RELATED)))))))
-					.addGap(27)
+					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_links_content, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel_links_title, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addComponent(panel_links_title, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel_links_content, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(14, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -400,70 +353,26 @@ public class View extends JFrame{
 						.addComponent(panel_top_logo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(panel_title, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(24)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(panel_news_title, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(panel_breadcrumb, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(panel_news_title, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(panel_breadcrumb, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
 						.addComponent(panel_links_title, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(editorScroll, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGap(27)
-					.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(editorScroll, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)))
+							.addGap(27)
+							.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE))
 					.addContainerGap())
 		);
-		/*GroupLayout gl_panel_links_content = new GroupLayout(panel_links_content);
-		gl_panel_links_content.setHorizontalGroup(
-			gl_panel_links_content.createParallelGroup(Alignment.TRAILING)
-				.addGap(0, 183, Short.MAX_VALUE)
-		);
-		gl_panel_links_content.setVerticalGroup(
-			gl_panel_links_content.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 409, Short.MAX_VALUE)
-		);
-		panel_links_content.setLayout(gl_panel_links_content);*/
-		
-		news1 = new JEditorPane();
-		news1.setContentType("text/html");
-		
-		news2 = new JEditorPane();
-		news2.setText("Aqu\u00ED tenim una not\u00EDcia de prova amb un enlla\u00E7 al fitxer <a href='doc\\cadastre.pdf'> Cadastre ");
-		news2.setOpaque(false);
-		news2.setFont(new Font("Georgia", Font.PLAIN, 13));
-		news2.setEditable(false);
-		news2.setContentType("text/html");
-		
-		news3 = new JEditorPane();
-		news3.setText("Aqu\u00ED tenim una not\u00EDcia de prova amb un enlla\u00E7 al fitxer <a href='doc\\cadastre.pdf'> Cadastre ");
-		news3.setOpaque(false);
-		news3.setFont(new Font("Georgia", Font.PLAIN, 13));
-		news3.setEditable(false);
-		news3.setContentType("text/html");
-		GroupLayout gl_panel_news_content = new GroupLayout(panel_news_content);
-		gl_panel_news_content.setHorizontalGroup(
-			gl_panel_news_content.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panel_news_content.createSequentialGroup()
-					.addGroup(gl_panel_news_content.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(news3, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-						.addComponent(news2, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-						.addComponent(news1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 187, Short.MAX_VALUE))
-					.addContainerGap(155, Short.MAX_VALUE))
-		);
-		gl_panel_news_content.setVerticalGroup(
-			gl_panel_news_content.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_news_content.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(news1, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(news2, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(news3, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(124, Short.MAX_VALUE))
-		);
-		panel_news_content.setLayout(gl_panel_news_content);
+		panel_news_content.setLayout(new MigLayout("", "[3px][165px][3px]", "[5px][50px][50px][50px][50px][50px][50px]"));
+		panel_links_content.setLayout(new MigLayout("", "[3px][165px][3px]", "[5px][50px][50px][50px][50px][50px][50px]"));
 		panel_info.setLayout(new MigLayout("", "[55px][5px][40px][5px][][8px][][][8px][][][8px][][][8px][][][8px][][]", "[14px][]"));
 		
 		lblAdreca = new JLabel("Pla\u00E7a Ajuntament, 1  08770 Sant Sadurn\u00ED d'Anoia");

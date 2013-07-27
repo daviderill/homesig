@@ -7,13 +7,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Properties;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
 import org.arbol.dao.Model;
+import org.arbol.domain.Links;
 import org.arbol.domain.Node;
 import org.arbol.gui.View;
 import org.arbol.util.Utils;
@@ -37,11 +38,12 @@ public class Controller {
 		
 		initializeProperties();
 		initalizeFirstLevel();
+		initializeLinks();
 		initializeNews();
+		
 	}
 
 	private void initializeProperties() {
-		myModel.openProperties();	
 		myView.setBackgroundColor(myModel.getBackground());
 		myView.setUpperLogo(myModel.getUpperLogoPath());
 		myView.setTitle(myModel.getTitle());
@@ -67,6 +69,12 @@ public class Controller {
 		myView.drawNews(news);
 	}
 	
+	private void initializeLinks() {
+		myModel.createLinks();
+		ArrayList<Links> links = myModel.createLinksHtlm();
+		myView.drawLinks(links);
+	}
+	
 	private void drawDirectory(Node n) {
 		ArrayList<Node> files = n.getChildren();
 		String parent_name = null;
@@ -76,11 +84,41 @@ public class Controller {
 		myView.drawBreadcrumb(myModel.drawPath());
 	}
 	
+	private boolean isMap(String s) {
+		if (s != null) {
+			int pos = s.lastIndexOf('.');
+			String ext = s.substring(pos+1);
+			return ext.equals("gvp");
+		}
+		return false;
+	}
+	
+	private boolean isDangerousExtension(String s) {
+		if (s != null) {
+			int pos = s.lastIndexOf('.');
+			String ext = s.substring(pos+1);
+			return ext.equals("exe") || ext.equals("jar");
+		}
+		return false;
+	}
+	
 	private void openFile(Node n) {
 		Utils.getLogger().info("Obrim el node " + n.getName() + " que te enllaç " + n.getLink());
 		File file = new File(n.getLink());
 		try {
-			Desktop.getDesktop().open(file);
+			if (isMap(file.getName())) {
+				Utils.getMapLogger().info("Obrim el mapa " + file.getName());
+			}
+			else if (isDangerousExtension(file.getName())) {
+				int reply = JOptionPane.showConfirmDialog(null, "Aquest fitxer té una extensió que pot ser perillosa. Obrir el fitxer?"
+						, "Confirmació d'obertura de fitxer", JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION) {
+					Desktop.getDesktop().open(file);
+				}
+			}
+			else {
+				Desktop.getDesktop().open(file);
+			}
 		} 
 		catch (IOException e1) {
 			Utils.getLogger().warning("Error al obrir el fitxer: " + e1.getMessage() + "\n" +

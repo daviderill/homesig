@@ -1,5 +1,7 @@
 package org.arbol;
 
+import java.util.Properties;
+
 import org.arbol.controller.Controller;
 import org.arbol.dao.Model;
 import org.arbol.gui.View;
