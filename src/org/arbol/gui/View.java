@@ -37,6 +37,8 @@ import net.miginfocom.swing.MigLayout;
 import org.arbol.domain.Links;
 import org.arbol.domain.Node;
 import org.arbol.util.Utils;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.EmptyBorder;
 
 /**
  * Classe que mostra un explorador de fitxers, i una secció de notícies i una d'enllaços
@@ -50,7 +52,10 @@ public class View extends JFrame{
 	private JPanel panel_files;
 	private JPanel panel_breadcrumb;
 	private JPanel panel_news_content;
+	private JPanel panel_news_title;
 	private JPanel panel_links_content;
+	private JPanel panel_links_title;
+	private JPanel panel_title;
 	private JLabel upperLogoLabel;
 	
 	private JLabel lblNumber;
@@ -61,8 +66,11 @@ public class View extends JFrame{
 	private JLabel lblAdreca;
 	private JLabel lblTitle;
 	private JLabel lblSubtitle;
+	private JLabel lblEnllacos;
+	private JLabel lblNoticies;
 	
 	private String iconPath = "res/ico_";
+	private String titleIcon;
 	private String upperLogoPath;
 	private String selectedLabel;
 	
@@ -76,23 +84,25 @@ public class View extends JFrame{
 	private static final int LABEL_HEIGHT = 80;
 	private static final int FONT_SIZE = 11;
 	private static final Font FONT = new Font("Georgia", Font.PLAIN, FONT_SIZE);
-
+	
+	private Color inici_color = Color.blue;
+	private Color breadcrumb_color = Color.black;
+	
 	
 	public View() {
 		initialize();
 		frame.setLocationRelativeTo(null);
-		setLookAndFeel();
 	}
 	
 	
 	private void setLookAndFeel() {
 		
 		List<Image> icons  = new ArrayList<Image>();
-		icons.add(new ImageIcon("res/icon256.png").getImage());
-	    icons.add(new ImageIcon("res/icon48.png").getImage());
-	    icons.add(new ImageIcon("res/icon32.png").getImage());
-	    icons.add(new ImageIcon("res/icon24.png").getImage());
-	    icons.add(new ImageIcon("res/icon16.png").getImage());
+		// Si no troba la icona adient, posa la de java per default
+		icons.add(new ImageIcon(titleIcon + "_128.png").getImage());
+	    icons.add(new ImageIcon(titleIcon + "_64.png").getImage());
+	    icons.add(new ImageIcon(titleIcon + "_32.png").getImage());
+	    icons.add(new ImageIcon(titleIcon + "_16.png").getImage());
 	    frame.setIconImages(icons);
 		try	{
 		    JFrame.setDefaultLookAndFeelDecorated(true);
@@ -178,7 +188,7 @@ public class View extends JFrame{
 			label_file.setFont(FONT);
 			
 			String extension = file.getExtension_id();
-			if (extension == null) {
+			if (extension == null || extension.trim().isEmpty()) {
 				extension = "dir";		
 			}
 			String path = iconPath + extension + ".png";
@@ -245,10 +255,12 @@ public class View extends JFrame{
 	 */
 	private void drawInBreadCrumb(String s, boolean bold) {
 		
-		JLabel bread = new JLabel(s, SwingConstants.LEFT);		
-		if (s.equals("Inici ")) bread.setForeground(Color.blue);
+		JLabel bread = new JLabel(s, SwingConstants.LEFT);
+		bread.setForeground(breadcrumb_color);
+		if (s.equals("Inici ")) bread.setForeground(inici_color);
 		bread.addMouseListener(breadcrumb_listener);
 		JLabel separator = new JLabel(" > ", SwingConstants.LEFT);
+		separator.setForeground(breadcrumb_color);
 		if (bold) {
 			bread.setFont(new Font("Georgia", Font.BOLD, FONT_SIZE));
 			separator.setFont(new Font("Georgia", Font.BOLD, FONT_SIZE));
@@ -279,30 +291,30 @@ public class View extends JFrame{
 		
 		FlowLayout fl_panel_files = new FlowLayout(FlowLayout.LEFT);
 		panel_files = new JPanel(fl_panel_files);
+		panel_files.setBorder(new EmptyBorder(0, 0, 0, 0));
 		panel_files.setBackground(new Color(245, 245, 245));
 		panel_files.setAlignmentX(Component.LEFT_ALIGNMENT);
 		JScrollPane editorScroll = new JScrollPane(panel_files);
+		editorScroll.setBorder(BorderFactory.createEmptyBorder());
 		editorScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		panel_files.setPreferredSize(new Dimension(777,600));
 		editorScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		JPanel panel_title = new JPanel();
+		panel_title = new JPanel();
 		
-		JPanel panel_links_title = new JPanel();
+		panel_links_title = new JPanel();
 		
-		JLabel lblEnllaos = new JLabel("Enlla\u00E7os");
-		lblEnllaos.setForeground(Color.GRAY);
-		lblEnllaos.setHorizontalAlignment(SwingConstants.LEFT);
-		lblEnllaos.setFont(new Font("Georgia", Font.PLAIN, 25));
-		panel_links_title.add(lblEnllaos);
+		lblEnllacos = new JLabel("Enlla\u00E7os");
+		lblEnllacos.setHorizontalAlignment(SwingConstants.LEFT);
+		lblEnllacos.setFont(new Font("Georgia", Font.PLAIN, 25));
+		panel_links_title.add(lblEnllacos);
 		
-		JPanel panel_news_title = new JPanel();
+		panel_news_title = new JPanel();
 		
-		JLabel lblNotcies = new JLabel("Not\u00EDcies");
-		lblNotcies.setForeground(Color.GRAY);
-		lblNotcies.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNotcies.setFont(new Font("Georgia", Font.PLAIN, 25));
-		panel_news_title.add(lblNotcies);
+		lblNoticies = new JLabel("Not\u00EDcies");
+		lblNoticies.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNoticies.setFont(new Font("Georgia", Font.PLAIN, 25));
+		panel_news_title.add(lblNoticies);
 		
 		JPanel panel_info = new JPanel();
 		panel_info.setFont(new Font("Georgia", Font.PLAIN, FONT_SIZE-2));
@@ -477,7 +489,11 @@ public class View extends JFrame{
 		selectedLabel = text;
 	}
 
-
+	public void setTitleIcon(String path) {
+		titleIcon = path;
+		setLookAndFeel();
+	}
+	
 	public void setUpperLogo(String path) {
 		upperLogoPath = path;
 		upperLogoLabel.setIcon(new ImageIcon(upperLogoPath));
@@ -488,8 +504,34 @@ public class View extends JFrame{
 		frame.getContentPane().setBackground(background);
 	}
 
+	public void setDarkGrey(Color c) {
+		panel_breadcrumb.setBackground(c);
+	}
+	
+	public void setLightGrey(Color c) {
+		panel_news_title.setBackground(c);
+		panel_links_title.setBackground(c);
+		panel_title.setBackground(c);
+	}
+	
+	public void setIniciForeground(Color c) {
+		inici_color = c;
+	}
+	
+	public void setBreadcrumbForeground(Color c) {
+		breadcrumb_color = c;
+	}
+	
+	public void setTitlesForeground(Color c) {
+		lblNoticies.setForeground(c);
+		lblEnllacos.setForeground(c);
+		lblTitle.setForeground(c);
+		lblSubtitle.setForeground(c);
+	}
+	
 	public void setTitle(String s) {
 		lblTitle.setText(s);
+		frame.setTitle(s);
 	}
 	
 	public void setSubtitle(String s) {

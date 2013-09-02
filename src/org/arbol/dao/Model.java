@@ -26,7 +26,7 @@ public class Model {
 	private ArrayList<News> news;
 	private ArrayList<Links> links;
 	private ArrayList<Node> currentPath;
-	private static final String DB_PATH = "config/BDProva.sqlite";
+	private static final String DB_PATH = "config/home_sig.sqlite";
 	//private static final String DB_PATH = "config/arbol2.sqlite";
 	
 	
@@ -404,14 +404,41 @@ public class Model {
 		return getValueOf("upperLogo");
 	}
 	
-	public Color getBackground() {
-		String color = getValueOf("backgroundColor");
-		String[] rgb = color.split(",");
+	public String getTitleIcon() {
+		return getValueOf("titleIcon");
+	}
+	
+	private Color createColor(String s) {
+		String[] rgb = s.split(",");
 		Float red = Float.valueOf(rgb[0])/255f;
 		Float green = Float.valueOf(rgb[1])/255f;
 		Float blue = Float.valueOf(rgb[2])/255f;
 		Color res = new Color(red,green,blue);
 		return res;
+	}
+	
+	public Color getBackground() {
+		return createColor(getValueOf("backgroundColor"));
+	}
+	
+	public Color getTitlesForeground() {
+		return createColor(getValueOf("titlesColor"));
+	}
+	
+	public Color getDarkGrey() {
+		return createColor(getValueOf("backFillAriadnaColor"));
+	}
+	
+	public Color getLightGrey() {
+		return createColor(getValueOf("backTextBoxColor"));
+	}
+	
+	public Color getIniciForeground() {
+		return createColor(getValueOf("iniciFontColor"));
+	}
+	
+	public Color getBreadcrumbForeground() {
+		return createColor(getValueOf("breadcrumbFontColor"));
 	}
 
 	public String getTitle() {

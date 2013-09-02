@@ -44,7 +44,13 @@ public class Controller {
 	}
 
 	private void initializeProperties() {
+		myView.setTitleIcon(myModel.getTitleIcon());
 		myView.setBackgroundColor(myModel.getBackground());
+		myView.setDarkGrey(myModel.getDarkGrey());
+		myView.setLightGrey(myModel.getLightGrey());
+		myView.setTitlesForeground(myModel.getTitlesForeground());
+		myView.setIniciForeground(myModel.getIniciForeground());
+		myView.setBreadcrumbForeground(myModel.getBreadcrumbForeground());	
 		myView.setUpperLogo(myModel.getUpperLogoPath());
 		myView.setTitle(myModel.getTitle());
 		myView.setSubtitle(myModel.getSubtitle());
@@ -160,7 +166,7 @@ public class Controller {
 						pare = myModel.getCurrentPath().get(s-1).getName();
 					}
 					Node n = myModel.getNodeNamed(label_text, pare);
-					if (n.getExtension_id() == null) {
+					if (n.getExtension_id() == null || n.getExtension_id().trim().isEmpty()) {
 						drawDirectory(n);
 					}
 					else {
@@ -248,7 +254,7 @@ public class Controller {
 						}
 					}
 					Node n = myModel.getNodeNamed(label.getText(),pare);
-					if (n.getExtension_id() == null) {
+					if (n.getExtension_id() == null || n.getExtension_id().trim().isEmpty()) {
 						drawDirectory(n);
 					}
 					
