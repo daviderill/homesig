@@ -445,6 +445,10 @@ public class Model {
 		return getValueOf("title");
 	}
 	
+	public String getWindowTitle() {
+		return getValueOf("windowTitle");
+	}
+	
 	public String getSubtitle() {
 		return getValueOf("subtitle");
 	}

@@ -81,7 +81,7 @@ public class View extends JFrame{
 	private ArrayList<Node> currentFiles;
 	
 	private static final int LABEL_WIDTH = 150;
-	private static final int LABEL_HEIGHT = 80;
+	private static final int LABEL_HEIGHT = 88;
 	private static final int FONT_SIZE = 11;
 	private static final Font FONT = new Font("Georgia", Font.PLAIN, FONT_SIZE);
 	
@@ -211,15 +211,21 @@ public class View extends JFrame{
 				label_file.setOpaque(true);
 			}
 			// Si és massa llarg, trunquem fent servir html, que trunca pel millor lloc
-			if (text_lenght > LABEL_WIDTH) {
-				int additional_lines = ((text_lenght - LABEL_WIDTH) / LABEL_WIDTH) + 1;
-				label_file.setText("<html><center>" + label_file.getText() + "</center></html>");
-				label_file.setPreferredSize(new Dimension(LABEL_WIDTH, LABEL_HEIGHT+fontMetrics.getHeight()*additional_lines));
+			
+			int additional_lines;
+			if (text_lenght < LABEL_WIDTH) additional_lines = 0;
+			else additional_lines = ((text_lenght - LABEL_WIDTH) / LABEL_WIDTH) + 1;
+			if (additional_lines == 0) {
+				label_file.setText("<html><center>" + label_file.getText() + "</center><br><br></html>");
+			}
+			else if (additional_lines == 1) {
+				label_file.setText("<html><center>" + label_file.getText() + "</center><br></html>");
 			}
 			else {
-				label_file.setPreferredSize(new Dimension(LABEL_WIDTH, LABEL_HEIGHT));
+				label_file.setText("<html><center>" + label_file.getText() + "</center></html>");
 			}
-			
+			label_file.setPreferredSize(new Dimension(LABEL_WIDTH, LABEL_HEIGHT+fontMetrics.getHeight()*additional_lines));
+		
 			label_file.addMouseListener(listener);
 
 			if (file.getTooltip() != null) {
@@ -297,7 +303,7 @@ public class View extends JFrame{
 		JScrollPane editorScroll = new JScrollPane(panel_files);
 		editorScroll.setBorder(BorderFactory.createEmptyBorder());
 		editorScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		panel_files.setPreferredSize(new Dimension(777,600));
+		panel_files.setPreferredSize(new Dimension(777, 400));
 		editorScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		panel_title = new JPanel();
@@ -431,18 +437,9 @@ public class View extends JFrame{
 		lblDissenyWeb.setFont(new Font("Georgia", Font.PLAIN, 10));
 		panel_info.add(lblDissenyWeb, "cell 19 0");
 		
-		JLabel lblNewLabel_7 = new JLabel("Av\u00EDs legal");
+		JLabel lblNewLabel_7 = new JLabel("Cr\u00E8dits");
 		lblNewLabel_7.setFont(new Font("Georgia", Font.BOLD, 10));
 		panel_info.add(lblNewLabel_7, "flowx,cell 0 1");
-		
-		JLabel lblNewLabel_8 = new JLabel("Inici");
-		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8.setFont(new Font("Georgia", Font.BOLD, 10));
-		panel_info.add(lblNewLabel_8, "cell 2 1,alignx center");
-		
-		JLabel lblMapaWeb = new JLabel("Mapa web");
-		lblMapaWeb.setFont(new Font("Georgia", Font.BOLD, 10));
-		panel_info.add(lblMapaWeb, "cell 4 1");
 		panel_breadcrumb.setLayout(new MigLayout("", "[4px]", "[14px]"));
 		panel_title.setLayout(new MigLayout("", "[450px]", "[41px][31px]"));
 		
@@ -531,6 +528,10 @@ public class View extends JFrame{
 	
 	public void setTitle(String s) {
 		lblTitle.setText(s);
+		
+	}
+	
+	public void setWindowTitle(String s) {
 		frame.setTitle(s);
 	}
 	

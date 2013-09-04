@@ -44,6 +44,7 @@ public class Controller {
 	}
 
 	private void initializeProperties() {
+		myView.setWindowTitle(myModel.getWindowTitle());
 		myView.setTitleIcon(myModel.getTitleIcon());
 		myView.setBackgroundColor(myModel.getBackground());
 		myView.setDarkGrey(myModel.getDarkGrey());
@@ -157,8 +158,14 @@ public class Controller {
 					JLabel label = (JLabel)e.getSource();		
 					String label_text = label.getText();
 					// Si el label conté html perquè el seu nom s'ha de truncar, li treiem
-					if (label_text.contains("<html>")) {
+					if (label_text.contains("<html>") && !label_text.contains("<br>")) {
 						label_text = label_text.substring(14, label_text.length() - 16);
+					}
+					else if (label_text.contains("<br><br>")) {
+						label_text = label_text.substring(14, label_text.length() - 24);
+					}
+					else if (label_text.contains("<br>")) {
+						label_text = label_text.substring(14, label_text.length() - 20);
 					}
 					int s = myModel.getCurrentPath().size();
 					String pare = null;
@@ -200,8 +207,16 @@ public class Controller {
 					JLabel label = (JLabel)e.getSource();
 					String label_text = label.getText();
 					// Si el label conté html perquè el seu nom s'ha de truncar, li treiem
-					if (label_text.contains("<html>")) {
+					if (label_text.contains("<html>") && !label_text.contains("<br>")) {
 						label_text = label_text.substring(14, label_text.length() - 16);
+						label.setText(label_text);
+					}
+					else if (label_text.contains("<br><br>")) {
+						label_text = label_text.substring(14, label_text.length() - 24);
+						label.setText(label_text);
+					}
+					else if (label_text.contains("<br>")) {
+						label_text = label_text.substring(14, label_text.length() - 20);
 						label.setText(label_text);
 					}
 					myView.paintComponent(label);
