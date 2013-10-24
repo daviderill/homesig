@@ -2,8 +2,6 @@ package org.arbol.dao;
 
 import java.awt.Color;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -27,12 +25,10 @@ public class Model {
 	private ArrayList<Links> links;
 	private ArrayList<Node> currentPath;
 	private static final String DB_PATH = "config/home_sig.sqlite";
-	//private static final String DB_PATH = "config/arbol2.sqlite";
 	
 	
 	public Model() {
 		
-        // Get log file
         Utils.getLogger();		
 		if (!setConnection(DB_PATH)){
 			System.exit(-1);
@@ -43,15 +39,16 @@ public class Model {
 		currentPath = new ArrayList<Node>();
 		
 	}
+
 	
 	public Connection getConn() {
 		return conn;
 	}
 
+	
 	public void setConn(Connection conn) {
 		this.conn = conn;
 	}
-
 
 
 	/**
@@ -105,6 +102,7 @@ public class Model {
 			currentPath.remove(n-1);
 		}
 	}
+	
 
 	/** 
 	 * Funció principal. Llegim de la base de dades i guardem a memòria els nodes i les seves
@@ -134,14 +132,15 @@ public class Model {
 		    // Ordenem els fills segons la posició
 		    sortChildren();
 		    rs.close();
-		    //conn.close();
 		} catch (SQLException e1) {
 			Utils.showError(e1.getMessage(), sql, "");
 		}
 		
 	}
 	
-	public void createNews() {		
+	
+	public void createNews() {	
+		
 		Statement stat = null;
 		String sql = "select * from news ORDER BY date_act DESC;";
 		try {
@@ -156,9 +155,12 @@ public class Model {
 		} catch (SQLException e1) {
 			Utils.showError(e1.getMessage(), sql, "");
 		}	
+		
 	}
 	
-	public void createLinks() {		
+	
+	public void createLinks() {	
+		
 		Statement stat = null;
 		String sql = "select * from links;";
 		try {
@@ -173,7 +175,9 @@ public class Model {
 		} catch (SQLException e1) {
 			Utils.showError(e1.getMessage(), sql, "");
 		}	
+		
 	}
+	
 	
 	/**
 	 * Ordena els fills segons la posició que han de tenir
@@ -243,6 +247,7 @@ public class Model {
 	 * @return El node amb nom fileName
 	 */
 	public Node getNodeNamed(String fileName, String pare) {
+		
 		for (int i=0; i < nodes.size(); ++i) {
 			if (nodes.get(i).getName().equals(fileName)) {
 				if (nodes.get(i).getParent() != null && pare != null) {
@@ -259,7 +264,9 @@ public class Model {
 			}
 		}
 		return null;
+		
 	}
+	
 	
 	/**
 	 * 
@@ -267,13 +274,16 @@ public class Model {
 	 * @return El node amb nom fileName
 	 */
 	public Node getNodeDirectoryNamed(String fileName) {
+		
 		for (int i=0; i < nodes.size(); ++i) {
 			if (nodes.get(i).getName().equals(fileName)) {
 				return nodes.get(i);
 			}
 		}
 		return null;
+		
 	}
+	
 	
 	/**
 	 * 
@@ -281,13 +291,16 @@ public class Model {
 	 * @return El node amb ruta link
 	 */
 	public Node getNodeWithLink(String link) {
+		
 		for (int i=0; i < nodes.size(); ++i) {
 			if (nodes.get(i).getLink() != null) {
 				if (nodes.get(i).getLink().equals(link)) return nodes.get(i);
 			}
 		}
 		return null;
+		
 	}
+	
 	
 	/**
 	 * 
@@ -295,10 +308,14 @@ public class Model {
 	 * @return El node amb ruta link
 	 */
 	public Node getNodeWithId(String id) {
+		
 		for (int i=0; i < nodes.size(); ++i) {
-			if (nodes.get(i).getId().equals(id)) return nodes.get(i);
+			if (nodes.get(i).getId().equals(id)) {
+				return nodes.get(i);
+			}
 		}
 		return null;
+		
 	}
 
 	
@@ -307,12 +324,14 @@ public class Model {
 	 * @return Array de Strings amb el nom dels nodes que formen part del current path
 	 */
 	public String[] drawPath() {
+		
 		String[] res = new String[currentPath.size()+1];
 		res[0] = "Inici ";
 		for (int i=0; i < currentPath.size(); ++i) {
 			res[i+1] = currentPath.get(i).getName();
 		}
 		return res;
+		
 	}
 
 
@@ -345,7 +364,9 @@ public class Model {
 		return res;
 	}
 
+	
 	public ArrayList<String> createHtlm() {
+		
 		ArrayList<String> res = new ArrayList<String>();
 		for (int i=0; i < news.size(); ++i) {
 			News n = news.get(i);
@@ -359,7 +380,7 @@ public class Model {
 				//Utils.getLogger().info("El link " + n.getLink() + " de la notícia " + n.getTitle() + " no existeix");
 			}
 			String htmlNews = null;
-			if (link.isEmpty()) {
+			if (link == null || link.isEmpty()) {
 				htmlNews = "<b>" + n.getTitle() + "</b><br>";
 			}
 			else {
@@ -369,9 +390,12 @@ public class Model {
 			res.add(htmlNews);
 		}
 		return res;
+		
 	}
 	
+	
 	public ArrayList<Links> createLinksHtlm() {
+		
 		ArrayList<Links> res = new ArrayList<Links>();
 		for (int i=0; i < links.size(); ++i) {
 			Links l = links.get(i);
@@ -380,11 +404,12 @@ public class Model {
 			res.add(links.get(i));
 		}
 		return res;
+		
 	}
-	
 	
 
 	private String getValueOf(String field) {
+		
 		Statement stat = null;
 		String sql = "select value from properties where field = \"" + field + "\"";
 		try {
@@ -398,7 +423,9 @@ public class Model {
 			Utils.showError(e.getMessage(), sql, "");
 		}
 		return "ERROR";
+		
 	}
+	
 	
 	public String getUpperLogoPath() {
 		return getValueOf("upperLogo");
@@ -476,4 +503,6 @@ public class Model {
 	public String getWebDesign() {
 		return getValueOf("webDesign");
 	}
+	
+	
 }

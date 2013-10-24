@@ -29,6 +29,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLDocument;
 
@@ -37,8 +38,6 @@ import net.miginfocom.swing.MigLayout;
 import org.arbol.domain.Links;
 import org.arbol.domain.Node;
 import org.arbol.util.Utils;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.EmptyBorder;
 
 /**
  * Classe que mostra un explorador de fitxers, i una secció de notícies i una d'enllaços
@@ -562,4 +561,6 @@ public class View extends JFrame{
 	public void setWebDesign(String s) {
 		lblDissenyWeb.setText(s);
 	}
+	
+	
 }

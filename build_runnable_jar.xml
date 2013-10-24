@@ -7,7 +7,7 @@
 	
     <target name="create_run_jar">
         
-        <jar destfile="${dist}/arbol2.jar">
+        <jar destfile="${dist}/home_sig.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.arbol.MainClass"/>
 				<attribute name="Class-Path" value=". lib/miglayout15-swing.jar lib/sqlitejdbc-v056.jar"/>

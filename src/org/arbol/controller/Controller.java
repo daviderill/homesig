@@ -19,6 +19,7 @@ import org.arbol.domain.Node;
 import org.arbol.gui.View;
 import org.arbol.util.Utils;
 
+
 /**
  * Classe que té accés a la vista i al model. Ella crea els listeners, que assigna a la vista
  * @author Roger Erill Carrera
@@ -29,13 +30,14 @@ public class Controller {
 	private View myView;
 	private Model myModel;
 	
+	
 	public Controller(View v, Model m) {
+		
 		myView = v;
 		myModel = m;
 		myView.addFileListener(new FileListener());
 		myView.addBreadcrumbListener(new BreadCrumbListener());
 		myView.addLinkListener(new LinkListener());
-		
 		initializeProperties();
 		initalizeFirstLevel();
 		initializeLinks();
@@ -43,7 +45,9 @@ public class Controller {
 		
 	}
 
+	
 	private void initializeProperties() {
+		
 		myView.setWindowTitle(myModel.getWindowTitle());
 		myView.setTitleIcon(myModel.getTitleIcon());
 		myView.setBackgroundColor(myModel.getBackground());
@@ -61,7 +65,9 @@ public class Controller {
 		myView.setEmail(myModel.getEmail());
 		myView.setConsultor(myModel.getConsultor());
 		myView.setWebDesign(myModel.getWebDesign());
+		
 	}
+	
 	
 	private void initalizeFirstLevel() {
 		myModel.createTree();
@@ -70,17 +76,20 @@ public class Controller {
 		myView.drawBreadcrumb(myModel.drawPath());
 	}
 	
+	
 	private void initializeNews() {
 		myModel.createNews();
 		ArrayList<String> news = myModel.createHtlm();
 		myView.drawNews(news);
 	}
 	
+	
 	private void initializeLinks() {
 		myModel.createLinks();
 		ArrayList<Links> links = myModel.createLinksHtlm();
 		myView.drawLinks(links);
 	}
+	
 	
 	private void drawDirectory(Node n) {
 		ArrayList<Node> files = n.getChildren();
@@ -91,6 +100,7 @@ public class Controller {
 		myView.drawBreadcrumb(myModel.drawPath());
 	}
 	
+	
 	private boolean isMap(String s) {
 		if (s != null) {
 			int pos = s.lastIndexOf('.');
@@ -100,6 +110,7 @@ public class Controller {
 		return false;
 	}
 	
+	
 	private boolean isDangerousExtension(String s) {
 		if (s != null) {
 			int pos = s.lastIndexOf('.');
@@ -108,6 +119,7 @@ public class Controller {
 		}
 		return false;
 	}
+	
 	
 	private void openFile(Node n) {
 		Utils.getLogger().info("Obrim el node " + n.getName() + " que te enllaç " + n.getLink());
@@ -140,6 +152,7 @@ public class Controller {
 			Utils.getLogger().warning("El sistema no accepta aquesta operació");
 		}
 	}
+	
 	
 	/**
 	 * Classe que fa de listener pels fitxers
