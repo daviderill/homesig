@@ -1,4 +1,4 @@
-package org.arbol.dao;
+package es.psig.homesig.dao;
 
 import java.awt.Color;
 import java.io.File;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import org.arbol.domain.Links;
-import org.arbol.domain.News;
-import org.arbol.domain.Node;
-import org.arbol.util.Utils;
+import es.psig.homesig.model.Links;
+import es.psig.homesig.model.News;
+import es.psig.homesig.model.Node;
+import es.psig.homesig.util.Utils;
 
 
 public class Model {

@@ -1,4 +1,4 @@
-package org.arbol.util;
+package es.psig.homesig.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

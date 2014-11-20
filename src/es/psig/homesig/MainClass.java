@@ -1,8 +1,8 @@
-package org.arbol;
+package es.psig.homesig;
 
-import org.arbol.controller.Controller;
-import org.arbol.dao.Model;
-import org.arbol.gui.View;
+import es.psig.homesig.controller.Controller;
+import es.psig.homesig.dao.Model;
+import es.psig.homesig.gui.View;
 
 
 public class MainClass {

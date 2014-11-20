@@ -1,4 +1,4 @@
-package org.arbol.domain;
+package es.psig.homesig.model;
 
 import java.util.ArrayList;
 

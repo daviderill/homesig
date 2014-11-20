@@ -1,4 +1,4 @@
-package org.arbol.gui;
+package es.psig.homesig.gui;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -34,10 +34,9 @@ import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLDocument;
 
 import net.miginfocom.swing.MigLayout;
-
-import org.arbol.domain.Links;
-import org.arbol.domain.Node;
-import org.arbol.util.Utils;
+import es.psig.homesig.model.Links;
+import es.psig.homesig.model.Node;
+import es.psig.homesig.util.Utils;
 
 /**
  * Classe que mostra un explorador de fitxers, i una secció de notícies i una d'enllaços

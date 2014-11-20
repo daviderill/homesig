@@ -1,4 +1,4 @@
-package org.arbol.controller;
+package es.psig.homesig.controller;
 
 import java.awt.Desktop;
 import java.awt.event.MouseEvent;
@@ -13,11 +13,11 @@ import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
-import org.arbol.dao.Model;
-import org.arbol.domain.Links;
-import org.arbol.domain.Node;
-import org.arbol.gui.View;
-import org.arbol.util.Utils;
+import es.psig.homesig.dao.Model;
+import es.psig.homesig.gui.View;
+import es.psig.homesig.model.Links;
+import es.psig.homesig.model.Node;
+import es.psig.homesig.util.Utils;
 
 
 /**
