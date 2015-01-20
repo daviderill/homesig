@@ -14,6 +14,11 @@ public class MainClass {
 		// Create view
 		View window = new View();
 		
+		// Create model and controller. Make window visible
+		Model model = new Model();
+		new Controller(window, model);
+		window.frame.setVisible(true);
+		
 		// Get version number
 		String versionCode = MainClass.class.getPackage().getImplementationVersion();
 		String msg = "Application started";
@@ -21,12 +26,7 @@ public class MainClass {
 			msg+= "\nVersion: " + versionCode;
 			window.setVersion("Version: " + versionCode);
 		}
-		Utils.getLogger().info(msg);	
-		
-		// Create model and controller. Make window visible
-		Model model = new Model();
-		new Controller(window, model);
-		window.frame.setVisible(true);
+		Utils.logInfo(msg);			
 		
 	}
 

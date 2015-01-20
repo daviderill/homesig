@@ -28,7 +28,7 @@ public class Model {
 	
 	public Model() {
 			
-		if (!setConnection(Utils.getAppPath() + DB_PATH)){
+		if (!setConnection(Utils.getAppPath() + DB_PATH)) {
 			System.exit(-1);
 		}
 		nodes = new ArrayList<Node>();
@@ -59,7 +59,6 @@ public class Model {
 
         try {
             Class.forName("org.sqlite.JDBC");
-            Utils.getLogger().info(fileName);
             File file = new File(fileName);
             if (file.exists()) {
             	conn = DriverManager.getConnection("jdbc:sqlite:" + fileName);

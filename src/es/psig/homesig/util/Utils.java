@@ -7,7 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.security.CodeSource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,8 +19,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 
 public class Utils {
@@ -26,6 +26,9 @@ public class Utils {
 	private static final ResourceBundle BUNDLE_TEXT = ResourceBundle.getBundle("text");
     private static Logger logger;
     private static Logger mapLogger;
+    private static String username;
+    private static String hostname;
+    private static String hostaddress;
     private static final String LOG_FOLDER = "log/";
 
     
@@ -35,6 +38,14 @@ public class Utils {
         	String logFile = createPath("log_");
             logger = Logger.getLogger(logFile);
             logger.addHandler(createHandler(logFile));
+    		// Get user name and machine
+            username = System.getProperty("user.name");
+            try {
+				hostname = InetAddress.getLocalHost().getHostName();
+				hostaddress = InetAddress.getLocalHost().getHostAddress();
+			} catch (UnknownHostException e) {
+				logger.warning(e.getMessage());
+			}
         }
         return logger;
 
@@ -161,10 +172,29 @@ public class Utils {
 
     }
 
+    
+    // Logger functions
+    public static void logInfo(String msg) {
+    	logInfo(msg, null);		
+    }    
+    
+    public static void logInfo(String msg, String param) {
+    	
+    	if (logger == null) {
+    		getLogger();
+    	}
+    	String aux = username+"@"+hostname+"("+hostaddress+")\n" + msg;
+    	if (param != null) {
+    		aux+= "\n"+param;
+    	}
+		logger.info(aux);
+		
+    }    
+    
 
     public static void showMessage(String msg, String param, String title) {
     	
-    	try{
+    	try {
     		JOptionPane.showMessageDialog(null, BUNDLE_TEXT.getString(msg) + "\n" + param,
         		BUNDLE_TEXT.getString(title), JOptionPane.PLAIN_MESSAGE);
     		if (logger != null) {
@@ -273,26 +303,6 @@ public class Utils {
         return reply;    	
         
     }        
-    
-
-    /**
-     * Returns the class name of the installed LookAndFeel with a name
-     * containing the name snippet or null if none found.
-     * 
-     * @param nameSnippet a snippet contained in the Laf's name
-     * @return the class name if installed, or null
-     */
-    public static String getLookAndFeelClassName(String nameSnippet) {
-    	
-        LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
-        for (LookAndFeelInfo info : plafs) {
-            if (info.getName().contains(nameSnippet)) {
-                return info.getClassName();
-            }
-        }
-        return null;
-        
-    }    
 
     
 }
