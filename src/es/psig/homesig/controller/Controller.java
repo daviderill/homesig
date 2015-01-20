@@ -122,6 +122,7 @@ public class Controller {
 	
 	
 	private void openFile(Node n) {
+		
 		Utils.getLogger().info("Obrim el node " + n.getName() + " que te enllaç " + n.getLink());
 		File file = new File(n.getLink());
 		try {
@@ -151,6 +152,7 @@ public class Controller {
 		catch (UnsupportedOperationException e3) {
 			Utils.getLogger().warning("El sistema no accepta aquesta operació");
 		}
+		
 	}
 	
 	
@@ -314,6 +316,7 @@ public class Controller {
 
 		@Override
 		public void hyperlinkUpdate(HyperlinkEvent hle) {  
+			
 			if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) {  
 				File file = new File(hle.getDescription());
 				try {

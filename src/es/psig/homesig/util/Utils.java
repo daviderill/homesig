@@ -23,7 +23,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 public class Utils {
 
-	private static final ResourceBundle BUNDLE_TEXT = ResourceBundle.getBundle("text"); //$NON-NLS-1$
+	private static final ResourceBundle BUNDLE_TEXT = ResourceBundle.getBundle("text");
     private static Logger logger;
     private static Logger mapLogger;
     private static final String LOG_FOLDER = "log/";
@@ -40,6 +40,7 @@ public class Utils {
 
     }
     
+    
     public static Logger getMapLogger() {
 
     	if (mapLogger == null) {
@@ -51,14 +52,25 @@ public class Utils {
 
     }
     
+    
     public static String createPath(String prefix) {
+        
     	String folderRoot = Utils.getAppPath();                	
-        String folder = folderRoot + LOG_FOLDER;
-        String logFile = folder + prefix + getCurrentTimeStamp() + ".log";
+        String logFolder = folderRoot + LOG_FOLDER;
+        File folderFile = new File(logFolder);
+        folderFile.mkdirs();
+        if (!folderFile.exists()) {
+        	JOptionPane.showMessageDialog(null, "No s'ha pogut crear la carpeta de log", "Log creation", JOptionPane.ERROR_MESSAGE);                	
+        }
+        String logFile = logFolder + prefix + getCurrentTimeStamp() + ".log";
+        
         return logFile;
+        
     }
     
+    
     public static FileHandler createHandler(String path) {
+    	
     	FileHandler fh = null;
 		try {
 			fh = new FileHandler(path, true);
@@ -71,7 +83,9 @@ public class Utils {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error al crear el fitxer de log", JOptionPane.ERROR_MESSAGE);
 		}
         return null;
+        
     }
+    
     
     public static String getAppPath(){
     	
@@ -94,6 +108,7 @@ public class Utils {
     	return BUNDLE_TEXT;
 	}    
     
+	
 	public static String getBundleString(ResourceBundle bundle, String key){
 		try{
 			return bundle.getString(key);
@@ -244,7 +259,6 @@ public class Utils {
         return reply;    	
     }        
     
-
 
     /**
      * Returns the class name of the installed LookAndFeel with a name

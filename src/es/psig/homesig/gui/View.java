@@ -45,7 +45,6 @@ import es.psig.homesig.util.Utils;
  */
 public class View extends JFrame{
 
-	private static final long serialVersionUID = 6859743538922139519L;
 	public JFrame frame;
 	private JPanel panel_files;
 	private JPanel panel_breadcrumb;
@@ -75,16 +74,15 @@ public class View extends JFrame{
 	private MouseListener listener;
 	private MouseListener breadcrumb_listener;
 	private HyperlinkListener link_listener;
-	
 	private ArrayList<Node> currentFiles;
+	
+	private Color inici_color = Color.blue;
+	private Color breadcrumb_color = Color.black;
 	
 	private static final int LABEL_WIDTH = 150;
 	private static final int LABEL_HEIGHT = 88;
 	private static final int FONT_SIZE = 11;
 	private static final Font FONT = new Font("Georgia", Font.PLAIN, FONT_SIZE);
-	
-	private Color inici_color = Color.blue;
-	private Color breadcrumb_color = Color.black;
 	
 	
 	public View() {
@@ -237,7 +235,6 @@ public class View extends JFrame{
 	}
 	
 	
-	
 	public void drawBreadcrumb(String[] drawPath) {
 		panel_breadcrumb.removeAll();
 		panel_breadcrumb.updateUI();
@@ -289,6 +286,7 @@ public class View extends JFrame{
 		frame.setTitle("Sistema d'informaci\u00F3 territorial");
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
 		
 		JPanel panel_top_logo = new JPanel();
 		panel_top_logo.setBackground(new Color(255, 255, 255));

@@ -52,8 +52,10 @@ public class DatabaseScript {
 		}
 	}
 
+	
 	/** Template method that calls {@link #processLine(String)}. */
 	public final void processLineByLine() {
+		
 		// Note that FileReader is used, not File, since File is not Closeable
 		Statement stmt = null;
 		try {
@@ -95,8 +97,10 @@ public class DatabaseScript {
 				Utils.getLogger().warning("Error de SQL " + e.getMessage());
 			}
 		}
+		
 	}
 
+	
 	protected void processLine(String aLine) {
 
 		@SuppressWarnings("resource")
@@ -124,7 +128,8 @@ public class DatabaseScript {
 			for (int i = 1; i < id_parts.length - 1; ++i) {
 				parentId += "_" + id_parts[i];
 			}
-		} else {
+		} 
+		else {
 			scanner.useDelimiter("=");
 			if (scanner.hasNext()) {
 				String name = scanner.next();

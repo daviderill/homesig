@@ -2,6 +2,7 @@ package es.psig.homesig.model;
 
 import java.util.ArrayList;
 
+
 /**
  * Classe que defineix un fitxer en l'aplicació
  * @author Roger Erill Carrera

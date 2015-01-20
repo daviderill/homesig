@@ -1,5 +1,6 @@
 package es.psig.homesig.model;
 
+
 public class Links {
 	
 	private String id;
@@ -7,6 +8,7 @@ public class Links {
 	private String path;
 	private String imagesrc;
 	private String htmlcode;
+	
 	
 	public Links(String id, String name, String path, String imagesrc) {
 		super();

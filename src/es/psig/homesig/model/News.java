@@ -1,5 +1,6 @@
 package es.psig.homesig.model;
 
+
 public class News {
 
 	private String id;
