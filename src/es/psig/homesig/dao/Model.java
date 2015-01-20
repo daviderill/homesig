@@ -30,7 +30,7 @@ public class Model {
 	public Model() {
 		
         Utils.getLogger();		
-		if (!setConnection(DB_PATH)){
+		if (!setConnection(Utils.getAppPath() + DB_PATH)){
 			System.exit(-1);
 		}
 		nodes = new ArrayList<Node>();
@@ -61,19 +61,20 @@ public class Model {
 
         try {
             Class.forName("org.sqlite.JDBC");
+            Utils.getLogger().info(fileName);
             File file = new File(fileName);
             if (file.exists()) {
             	conn = DriverManager.getConnection("jdbc:sqlite:" + fileName);
                 return true;
             } else {
-                Utils.showError("File not found", fileName, "Arbol");
+                Utils.showError("File not found", fileName);
                 return false;
             }
         } catch (SQLException e) {
-            Utils.showError("Database Error Connection", e.getMessage(), "Arbol");
+            Utils.showError("Database Error Connection", e.getMessage());
             return false;
         } catch (ClassNotFoundException e) {
-            Utils.showError("Database Error Connection", "ClassNotFoundException", "Arbol");
+            Utils.showError("Database Error Connection", "ClassNotFoundException");
             return false;
         }
 

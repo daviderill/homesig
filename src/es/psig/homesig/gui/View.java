@@ -460,12 +460,12 @@ public class View extends JFrame{
 
 	
 	public void showErrorFileNotFound(String path) {
-		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no existeix", "Arbol", JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no existeix", "Homesig", JOptionPane.WARNING_MESSAGE);
 	}
 	
 	public void showErrorFileNotOpeneable(String path) {
 		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no es pot obrir. És possible que no hi hagi cap aplicació configurada " +
-				"per obrir aquest tipus de fitxer", "Arbol", JOptionPane.WARNING_MESSAGE);
+				"per obrir aquest tipus de fitxer", "Homesig", JOptionPane.WARNING_MESSAGE);
 	}
 	
 	

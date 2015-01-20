@@ -163,6 +163,7 @@ public class Utils {
 
 
     public static void showMessage(String msg, String param, String title) {
+    	
     	try{
     		JOptionPane.showMessageDialog(null, BUNDLE_TEXT.getString(msg) + "\n" + param,
         		BUNDLE_TEXT.getString(title), JOptionPane.PLAIN_MESSAGE);
@@ -175,11 +176,18 @@ public class Utils {
     			logger.info(msg + "\n" + param);
     		}    		
     	}
+    	
     }    
 
     
+    public static void showError(String msg, String param) {
+    	showError(msg, param, BUNDLE_TEXT.getString("title"));  
+    }
+    
+    
     public static void showError(String msg, String param, String title) {
-    	try{
+    	
+    	try {
     		JOptionPane.showMessageDialog(null, BUNDLE_TEXT.getString(msg) + "\n" + param,
     			BUNDLE_TEXT.getString(title), JOptionPane.WARNING_MESSAGE);
     		if (logger != null) {
@@ -190,14 +198,16 @@ public class Utils {
     		if (logger != null) {
     			logger.warning(msg + "\n" + param);
     		}    		
-    	}        
+    	}      
+    	
     }
 
     
     public static void showError(Exception e) {
+    	
     	String errorInfo = getErrorInfo();
-    	try{
-    		JOptionPane.showMessageDialog(null, e.getMessage(), BUNDLE_TEXT.getString("inp_descr"), JOptionPane.WARNING_MESSAGE);
+    	try {
+    		JOptionPane.showMessageDialog(null, e.getMessage(), BUNDLE_TEXT.getString("title"), JOptionPane.WARNING_MESSAGE);
     		if (logger != null) {
     			//logger.warning(e.getMessage() + "\n" + e.toString() + "\n" + errorInfo);
     			logger.warning(e.toString() + "\n" + errorInfo);
@@ -208,13 +218,15 @@ public class Utils {
     			logger.warning(e.toString() + "\n" + errorInfo);
     		}    		
     	}   
+    	
     }    
     
     
     public static void showError(Exception e, String param) {
+    	
     	String errorInfo = getErrorInfo();
     	try{
-    		JOptionPane.showMessageDialog(null, e.getMessage(), BUNDLE_TEXT.getString("inp_descr"), JOptionPane.WARNING_MESSAGE);
+    		JOptionPane.showMessageDialog(null, e.getMessage(), BUNDLE_TEXT.getString("title"), JOptionPane.WARNING_MESSAGE);
     		if (logger != null) {
     			logger.warning(e.toString() + "\n" + errorInfo + "\n" + param);
     		}
@@ -224,6 +236,7 @@ public class Utils {
     			logger.warning(e.toString() + "\n" + errorInfo + "\n" + param);
     		}    		
     	}        
+    	
     }     
     
     
@@ -243,6 +256,7 @@ public class Utils {
     
     
     public static int confirmDialog(String msg, String title) {
+    	
     	int reply;
     	try{
 	    	reply = JOptionPane.showConfirmDialog(null, BUNDLE_TEXT.getString(msg),
@@ -257,6 +271,7 @@ public class Utils {
     		}    		
     	}
         return reply;    	
+        
     }        
     
 
@@ -268,6 +283,7 @@ public class Utils {
      * @return the class name if installed, or null
      */
     public static String getLookAndFeelClassName(String nameSnippet) {
+    	
         LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
         for (LookAndFeelInfo info : plafs) {
             if (info.getName().contains(nameSnippet)) {
@@ -275,6 +291,7 @@ public class Utils {
             }
         }
         return null;
+        
     }    
 
     

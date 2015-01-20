@@ -38,16 +38,16 @@ public class DatabaseScript {
 			if (file.exists()) {
 				conn = DriverManager.getConnection("jdbc:sqlite:" + PATH_TO_DB);
 				return true;
-			} else {
-				Utils.showError("File not found", PATH_TO_DB, "Arbol");
+			} 
+			else {
+				Utils.showError("File not found", PATH_TO_DB);
 				return false;
 			}
 		} catch (SQLException e) {
-			Utils.showError("Database Error Connection", e.getMessage(), "Arbol");
+			Utils.showError("Database Error Connection", e.getMessage());
 			return false;
 		} catch (ClassNotFoundException e) {
-			Utils.showError("Database Error Connection",
-					"ClassNotFoundException", "Arbol");
+			Utils.showError("Database Error Connection", "ClassNotFoundException");
 			return false;
 		}
 	}
@@ -103,7 +103,6 @@ public class DatabaseScript {
 	
 	protected void processLine(String aLine) {
 
-		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(aLine);
 		if (aLine.startsWith("[")) {
 			// resetegem tot, per a un nou registre
