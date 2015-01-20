@@ -27,7 +27,7 @@ public class Utils {
     private static Logger logger;
     private static Logger mapLogger;
     private static String username;
-    private static String hostname;
+	private static String hostname;
     private static String hostaddress;
     private static final String LOG_FOLDER = "log/";
 
@@ -62,6 +62,19 @@ public class Utils {
         return mapLogger;
 
     }
+    
+    
+    public static String getUsername() {
+		return username;
+	}
+
+	public static String getHostname() {
+		return hostname;
+	}
+
+	public static String getHostaddress() {
+		return hostaddress;
+	}
     
     
     public static String createPath(String prefix) {
@@ -129,8 +142,13 @@ public class Utils {
 	}
 	
 	
+	
     public static String getCurrentTimeStamp() {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
+        return getCurrentTimeStamp("yyyyMMdd");
+    }
+	
+    public static String getCurrentTimeStamp(String format) {
+        SimpleDateFormat sdfDate = new SimpleDateFormat(format);
         Date now = new Date();
         String date = sdfDate.format(now);
         return date;
@@ -180,9 +198,7 @@ public class Utils {
     
     public static void logInfo(String msg, String param) {
     	
-    	if (logger == null) {
-    		getLogger();
-    	}
+    	if (logger == null) getLogger();
     	String aux = username+"@"+hostname+"("+hostaddress+")\n" + msg;
     	if (param != null) {
     		aux+= "\n"+param;
@@ -194,17 +210,14 @@ public class Utils {
 
     public static void showMessage(String msg, String param, String title) {
     	
+    	if (logger == null) getLogger();
     	try {
     		JOptionPane.showMessageDialog(null, BUNDLE_TEXT.getString(msg) + "\n" + param,
         		BUNDLE_TEXT.getString(title), JOptionPane.PLAIN_MESSAGE);
-    		if (logger != null) {
-    			logger.info(BUNDLE_TEXT.getString(msg) + "\n" + param);
-    		}
+    		logger.info(BUNDLE_TEXT.getString(msg) + "\n" + param);
     	} catch (MissingResourceException e){
     		JOptionPane.showMessageDialog(null, msg + "\n" + param,	title, JOptionPane.PLAIN_MESSAGE);
-    		if (logger != null) {
-    			logger.info(msg + "\n" + param);
-    		}    		
+    		logger.info(msg + "\n" + param); 		
     	}
     	
     }    
@@ -217,17 +230,14 @@ public class Utils {
     
     public static void showError(String msg, String param, String title) {
     	
+    	if (logger == null) getLogger();
     	try {
     		JOptionPane.showMessageDialog(null, BUNDLE_TEXT.getString(msg) + "\n" + param,
     			BUNDLE_TEXT.getString(title), JOptionPane.WARNING_MESSAGE);
-    		if (logger != null) {
-    			logger.warning(BUNDLE_TEXT.getString(msg) + "\n" + param);
-    		}
+    		logger.warning(BUNDLE_TEXT.getString(msg) + "\n" + param);
     	} catch (MissingResourceException e){
     		JOptionPane.showMessageDialog(null, msg + "\n" + param,	title, JOptionPane.WARNING_MESSAGE);
-    		if (logger != null) {
-    			logger.warning(msg + "\n" + param);
-    		}    		
+    		logger.warning(msg + "\n" + param);		
     	}      
     	
     }
@@ -235,18 +245,14 @@ public class Utils {
     
     public static void showError(Exception e) {
     	
+    	if (logger == null) getLogger();
     	String errorInfo = getErrorInfo();
     	try {
     		JOptionPane.showMessageDialog(null, e.getMessage(), BUNDLE_TEXT.getString("title"), JOptionPane.WARNING_MESSAGE);
-    		if (logger != null) {
-    			//logger.warning(e.getMessage() + "\n" + e.toString() + "\n" + errorInfo);
-    			logger.warning(e.toString() + "\n" + errorInfo);
-    		}
+    		logger.warning(e.toString() + "\n" + errorInfo);
     	} catch (MissingResourceException e1){
     		JOptionPane.showMessageDialog(null, e.getMessage(), "Error information", JOptionPane.WARNING_MESSAGE);
-    		if (logger != null) {
-    			logger.warning(e.toString() + "\n" + errorInfo);
-    		}    		
+    		logger.warning(e.toString() + "\n" + errorInfo); 		
     	}   
     	
     }    
@@ -254,27 +260,23 @@ public class Utils {
     
     public static void showError(Exception e, String param) {
     	
+    	if (logger == null) getLogger();
     	String errorInfo = getErrorInfo();
     	try{
     		JOptionPane.showMessageDialog(null, e.getMessage(), BUNDLE_TEXT.getString("title"), JOptionPane.WARNING_MESSAGE);
-    		if (logger != null) {
-    			logger.warning(e.toString() + "\n" + errorInfo + "\n" + param);
-    		}
+    		logger.warning(e.toString() + "\n" + errorInfo + "\n" + param);
     	} catch (MissingResourceException e1){
     		JOptionPane.showMessageDialog(null, e.getMessage(), "Error information", JOptionPane.WARNING_MESSAGE);
-    		if (logger != null) {
-    			logger.warning(e.toString() + "\n" + errorInfo + "\n" + param);
-    		}    		
+    		logger.warning(e.toString() + "\n" + errorInfo + "\n" + param); 		
     	}        
     	
     }     
     
     
     public static void logError(Exception e, String param) {
+    	if (logger == null) getLogger();
     	String errorInfo = getErrorInfo();
-		if (logger != null) {
-			logger.warning(e.toString() + "\n" + errorInfo + "\n" + param);
-		}
+		logger.warning(e.toString() + "\n" + errorInfo + "\n" + param);
     }         
     
     
@@ -287,18 +289,15 @@ public class Utils {
     
     public static int confirmDialog(String msg, String title) {
     	
+    	if (logger == null) getLogger();
     	int reply;
-    	try{
+    	try {
 	    	reply = JOptionPane.showConfirmDialog(null, BUNDLE_TEXT.getString(msg),
 	    		BUNDLE_TEXT.getString(title), JOptionPane.YES_NO_OPTION);
-	        if (logger != null) {
-	            logger.warning(BUNDLE_TEXT.getString(msg));
-	        }
+	        logger.warning(BUNDLE_TEXT.getString(msg));
     	} catch (MissingResourceException e){
 	    	reply = JOptionPane.showConfirmDialog(null, msg, title, JOptionPane.YES_NO_OPTION);
-    		if (logger != null) {
-    			logger.info(msg);
-    		}    		
+    		logger.info(msg); 		
     	}
         return reply;    	
         

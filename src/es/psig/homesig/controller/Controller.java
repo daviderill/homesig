@@ -27,17 +27,17 @@ import es.psig.homesig.util.Utils;
  */
 public class Controller {
 	
-	private View myView;
-	private Model myModel;
+	private View view;
+	private Model model;
 	
 	
-	public Controller(View v, Model m) {
+	public Controller(View view, Model model) {
 		
-		myView = v;
-		myModel = m;
-		myView.addFileListener(new FileListener());
-		myView.addBreadcrumbListener(new BreadCrumbListener());
-		myView.addLinkListener(new LinkListener());
+		this.view = view;
+		this.model = model;
+		this.view.addFileListener(new FileListener());
+		this.view.addBreadcrumbListener(new BreadCrumbListener());
+		this.view.addLinkListener(new LinkListener());
 		initializeProperties();
 		initalizeFirstLevel();
 		initializeLinks();
@@ -48,46 +48,46 @@ public class Controller {
 	
 	private void initializeProperties() {
 		
-		myView.setWindowTitle(myModel.getWindowTitle());
-		myView.setTitleIcon(myModel.getTitleIcon());
-		myView.setBackgroundColor(myModel.getBackground());
-		myView.setDarkGrey(myModel.getDarkGrey());
-		myView.setLightGrey(myModel.getLightGrey());
-		myView.setTitlesForeground(myModel.getTitlesForeground());
-		myView.setIniciForeground(myModel.getIniciForeground());
-		myView.setBreadcrumbForeground(myModel.getBreadcrumbForeground());	
-		myView.setUpperLogo(myModel.getUpperLogoPath());
-		myView.setTitle(myModel.getTitle());
-		myView.setSubtitle(myModel.getSubtitle());
-		myView.setAddress(myModel.getAddress());
-		myView.setTelephone(myModel.getTelephone());
-		myView.setFax(myModel.getFax());
-		myView.setEmail(myModel.getEmail());
-		myView.setConsultor(myModel.getConsultor());
-		myView.setWebDesign(myModel.getWebDesign());
+		view.setWindowTitle(model.getWindowTitle());
+		view.setTitleIcon(model.getTitleIcon());
+		view.setBackgroundColor(model.getBackground());
+		view.setDarkGrey(model.getDarkGrey());
+		view.setLightGrey(model.getLightGrey());
+		view.setTitlesForeground(model.getTitlesForeground());
+		view.setIniciForeground(model.getIniciForeground());
+		view.setBreadcrumbForeground(model.getBreadcrumbForeground());	
+		view.setUpperLogo(model.getUpperLogoPath());
+		view.setTitle(model.getTitle());
+		view.setSubtitle(model.getSubtitle());
+		view.setAddress(model.getAddress());
+		view.setTelephone(model.getTelephone());
+		view.setFax(model.getFax());
+		view.setEmail(model.getEmail());
+		view.setConsultor(model.getConsultor());
+		view.setWebDesign(model.getWebDesign());
 		
 	}
 	
 	
 	private void initalizeFirstLevel() {
-		myModel.createTree();
-		ArrayList<Node> files = myModel.getFirstLevel();
-		myView.drawChildren(files);
-		myView.drawBreadcrumb(myModel.drawPath());
+		model.createTree();
+		ArrayList<Node> files = model.getFirstLevel();
+		view.drawChildren(files);
+		view.drawBreadcrumb(model.drawPath());
 	}
 	
 	
 	private void initializeNews() {
-		myModel.createNews();
-		ArrayList<String> news = myModel.createHtlm();
-		myView.drawNews(news);
+		model.createNews();
+		ArrayList<String> news = model.createHtlm();
+		view.drawNews(news);
 	}
 	
 	
 	private void initializeLinks() {
-		myModel.createLinks();
-		ArrayList<Links> links = myModel.createLinksHtlm();
-		myView.drawLinks(links);
+		model.createLinks();
+		ArrayList<Links> links = model.createLinksHtlm();
+		view.drawLinks(links);
 	}
 	
 	
@@ -95,9 +95,9 @@ public class Controller {
 		ArrayList<Node> files = n.getChildren();
 		String parent_name = null;
 		if (n.getParent() != null) parent_name = n.getParent().getName();
-		myModel.createPathOf(n.getName(), parent_name);
-		myView.drawChildren(files);
-		myView.drawBreadcrumb(myModel.drawPath());
+		model.createPathOf(n.getName(), parent_name);
+		view.drawChildren(files);
+		view.drawBreadcrumb(model.drawPath());
 	}
 	
 	
@@ -123,6 +123,7 @@ public class Controller {
 	
 	private void openFile(Node n) {
 		
+		model.insertLog(n.getName(), n.getLink());
 		Utils.getLogger().info("Obrim el node " + n.getName() + " que te enllaç " + n.getLink());
 		File file = new File(n.getLink());
 		try {
@@ -142,12 +143,12 @@ public class Controller {
 		} 
 		catch (IOException e1) {
 			Utils.getLogger().warning("Error al obrir el fitxer: " + e1.getMessage() + "\n" +
-					"Pot ser que no tinguis cap aplicació associada a l'extensió ." + n.getExtension_id() + "?");
-			myView.showErrorFileNotOpeneable(n.getLink());
+				"Pot ser que no tinguis cap aplicació associada a l'extensió ." + n.getExtension_id() + "?");
+			view.showErrorFileNotOpeneable(n.getLink());
 		}
 		catch (IllegalArgumentException e2) {
 			Utils.getLogger().warning("No hi ha cap fitxer a la ruta " + n.getLink());	
-			myView.showErrorFileNotFound(n.getLink());	
+			view.showErrorFileNotFound(n.getLink());	
 		}
 		catch (UnsupportedOperationException e3) {
 			Utils.getLogger().warning("El sistema no accepta aquesta operació");
@@ -166,7 +167,7 @@ public class Controller {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			
-			//Doble click amb el botó esquerre
+			// Doble click amb el botó esquerre
 			if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
 				String source = e.getComponent().getClass().getName();
 				if (source.equals("javax.swing.JLabel")) {
@@ -182,12 +183,12 @@ public class Controller {
 					else if (label_text.contains("<br>")) {
 						label_text = label_text.substring(14, label_text.length() - 20);
 					}
-					int s = myModel.getCurrentPath().size();
+					int s = model.getCurrentPath().size();
 					String pare = null;
 					if (s > 0) {
-						pare = myModel.getCurrentPath().get(s-1).getName();
+						pare = model.getCurrentPath().get(s-1).getName();
 					}
-					Node n = myModel.getNodeNamed(label_text, pare);
+					Node n = model.getNodeNamed(label_text, pare);
 					if (n.getExtension_id() == null || n.getExtension_id().trim().isEmpty()) {
 						drawDirectory(n);
 					}
@@ -200,19 +201,19 @@ public class Controller {
 				}
 			}
 			
-			//Un click amb el botó dret, pugem un nivell de directori
+			// Un click amb el botó dret, pugem un nivell de directori
 			else if (e.getButton() == MouseEvent.BUTTON3) {
-				myModel.removeLastPathNode();
-				Node newParent = myModel.getCurrentParent();
+				model.removeLastPathNode();
+				Node newParent = model.getCurrentParent();
 				ArrayList<Node> files;
 				if (newParent == null) {
-					files = myModel.getFirstLevel();
+					files = model.getFirstLevel();
 				}
 				else {
 					files = newParent.getChildren();
 				}
-				myView.drawChildren(files);
-				myView.drawBreadcrumb(myModel.drawPath());
+				view.drawChildren(files);
+				view.drawBreadcrumb(model.drawPath());
 			}
 			
 			// Un clic de botó esquerre, seleccionem el fitxer
@@ -234,7 +235,7 @@ public class Controller {
 						label_text = label_text.substring(14, label_text.length() - 20);
 						label.setText(label_text);
 					}
-					myView.paintComponent(label);
+					view.paintComponent(label);
 				}
 			}
 			
@@ -268,12 +269,12 @@ public class Controller {
 			if (source.equals("javax.swing.JLabel")) {
 				JLabel label = (JLabel)e.getSource();
 				if (label.getText().equals("Inici ")) {
-					ArrayList<Node> files = myModel.getFirstLevel();
-					myView.drawChildren(files);
-					myView.drawBreadcrumb(myModel.drawEmptyPath());
+					ArrayList<Node> files = model.getFirstLevel();
+					view.drawChildren(files);
+					view.drawBreadcrumb(model.drawEmptyPath());
 				}
 				else {
-					ArrayList<Node> path = myModel.getCurrentPath();
+					ArrayList<Node> path = model.getCurrentPath();
 					int s = path.size();
 					String pare = null;
 					for (int i=0; i < s; ++i) {
@@ -283,7 +284,7 @@ public class Controller {
 							}
 						}
 					}
-					Node n = myModel.getNodeNamed(label.getText(),pare);
+					Node n = model.getNodeNamed(label.getText(),pare);
 					if (n.getExtension_id() == null || n.getExtension_id().trim().isEmpty()) {
 						drawDirectory(n);
 					}
@@ -323,13 +324,13 @@ public class Controller {
 					
 					if (file.isFile()) {
 						Utils.getLogger().info("Considerem " + hle.getDescription() + " un fitxer");
-						Node n = myModel.getNodeWithLink(hle.getDescription());
+						Node n = model.getNodeWithLink(hle.getDescription());
 						if (n == null) {
 							Utils.getLogger().warning("No s'ha trobat el fitxer " + hle.getDescription());
-							myView.showErrorFileNotFound(hle.getDescription());
+							view.showErrorFileNotFound(hle.getDescription());
 						}
 						else {
-							myView.setSelectedLabel(n.getName());
+							view.setSelectedLabel(n.getName());
 							drawDirectory(n.getParent());
 							try {
 								Desktop.getDesktop().open(file);
@@ -350,21 +351,21 @@ public class Controller {
 					}
 					else {
 						Utils.getLogger().info("Considerem " + hle.getDescription() + " un directori o fitxer inexistent");
-						Node n = myModel.getNodeDirectoryNamed(file.getName());
+						Node n = model.getNodeDirectoryNamed(file.getName());
 						if (n != null){
 							drawDirectory(n);
 						}
 						else {
 							Utils.getLogger().info(file.getName() + "No és un directori, mirem si aconseguim obrir com a fitxer");
-							n = myModel.getNodeWithLink(hle.getDescription());
+							n = model.getNodeWithLink(hle.getDescription());
 							if (n != null) {
-								myView.setSelectedLabel(n.getName());
+								view.setSelectedLabel(n.getName());
 								drawDirectory(n.getParent());
 								Desktop.getDesktop().open(file);
 							}
 							else {
 								Utils.getLogger().warning("No existeix cap fitxer o directori a " + hle.getDescription());
-								myView.showErrorFileNotFound(hle.getDescription());
+								view.showErrorFileNotFound(hle.getDescription());
 							}
 						}
 					}
@@ -373,7 +374,7 @@ public class Controller {
 					Utils.getLogger().warning(e1.getMessage());						
 				}
 				catch (IllegalArgumentException e2) {
-					myView.showErrorFileNotFound(hle.getDescription());	
+					view.showErrorFileNotFound(hle.getDescription());	
 				}
 			}  
 		}

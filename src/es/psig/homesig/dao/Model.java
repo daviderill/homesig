@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
 import es.psig.homesig.model.Links;
 import es.psig.homesig.model.News;
 import es.psig.homesig.model.Node;
@@ -23,12 +25,14 @@ public class Model {
 	private ArrayList<News> news;
 	private ArrayList<Links> links;
 	private ArrayList<Node> currentPath;
+	private String dbPath;
 	private static final String DB_PATH = "config/home_sig.sqlite";
 	
 	
 	public Model() {
 			
-		if (!setConnection(Utils.getAppPath() + DB_PATH)) {
+		dbPath = Utils.getAppPath() + DB_PATH;
+		if (!setConnection(dbPath)) {
 			System.exit(-1);
 		}
 		nodes = new ArrayList<Node>();
@@ -36,16 +40,6 @@ public class Model {
 		links = new ArrayList<Links>();
 		currentPath = new ArrayList<Node>();
 		
-	}
-
-	
-	public Connection getConn() {
-		return conn;
-	}
-
-	
-	public void setConn(Connection conn) {
-		this.conn = conn;
 	}
 
 
@@ -63,7 +57,8 @@ public class Model {
             if (file.exists()) {
             	conn = DriverManager.getConnection("jdbc:sqlite:" + fileName);
                 return true;
-            } else {
+            } 
+            else {
                 Utils.showError("File not found", fileName);
                 return false;
             }
@@ -77,7 +72,52 @@ public class Model {
 
     }  
     
+
+	public void logInfo(String msg) {
+
+		Utils.logInfo(msg);
+		insertLog(msg);
+		
+	}
+    
 	
+    public boolean insertLog(String event) {
+    	return insertLog(event, null);
+    }
+	
+    public boolean insertLog(String event, String param) {
+    	
+    	PreparedStatement stat = null;
+    	String sql = "INSERT INTO log (date_act, username, hostname, hostaddress, event, parameter) VALUES (?, ?, ?, ?, ?, ?)";
+		try {
+			if (conn.isClosed()) {
+				setConnection(dbPath);
+			}
+			stat = conn.prepareStatement(sql);
+			stat.setString(1, Utils.getCurrentTimeStamp("yyyy-MM-dd HH:mm:ss"));
+			stat.setString(2, Utils.getUsername());
+			stat.setString(3, Utils.getHostname());
+			stat.setString(4, Utils.getHostaddress());
+			stat.setString(5, event);
+			stat.setString(6, param);
+			stat.executeUpdate();
+		} catch (SQLException e) {
+			Utils.logError(e, sql);
+			return false;
+		} finally {
+			try {
+				stat.close();
+				conn.close();			
+			} catch (SQLException e) {
+				Utils.logError(e, sql);
+				return false;
+			}
+		}
+    	return true;
+    	
+    }
+    
+    
 	public ArrayList<Node> getCurrentPath() {
 		return currentPath;
 	}
@@ -149,7 +189,6 @@ public class Model {
 		    	news.add(n);
 		    }
 		    rs.close();
-		    conn.close();
 		} catch (SQLException e1) {
 			Utils.showError(e1.getMessage(), sql, "");
 		}	
@@ -169,7 +208,6 @@ public class Model {
 		    	links.add(n);
 		    }
 		    rs.close();
-		    //conn.close();
 		} catch (SQLException e1) {
 			Utils.showError(e1.getMessage(), sql, "");
 		}	
@@ -501,6 +539,6 @@ public class Model {
 	public String getWebDesign() {
 		return getValueOf("webDesign");
 	}
-	
+
 	
 }

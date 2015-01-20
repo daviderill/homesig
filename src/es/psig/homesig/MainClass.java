@@ -3,7 +3,6 @@ package es.psig.homesig;
 import es.psig.homesig.controller.Controller;
 import es.psig.homesig.dao.Model;
 import es.psig.homesig.gui.View;
-import es.psig.homesig.util.Utils;
 
 
 public class MainClass {
@@ -14,10 +13,9 @@ public class MainClass {
 		// Create view
 		View window = new View();
 		
-		// Create model and controller. Make window visible
+		// Create model and controller. 
 		Model model = new Model();
 		new Controller(window, model);
-		window.frame.setVisible(true);
 		
 		// Get version number
 		String versionCode = MainClass.class.getPackage().getImplementationVersion();
@@ -26,7 +24,10 @@ public class MainClass {
 			msg+= "\nVersion: " + versionCode;
 			window.setVersion("Version: " + versionCode);
 		}
-		Utils.logInfo(msg);			
+		model.logInfo(msg);			
+		
+		// Make window visible
+		window.frame.setVisible(true);
 		
 	}
 
