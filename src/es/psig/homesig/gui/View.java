@@ -43,7 +43,7 @@ import es.psig.homesig.util.Utils;
  * @author Roger Erill Carrera
  *
  */
-public class View extends JFrame{
+public class View extends JFrame {
 
 	public JFrame frame;
 	private JPanel panel_files;
@@ -65,6 +65,7 @@ public class View extends JFrame{
 	private JLabel lblSubtitle;
 	private JLabel lblEnllacos;
 	private JLabel lblNoticies;
+	private JLabel lblVersion;
 	
 	private String iconPath = "res/ico_";
 	private String titleIcon;
@@ -88,6 +89,7 @@ public class View extends JFrame{
 	public View() {
 		initialize();
 		frame.setLocationRelativeTo(null);
+		setVersion("");
 	}
 	
 	
@@ -436,6 +438,10 @@ public class View extends JFrame{
 		JLabel lblNewLabel_7 = new JLabel("Cr\u00E8dits");
 		lblNewLabel_7.setFont(new Font("Georgia", Font.BOLD, 10));
 		panel_info.add(lblNewLabel_7, "flowx,cell 0 1");
+		
+		lblVersion = new JLabel("Version 1.2.111");
+		lblVersion.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblVersion, "cell 18 1 2 1,alignx right");
 		panel_breadcrumb.setLayout(new MigLayout("", "[4px]", "[14px]"));
 		panel_title.setLayout(new MigLayout("", "[450px]", "[41px][31px]"));
 		
@@ -492,7 +498,6 @@ public class View extends JFrame{
 		upperLogoLabel.setIcon(new ImageIcon(upperLogoPath));
 	}
 
-
 	public void setBackgroundColor(Color background) {
 		frame.getContentPane().setBackground(background);
 	}
@@ -524,7 +529,6 @@ public class View extends JFrame{
 	
 	public void setTitle(String s) {
 		lblTitle.setText(s);
-		
 	}
 	
 	public void setWindowTitle(String s) {
@@ -557,6 +561,10 @@ public class View extends JFrame{
 	
 	public void setWebDesign(String s) {
 		lblDissenyWeb.setText(s);
+	}
+	
+	public void setVersion(String s) {
+		lblVersion.setText(s);
 	}
 	
 	

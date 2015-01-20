@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
 import es.psig.homesig.model.Links;
 import es.psig.homesig.model.News;
 import es.psig.homesig.model.Node;
@@ -28,8 +27,7 @@ public class Model {
 	
 	
 	public Model() {
-		
-        Utils.getLogger();		
+			
 		if (!setConnection(Utils.getAppPath() + DB_PATH)){
 			System.exit(-1);
 		}
