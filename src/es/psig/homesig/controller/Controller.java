@@ -107,16 +107,6 @@ public class Controller {
 	}
 	
 	
-	private boolean isMap(String s) {
-		if (s != null) {
-			int pos = s.lastIndexOf('.');
-			String ext = s.substring(pos+1);
-			return ext.equals("gvp");
-		}
-		return false;
-	}
-	
-	
 	private boolean isDangerousExtension(String s) {
 		if (s != null) {
 			int pos = s.lastIndexOf('.');
@@ -131,14 +121,12 @@ public class Controller {
 		
 		model.insertLog(n.getName(), n.getLink());
 		Utils.getLogger().info("Obrim el node " + n.getName() + " que te enllaç " + n.getLink());
-		File file = new File(n.getLink());
+		String filePath = ".."+File.separator+n.getLink();
+		File file = new File(filePath);
 		try {
-			if (isMap(file.getName())) {
-				Utils.getMapLogger().info("Obrim el mapa " + file.getName());
-			}
-			else if (isDangerousExtension(file.getName())) {
+			if (isDangerousExtension(file.getName())) {
 				int reply = JOptionPane.showConfirmDialog(null, "Aquest fitxer té una extensió que pot ser perillosa. Obrir el fitxer?"
-						, "Confirmació d'obertura de fitxer", JOptionPane.YES_NO_OPTION);
+					, "Confirmació d'obertura de fitxer", JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
 					Desktop.getDesktop().open(file);
 				}
