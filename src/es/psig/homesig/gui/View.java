@@ -9,6 +9,8 @@ import java.awt.FontMetrics;
 import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLDocument;
 
 import net.miginfocom.swing.MigLayout;
+import es.psig.homesig.controller.Controller;
 import es.psig.homesig.model.Links;
 import es.psig.homesig.model.Node;
 import es.psig.homesig.util.Utils;
@@ -45,7 +48,6 @@ import es.psig.homesig.util.Utils;
  */
 public class View extends JFrame {
 
-	public JFrame frame;
 	private JPanel panel_files;
 	private JPanel panel_breadcrumb;
 	private JPanel panel_news_content;
@@ -61,8 +63,8 @@ public class View extends JFrame {
 	private JLabel lblConsultor;
 	private JLabel lblDissenyWeb;
 	private JLabel lblAdreca;
-	private JLabel lblTitle;
-	private JLabel lblSubtitle;
+	private JLabel lblTitle2;
+	private JLabel lblTitle3;
 	private JLabel lblEnllacos;
 	private JLabel lblNoticies;
 	private JLabel lblVersion;
@@ -79,6 +81,7 @@ public class View extends JFrame {
 	
 	private Color inici_color = Color.blue;
 	private Color breadcrumb_color = Color.black;
+	private Controller controller;
 	
 	private static final int LABEL_WIDTH = 150;
 	private static final int LABEL_HEIGHT = 88;
@@ -88,8 +91,11 @@ public class View extends JFrame {
 	
 	public View() {
 		initialize();
-		frame.setLocationRelativeTo(null);
-		setVersion("");
+	}
+	
+
+	public void setController(Controller controller) {
+		this.controller = controller;
 	}
 	
 	
@@ -101,7 +107,7 @@ public class View extends JFrame {
 	    icons.add(new ImageIcon(titleIcon + "_64.png").getImage());
 	    icons.add(new ImageIcon(titleIcon + "_32.png").getImage());
 	    icons.add(new ImageIcon(titleIcon + "_16.png").getImage());
-	    frame.setIconImages(icons);
+	    setIconImages(icons);
 		try	{
 		    JFrame.setDefaultLookAndFeelDecorated(true);
 		    JDialog.setDefaultLookAndFeelDecorated(true);
@@ -127,15 +133,20 @@ public class View extends JFrame {
 		link_listener = linkListener;
 	}
 	
+	
 	public void drawNews(ArrayList<String> news) {
+		
 		int index = 1;
 		for (int i=0; i < news.size(); ++i) {
 			createHtmlElement(index,news.get(i),panel_news_content);
 			++index;
 		}
+		
 	}
 	
+	
 	public void drawLinks(ArrayList<Links> links) {
+		
 		int index = 1;
 		for (int i=0; i < links.size(); ++i) {
 			Links l = links.get(i);
@@ -151,12 +162,15 @@ public class View extends JFrame {
 			createHtmlElement(index,l.getHtmlcode(),panel_links_content);
 			++index;
 		}
+		
 	}
 	
+	
 	private void createHtmlElement(int position, String htmltext, JPanel parent) {
+		
 		JEditorPane element = new JEditorPane();
 		String bodyRule = "body { font-family: " + FONT.getFamily() + "; " +
-	            "font-size: " + FONT.getSize() + "pt; }";
+			"font-size: " + FONT.getSize() + "pt; }";
 		element.setContentType("text/html");
 		((HTMLDocument)element.getDocument()).getStyleSheet().addRule(bodyRule);
 		element.setText(htmltext);
@@ -165,7 +179,9 @@ public class View extends JFrame {
 		String pos = String.valueOf(position);
 		Object constraint = "cell 1 " + pos + ",grow";
 		parent.add(element, constraint);
+		
 	}
+	
 	
 	/**
 	 * Donats uns nodes files, dibuixar-los en el panell panel_files
@@ -238,6 +254,7 @@ public class View extends JFrame {
 	
 	
 	public void drawBreadcrumb(String[] drawPath) {
+		
 		panel_breadcrumb.removeAll();
 		panel_breadcrumb.updateUI();
 		for (int i=0; i < drawPath.length; ++i) {		
@@ -248,6 +265,7 @@ public class View extends JFrame {
 				drawInBreadCrumb(drawPath[i],false);
 			}
 		}
+		
 	}
 	
 	
@@ -283,12 +301,11 @@ public class View extends JFrame {
 	 */
 	private void initialize() {
 		
-		frame = new JFrame();
-		frame.setBounds(0, 0, 1267, 700);
-		frame.setTitle("Sistema d'informaci\u00F3 territorial");
-		frame.getContentPane().setBackground(new Color(255, 255, 255));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
+		setBounds(0, 0, 1267, 700);
+		getContentPane().setBackground(new Color(255, 255, 255));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setLocationRelativeTo(null);
 		
 		JPanel panel_top_logo = new JPanel();
 		panel_top_logo.setBackground(new Color(255, 255, 255));
@@ -332,7 +349,7 @@ public class View extends JFrame {
 		panel_breadcrumb = new JPanel();
 		panel_breadcrumb.setBorder(null);
 		panel_breadcrumb.setBackground(SystemColor.controlHighlight);
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -445,32 +462,47 @@ public class View extends JFrame {
 		panel_breadcrumb.setLayout(new MigLayout("", "[4px]", "[14px]"));
 		panel_title.setLayout(new MigLayout("", "[450px]", "[41px][31px]"));
 		
-		lblTitle = new JLabel("TITLE");
-		lblTitle.setForeground(Color.GRAY);
-		panel_title.add(lblTitle, "cell 0 0,alignx left,aligny top");
-		lblTitle.setBackground(Color.LIGHT_GRAY);
-		lblTitle.setFont(new Font("Georgia", Font.PLAIN, 35));
+		lblTitle2 = new JLabel("TITLE2");
+		lblTitle2.setForeground(Color.GRAY);
+		panel_title.add(lblTitle2, "cell 0 0,alignx left,aligny top");
+		lblTitle2.setBackground(Color.LIGHT_GRAY);
+		lblTitle2.setFont(new Font("Georgia", Font.PLAIN, 35));
 		
-		lblSubtitle = new JLabel("SUBTITLE");
-		lblSubtitle.setForeground(Color.GRAY);
-		lblSubtitle.setHorizontalAlignment(SwingConstants.LEFT);
-		lblSubtitle.setFont(new Font("Georgia", Font.PLAIN, 25));
-		panel_title.add(lblSubtitle, "cell 0 1,alignx left,aligny top");
+		lblTitle3 = new JLabel("TITLE3");
+		lblTitle3.setForeground(Color.GRAY);
+		lblTitle3.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTitle3.setFont(new Font("Georgia", Font.PLAIN, 25));
+		panel_title.add(lblTitle3, "cell 0 1,alignx left,aligny top");
 		
 		upperLogoLabel = new JLabel("");
 		//lblNewLabel.setIcon(new ImageIcon("res\\logo2.png"));
 		panel_top_logo.add(upperLogoLabel);
-		frame.getContentPane().setLayout(groupLayout);
+		getContentPane().setLayout(groupLayout);
+		
+		this.addWindowListener(new WindowAdapter() {
+			 @Override
+			 public void windowClosing(WindowEvent e) {
+			     closeApp();
+			 }
+		 });	
+		
+		//setTitle("Sistema d'informaci\u00F3 territorial");
+		setVersion("");		
 		
 	}
 
 	
+	public void closeApp() {
+		controller.insertLog("Application closed");
+	}
+	
+	
 	public void showErrorFileNotFound(String path) {
-		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no existeix", "Homesig", JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(this, "El fitxer " + path + " no existeix", "Homesig", JOptionPane.WARNING_MESSAGE);
 	}
 	
 	public void showErrorFileNotOpeneable(String path) {
-		JOptionPane.showMessageDialog(this.frame, "El fitxer " + path + " no es pot obrir. És possible que no hi hagi cap aplicació configurada " +
+		JOptionPane.showMessageDialog(this, "El fitxer " + path + " no es pot obrir. És possible que no hi hagi cap aplicació configurada " +
 				"per obrir aquest tipus de fitxer", "Homesig", JOptionPane.WARNING_MESSAGE);
 	}
 	
@@ -499,7 +531,7 @@ public class View extends JFrame {
 	}
 
 	public void setBackgroundColor(Color background) {
-		frame.getContentPane().setBackground(background);
+		getContentPane().setBackground(background);
 	}
 
 	public void setDarkGrey(Color c) {
@@ -523,20 +555,20 @@ public class View extends JFrame {
 	public void setTitlesForeground(Color c) {
 		lblNoticies.setForeground(c);
 		lblEnllacos.setForeground(c);
-		lblTitle.setForeground(c);
-		lblSubtitle.setForeground(c);
+		lblTitle2.setForeground(c);
+		lblTitle3.setForeground(c);
 	}
 	
-	public void setTitle(String s) {
-		lblTitle.setText(s);
+	public void setTitle2(String s) {
+		lblTitle2.setText(s);
 	}
 	
 	public void setWindowTitle(String s) {
-		frame.setTitle(s);
+		setTitle(s);
 	}
 	
-	public void setSubtitle(String s) {
-		lblSubtitle.setText(s);
+	public void setTitle3(String s) {
+		lblTitle3.setText(s);
 	}
 	
 	public void setAddress(String s) {
@@ -566,6 +598,6 @@ public class View extends JFrame {
 	public void setVersion(String s) {
 		lblVersion.setText(s);
 	}
-	
+
 	
 }

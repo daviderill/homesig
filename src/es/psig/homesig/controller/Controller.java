@@ -38,6 +38,7 @@ public class Controller {
 		this.view.addFileListener(new FileListener());
 		this.view.addBreadcrumbListener(new BreadCrumbListener());
 		this.view.addLinkListener(new LinkListener());
+		this.view.setController(this);
 		initializeProperties();
 		initalizeFirstLevel();
 		initializeLinks();
@@ -46,9 +47,13 @@ public class Controller {
 	}
 
 	
+	public void insertLog(String msg) {
+		model.logInfo(msg);
+	}
+	
+	
 	private void initializeProperties() {
 		
-		view.setWindowTitle(model.getWindowTitle());
 		view.setTitleIcon(model.getTitleIcon());
 		view.setBackgroundColor(model.getBackground());
 		view.setDarkGrey(model.getDarkGrey());
@@ -57,8 +62,9 @@ public class Controller {
 		view.setIniciForeground(model.getIniciForeground());
 		view.setBreadcrumbForeground(model.getBreadcrumbForeground());	
 		view.setUpperLogo(model.getUpperLogoPath());
-		view.setTitle(model.getTitle());
-		view.setSubtitle(model.getSubtitle());
+		view.setWindowTitle(model.getWindowTitle());
+		view.setTitle2(model.getTitle());
+		view.setTitle3(model.getSubtitle());
 		view.setAddress(model.getAddress());
 		view.setTelephone(model.getTelephone());
 		view.setFax(model.getFax());
@@ -380,6 +386,6 @@ public class Controller {
 		}
 		
 	}
-	
+
 	
 }

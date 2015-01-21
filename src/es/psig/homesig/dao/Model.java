@@ -72,12 +72,71 @@ public class Model {
 
     }  
     
+    
+    // Create log table if not exists
+	public void checkLogTable() {
+		
+		if (!checkTable("log")) {
+			String sql = "CREATE TABLE [log] ([date_act] TEXT, [username] VARCHAR, [hostname] VARCHAR, [hostaddress] VARCHAR, [event] VARCHAR, [parameter] VARCHAR);";
+			Statement stat;
+			try {
+				stat = conn.createStatement();
+				stat.executeUpdate(sql);
+			} catch (SQLException e) {
+	        	Utils.showError(e);
+			}
+		}
+		
+	}
+    
+    
+	public ResultSet getResultset(String sql) {
+		return getResultset(sql, true);
+	}
+    
+	public ResultSet getResultset(String sql, boolean showError) {
+		
+        ResultSet rs = null;        
+        try {
+        	Statement stat = conn.createStatement();
+            rs = stat.executeQuery(sql);
+        } catch (SQLException e) {
+			if (showError) {
+				Utils.showError(e, sql);
+			} 
+			else {
+				Utils.logError(e, sql);
+			}
+        }
+        return rs;   
+        
+	}
+	
+    // Check if the table exists
+	public boolean checkTable(String tableName) {
+        String sql = "SELECT name FROM sqlite_master" + 
+        	" WHERE type = 'table' AND name = '"+tableName+"';";
+        return checkQuery(sql);
+    }	
 
+	// Return true if query returns at least one record
+	private boolean checkQuery(String sql) {
+		
+		boolean check = false;
+        try {
+    		ResultSet rs = getResultset(sql);
+            check = rs.next();
+            rs.close();
+        } catch (SQLException e) {
+        	Utils.showError(e);
+        }		
+        return check;
+        
+	}
+	
 	public void logInfo(String msg) {
-
 		Utils.logInfo(msg);
 		insertLog(msg);
-		
 	}
     
 	
@@ -503,13 +562,13 @@ public class Model {
 	public Color getBreadcrumbForeground() {
 		return createColor(getValueOf("breadcrumbFontColor"));
 	}
-
-	public String getTitle() {
-		return getValueOf("title");
-	}
 	
 	public String getWindowTitle() {
 		return getValueOf("windowTitle");
+	}
+	
+	public String getTitle() {
+		return getValueOf("title");
 	}
 	
 	public String getSubtitle() {
