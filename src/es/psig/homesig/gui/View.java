@@ -138,7 +138,7 @@ public class View extends JFrame {
 		
 		int index = 1;
 		for (int i=0; i < news.size(); ++i) {
-			createHtmlElement(index,news.get(i),panel_news_content);
+			createHtmlElement(index, news.get(i), panel_news_content);
 			++index;
 		}
 		
@@ -159,7 +159,7 @@ public class View extends JFrame {
 				panel_links_content.add(image, constraint);
 				++index;
 			} 
-			createHtmlElement(index,l.getHtmlcode(),panel_links_content);
+			createHtmlElement(index, l.getHtmlcode(), panel_links_content);
 			++index;
 		}
 		

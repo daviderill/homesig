@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.security.CodeSource;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -27,8 +28,9 @@ import es.psig.homesig.util.Utils;
  */
 public class Controller {
 	
-	private View view;
-	private Model model;
+	protected View view;
+	protected Model model;
+	protected static String rootPath;
 	
 	
 	public Controller(View view, Model model) {
@@ -43,8 +45,28 @@ public class Controller {
 		initalizeFirstLevel();
 		initializeLinks();
 		initializeNews();
+		getRootPath();
 		
 	}
+	
+	
+	// Parent of current appPath
+    public static String getRootPath() {
+    	
+    	if (rootPath == null) {
+	    	CodeSource codeSource = Utils.class.getProtectionDomain().getCodeSource();
+	    	File jarFile;
+	    	try {
+	    		jarFile = new File(codeSource.getLocation().toURI().getPath());
+	    	   	rootPath = jarFile.getParentFile().getParent()+File.separator;
+	    	}
+	    	catch (URISyntaxException e) {
+	    		JOptionPane.showMessageDialog(null, e.getMessage(), "getRootPath Error", JOptionPane.ERROR_MESSAGE);
+	    	}
+    	}
+    	return rootPath;
+    	
+    }	
 
 	
 	public void insertLog(String msg) {
@@ -97,7 +119,7 @@ public class Controller {
 	}
 	
 	
-	private void drawDirectory(Node n) {
+	protected void drawDirectory(Node n) {
 		ArrayList<Node> files = n.getChildren();
 		String parent_name = null;
 		if (n.getParent() != null) parent_name = n.getParent().getName();
@@ -117,11 +139,12 @@ public class Controller {
 	}
 	
 	
-	private void openFile(Node n) {
+	protected void openFile(Node n) {
 		
 		model.insertLog(n.getName(), n.getLink());
-		Utils.getLogger().info("Obrim el node " + n.getName() + " que te enllaç " + n.getLink());
-		String filePath = ".."+File.separator+n.getLink();
+		Utils.getLogger().info("Obrim el node "+n.getName()+" que te enllaç "+n.getLink());
+		String filePath = rootPath+n.getLink();
+		System.out.println(filePath);
 		File file = new File(filePath);
 		try {
 			if (isDangerousExtension(file.getName())) {
@@ -136,12 +159,12 @@ public class Controller {
 			}
 		} 
 		catch (IOException e1) {
-			Utils.getLogger().warning("Error al obrir el fitxer: " + e1.getMessage() + "\n" +
-				"Pot ser que no tinguis cap aplicació associada a l'extensió ." + n.getExtension_id() + "?");
+			Utils.getLogger().warning("Error al obrir el fitxer: "+e1.getMessage()+"\n" +
+				"Pot ser que no tinguis cap aplicació associada a l'extensió ."+n.getExtension_id()+"?");
 			view.showErrorFileNotOpeneable(n.getLink());
 		}
 		catch (IllegalArgumentException e2) {
-			Utils.getLogger().warning("No hi ha cap fitxer a la ruta " + n.getLink());	
+			Utils.getLogger().warning("No hi ha cap fitxer a la ruta "+n.getLink());	
 			view.showErrorFileNotFound(n.getLink());	
 		}
 		catch (UnsupportedOperationException e3) {
@@ -259,6 +282,7 @@ public class Controller {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			
 			String source = e.getComponent().getClass().getName();
 			if (source.equals("javax.swing.JLabel")) {
 				JLabel label = (JLabel)e.getSource();
@@ -285,6 +309,7 @@ public class Controller {
 					
 				}
 			}
+			
 		}
 
 		@Override
@@ -313,30 +338,31 @@ public class Controller {
 		public void hyperlinkUpdate(HyperlinkEvent hle) {  
 			
 			if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) {  
-				File file = new File(hle.getDescription());
+				
+				String filePath = rootPath+hle.getDescription();
+				File file = new File(filePath);
 				try {
 					
 					if (file.isFile()) {
-						Utils.getLogger().info("Considerem " + hle.getDescription() + " un fitxer");
+						Utils.getLogger().info("Considerem "+hle.getDescription()+" un fitxer");
 						Node n = model.getNodeWithLink(hle.getDescription());
 						if (n == null) {
-							Utils.getLogger().warning("No s'ha trobat el fitxer " + hle.getDescription());
+							Utils.getLogger().warning("No s'ha trobat el fitxer "+hle.getDescription());
 							view.showErrorFileNotFound(hle.getDescription());
 						}
 						else {
-							view.setSelectedLabel(n.getName());
-							drawDirectory(n.getParent());
 							try {
 								Desktop.getDesktop().open(file);
 							}
 							catch (IOException e) {
-								Utils.getLogger().warning("No es pot obrir el fitxer " + file.getCanonicalPath());
+								Utils.getLogger().warning("No es pot obrir el fitxer "+file.getCanonicalPath());
 							}
 						}
 					}
+					
 					else if (hle.getDescription().contains("http")) {
 						try {
-							Utils.getLogger().info("Considerem " + hle.getDescription() + " un enllaç extern");
+							Utils.getLogger().info("Considerem "+hle.getDescription()+ " un enllaç extern");
 							Desktop.getDesktop().browse(hle.getURL().toURI());
 						} catch (URISyntaxException e) {
 							Utils.getLogger().warning("Error en obrir la URL " + hle.getDescription());
@@ -344,13 +370,13 @@ public class Controller {
 						}
 					}
 					else {
-						Utils.getLogger().info("Considerem " + hle.getDescription() + " un directori o fitxer inexistent");
+						Utils.getLogger().info("Considerem "+hle.getDescription()+" un directori o fitxer inexistent");
 						Node n = model.getNodeDirectoryNamed(file.getName());
 						if (n != null){
 							drawDirectory(n);
 						}
 						else {
-							Utils.getLogger().info(file.getName() + "No és un directori, mirem si aconseguim obrir com a fitxer");
+							Utils.getLogger().info(file.getName()+"no és un directori, mirem si aconseguim obrir com a fitxer");
 							n = model.getNodeWithLink(hle.getDescription());
 							if (n != null) {
 								view.setSelectedLabel(n.getName());
@@ -358,7 +384,7 @@ public class Controller {
 								Desktop.getDesktop().open(file);
 							}
 							else {
-								Utils.getLogger().warning("No existeix cap fitxer o directori a " + hle.getDescription());
+								Utils.getLogger().warning("No existeix cap fitxer o directori a "+hle.getDescription());
 								view.showErrorFileNotFound(hle.getDescription());
 							}
 						}

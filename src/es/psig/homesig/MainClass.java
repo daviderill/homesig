@@ -21,8 +21,8 @@ public class MainClass {
 		String versionCode = MainClass.class.getPackage().getImplementationVersion();
 		String msg = "Application started";
 		if (versionCode != null) {
-			msg+= "\nVersion: " + versionCode;
-			view.setVersion("Version: " + versionCode);
+			msg+= "\nVersion: "+versionCode;
+			view.setVersion("Version: "+versionCode);
 		}
 		model.checkLogTable();
 		model.logInfo(msg);			
