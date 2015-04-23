@@ -503,10 +503,11 @@ public class Model {
 	}
 	
 
+	// Get values from properties table
 	private String getValueOf(String field) {
 		
 		Statement stat = null;
-		String sql = "select value from properties where field = \"" + field + "\"";
+		String sql = "select value from properties where field = \""+field+"\"";
 		try {
 			stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(sql);
@@ -517,49 +518,62 @@ public class Model {
 		catch (SQLException e) {
 			Utils.showError(e.getMessage(), sql, "");
 		}
-		return "ERROR";
+		return "";
 		
 	}
 	
 	
-	public String getUpperLogoPath() {
+	private Color createColor(String s) {
+		
+		Color res = null;
+		if (s.equals("")) {
+			res = new Color(255, 255, 255);
+		}
+		else {
+			String[] rgb = s.split(",");
+			Float red = Float.valueOf(rgb[0])/255f;
+			Float green = Float.valueOf(rgb[1])/255f;
+			Float blue = Float.valueOf(rgb[2])/255f;
+			res = new Color(red, green, blue);
+		}
+		return res;
+		
+	}
+	
+	
+	public String getUpperLogo() {
 		return getValueOf("upperLogo");
 	}
 	
 	public String getTitleIcon() {
 		return getValueOf("titleIcon");
-	}
+	}	
 	
-	private Color createColor(String s) {
-		String[] rgb = s.split(",");
-		Float red = Float.valueOf(rgb[0])/255f;
-		Float green = Float.valueOf(rgb[1])/255f;
-		Float blue = Float.valueOf(rgb[2])/255f;
-		Color res = new Color(red,green,blue);
-		return res;
-	}
-	
-	public Color getBackground() {
+	public Color getBackgroundColor() {
 		return createColor(getValueOf("backgroundColor"));
 	}
 	
-	public Color getTitlesForeground() {
+	public Color getTitlesColor() {
 		return createColor(getValueOf("titlesColor"));
 	}
 	
-	public Color getDarkGrey() {
+	public Color getBackFillAriadnaColor() {
 		return createColor(getValueOf("backFillAriadnaColor"));
 	}
 	
-	public Color getLightGrey() {
+	public Color getBackTextBoxColor() {
 		return createColor(getValueOf("backTextBoxColor"));
 	}
 	
-	public Color getIniciForeground() {
+	public Color getBackMain() {
+		return createColor(getValueOf("backMain"));
+	}
+	
+	public Color getIniciFontColor() {
 		return createColor(getValueOf("iniciFontColor"));
 	}
 	
-	public Color getBreadcrumbForeground() {
+	public Color getBreadcrumbFontColor() {
 		return createColor(getValueOf("breadcrumbFontColor"));
 	}
 	

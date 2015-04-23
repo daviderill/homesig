@@ -55,6 +55,7 @@ public class View extends JFrame {
 	private JPanel panel_links_content;
 	private JPanel panel_links_title;
 	private JPanel panel_title;
+	private JPanel panel_top_logo;
 	private JLabel upperLogoLabel;
 	
 	private JLabel lblNumber;
@@ -307,7 +308,7 @@ public class View extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
-		JPanel panel_top_logo = new JPanel();
+		panel_top_logo = new JPanel();
 		panel_top_logo.setBackground(new Color(255, 255, 255));
 		
 		FlowLayout fl_panel_files = new FlowLayout(FlowLayout.LEFT);
@@ -532,27 +533,34 @@ public class View extends JFrame {
 
 	public void setBackgroundColor(Color background) {
 		getContentPane().setBackground(background);
+		panel_top_logo.setBackground(background);
 	}
 
-	public void setDarkGrey(Color c) {
+	public void setBackFillAriadnaColor(Color c) {
 		panel_breadcrumb.setBackground(c);
 	}
 	
-	public void setLightGrey(Color c) {
+	public void setBackTextBoxColor(Color c) {
 		panel_news_title.setBackground(c);
 		panel_links_title.setBackground(c);
 		panel_title.setBackground(c);
 	}
 	
-	public void setIniciForeground(Color c) {
+	public void setBackMain(Color c) {
+		panel_news_content.setBackground(c);
+		panel_files.setBackground(c);
+		panel_links_content.setBackground(c);
+	}
+	
+	public void setIniciFontColor(Color c) {
 		inici_color = c;
 	}
 	
-	public void setBreadcrumbForeground(Color c) {
+	public void setBreadcrumbFontColor(Color c) {
 		breadcrumb_color = c;
 	}
 	
-	public void setTitlesForeground(Color c) {
+	public void setTitlesColor(Color c) {
 		lblNoticies.setForeground(c);
 		lblEnllacos.setForeground(c);
 		lblTitle2.setForeground(c);

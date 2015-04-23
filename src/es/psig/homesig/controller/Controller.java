@@ -77,13 +77,16 @@ public class Controller {
 	private void initializeProperties() {
 		
 		view.setTitleIcon(model.getTitleIcon());
-		view.setBackgroundColor(model.getBackground());
-		view.setDarkGrey(model.getDarkGrey());
-		view.setLightGrey(model.getLightGrey());
-		view.setTitlesForeground(model.getTitlesForeground());
-		view.setIniciForeground(model.getIniciForeground());
-		view.setBreadcrumbForeground(model.getBreadcrumbForeground());	
-		view.setUpperLogo(model.getUpperLogoPath());
+		view.setBackgroundColor(model.getBackgroundColor());
+		view.setBackFillAriadnaColor(model.getBackFillAriadnaColor());
+		view.setBackTextBoxColor(model.getBackTextBoxColor());
+		view.setBackMain(model.getBackMain());
+		
+		view.setTitlesColor(model.getTitlesColor());
+		view.setIniciFontColor(model.getIniciFontColor());
+		view.setBreadcrumbFontColor(model.getBreadcrumbFontColor());	
+		view.setUpperLogo(model.getUpperLogo());
+		
 		view.setWindowTitle(model.getWindowTitle());
 		view.setTitle2(model.getTitle());
 		view.setTitle3(model.getSubtitle());
