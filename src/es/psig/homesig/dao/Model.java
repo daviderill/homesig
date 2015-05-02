@@ -476,10 +476,10 @@ public class Model {
 			}
 			String htmlNews = null;
 			if (link == null || link.isEmpty()) {
-				htmlNews = "<b>" + n.getTitle() + "</b><br>";
+				htmlNews = "<b>"+n.getTitle()+"</b><br>";
 			}
 			else {
-				htmlNews = "<b><a href='" + link + "'> " + n.getTitle() + " </a></b><br>";
+				htmlNews = "<b><a href='"+link+"'>"+n.getTitle()+"</a></b><br>";
 			}
 			htmlNews += n.getDesc();
 			res.add(htmlNews);
@@ -494,7 +494,7 @@ public class Model {
 		ArrayList<Links> res = new ArrayList<Links>();
 		for (int i=0; i < links.size(); ++i) {
 			Links l = links.get(i);
-			String htmlLinks = "<a href='" + l.getPath() + "'> " + l.getName() + " </a><br>";
+			String htmlLinks = "<a href='"+l.getPath()+"'>"+l.getName()+"</a><br>";
 			links.get(i).setHtmlcode(htmlLinks);
 			res.add(links.get(i));
 		}
@@ -513,6 +513,10 @@ public class Model {
 			ResultSet rs = stat.executeQuery(sql);
 			if (rs.next()) {
 				return rs.getString("value");
+			}
+			else {
+				// Utils.getLogger().warning(field+": Paràmetre no trobat");
+				return "-1";
 			}
 		}
 		catch (SQLException e) {
@@ -569,6 +573,10 @@ public class Model {
 		return createColor(getValueOf("backMain"));
 	}
 	
+	public Color getBackFilesColor() {
+		return createColor(getValueOf("backFilesColor"));
+	}
+	
 	public Color getIniciFontColor() {
 		return createColor(getValueOf("iniciFontColor"));
 	}
@@ -611,6 +619,34 @@ public class Model {
 	
 	public String getWebDesign() {
 		return getValueOf("webDesign");
+	}
+	
+	
+	public String getStringParam(String param) {
+		return getValueOf(param);
+	}
+	
+	public Integer getIntegerParam(String param) {
+		Integer value = -1;
+		try {
+			value = Integer.parseInt(getValueOf(param));
+		}
+		catch (NumberFormatException e) {
+			Utils.getLogger().info(param+": El paràmetre ha de ser numèric");
+		}
+		return value;		
+	}
+	
+	public String getDefaultFontName() {
+		return getValueOf("defaultFontName");
+	}
+	
+	public Integer getDefaultFontSize() {
+		return getIntegerParam("defaultFontSize");
+	}
+	
+	public Integer getDefaultFontStyle() {
+		return getIntegerParam("defaultFontStyle");
 	}
 
 	

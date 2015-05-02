@@ -276,7 +276,7 @@ public class Utils {
     public static void logError(Exception e, String param) {
     	if (logger == null) getLogger();
     	String errorInfo = getErrorInfo();
-		logger.warning(e.toString() + "\n" + errorInfo + "\n" + param);
+		logger.warning(e.toString()+"\n"+errorInfo+"\n"+param);
     }         
     
     

@@ -30,7 +30,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLDocument;
@@ -80,14 +79,34 @@ public class View extends JFrame {
 	private HyperlinkListener link_listener;
 	private ArrayList<Node> currentFiles;
 	
+	private Color backMain;
+	private Color backFilesColor;
 	private Color inici_color = Color.blue;
 	private Color breadcrumb_color = Color.black;
 	private Controller controller;
 	
+	private String defaultFontName = FONT_NAME;
+	private int defaultFontSize = Font.PLAIN;
+	private int defaultFontStyle = FONT_SIZE;
+	private Font defaultFont;
+	
+	private String newsFontName;
+	private int newsFontSize;
+	private int newsFontStyle;
+	private Font newsFont;
+	private String filesFontName;
+	private int filesFontSize;
+	private int filesFontStyle;
+	private Font filesFont;
+	private String linksFontName;
+	private int linksFontSize;
+	private int linksFontStyle;
+	private Font linksFont;
+	
 	private static final int LABEL_WIDTH = 150;
 	private static final int LABEL_HEIGHT = 88;
+	private static final String FONT_NAME = "Georgia";
 	private static final int FONT_SIZE = 11;
-	private static final Font FONT = new Font("Georgia", Font.PLAIN, FONT_SIZE);
 	
 	
 	public View() {
@@ -139,7 +158,7 @@ public class View extends JFrame {
 		
 		int index = 1;
 		for (int i=0; i < news.size(); ++i) {
-			createHtmlElement(index, news.get(i), panel_news_content);
+			createHtmlElement(index, news.get(i), panel_news_content, newsFont);
 			++index;
 		}
 		
@@ -160,25 +179,26 @@ public class View extends JFrame {
 				panel_links_content.add(image, constraint);
 				++index;
 			} 
-			createHtmlElement(index, l.getHtmlcode(), panel_links_content);
+			createHtmlElement(index, l.getHtmlcode(), panel_links_content, linksFont);
 			++index;
 		}
 		
 	}
 	
 	
-	private void createHtmlElement(int position, String htmltext, JPanel parent) {
+	private void createHtmlElement(int position, String htmltext, JPanel parent, Font font) {
 		
 		JEditorPane element = new JEditorPane();
-		String bodyRule = "body { font-family: " + FONT.getFamily() + "; " +
-			"font-size: " + FONT.getSize() + "pt; }";
+		String bodyRule = "body {font-family: "+font.getFamily()+"; " +
+			"font-size: "+font.getSize()+"pt; }";
 		element.setContentType("text/html");
 		((HTMLDocument)element.getDocument()).getStyleSheet().addRule(bodyRule);
 		element.setText(htmltext);
 		element.setEditable(false);		
 		element.addHyperlinkListener(link_listener);
+		element.setBackground(backMain);
 		String pos = String.valueOf(position);
-		Object constraint = "cell 1 " + pos + ",grow";
+		Object constraint = "cell 1 "+pos+",grow";
 		parent.add(element, constraint);
 		
 	}
@@ -200,16 +220,16 @@ public class View extends JFrame {
 			JLabel label_file = new JLabel(file.getName(), SwingConstants.CENTER);
 			label_file.setHorizontalTextPosition(SwingConstants.CENTER);
 			label_file.setVerticalTextPosition(JLabel.BOTTOM);
-			label_file.setFont(FONT);
+			label_file.setFont(defaultFont);
 			
 			String extension = file.getExtension_id();
 			if (extension == null || extension.trim().isEmpty()) {
 				extension = "dir";		
 			}
-			String path = iconPath + extension + ".png";
+			String path = iconPath+extension+".png";
 			
 			// Creem una icona per defecte, i si el path de la imatge existeix, l'apliquem
-			ImageIcon icon = new ImageIcon(iconPath + "default.png");	
+			ImageIcon icon = new ImageIcon(iconPath+"default.png");	
 			if (new File(path).isFile()) {
 				icon = new ImageIcon(path);
 			}
@@ -219,25 +239,24 @@ public class View extends JFrame {
 			FontMetrics fontMetrics = label_file.getFontMetrics(label_file.getFont());
 			int text_lenght = fontMetrics.stringWidth(label_file.getText());
 			
+			label_file.setFont(filesFont);
 			if (label_file.getText().equals(selectedLabel)) {
-				Border border = BorderFactory.createLineBorder(Color.gray);
-				label_file.setBorder(border);
-				label_file.setBackground(new Color(200,200,200));
+				label_file.setBackground(backFilesColor);
 				label_file.setOpaque(true);
 			}
-			// Si és massa llarg, trunquem fent servir html, que trunca pel millor lloc
 			
+			// Si és massa llarg, trunquem fent servir html, que trunca pel millor lloc
 			int additional_lines;
 			if (text_lenght < LABEL_WIDTH) additional_lines = 0;
 			else additional_lines = ((text_lenght - LABEL_WIDTH) / LABEL_WIDTH) + 1;
 			if (additional_lines == 0) {
-				label_file.setText("<html><center>" + label_file.getText() + "</center><br><br></html>");
+				label_file.setText("<html><center>"+label_file.getText()+"</center><br><br></html>");
 			}
 			else if (additional_lines == 1) {
-				label_file.setText("<html><center>" + label_file.getText() + "</center><br></html>");
+				label_file.setText("<html><center>"+label_file.getText()+"</center><br></html>");
 			}
 			else {
-				label_file.setText("<html><center>" + label_file.getText() + "</center></html>");
+				label_file.setText("<html><center>"+label_file.getText()+"</center></html>");
 			}
 			label_file.setPreferredSize(new Dimension(LABEL_WIDTH, LABEL_HEIGHT+fontMetrics.getHeight()*additional_lines));
 		
@@ -284,12 +303,13 @@ public class View extends JFrame {
 		JLabel separator = new JLabel(" > ", SwingConstants.LEFT);
 		separator.setForeground(breadcrumb_color);
 		if (bold) {
-			bread.setFont(new Font("Georgia", Font.BOLD, FONT_SIZE));
-			separator.setFont(new Font("Georgia", Font.BOLD, FONT_SIZE));
+			Font aux = filesFont.deriveFont(Font.BOLD);
+			bread.setFont(aux);
+			separator.setFont(aux);
 		}
 		else {
-			bread.setFont(FONT);
-			separator.setFont(FONT);
+			bread.setFont(filesFont);
+			separator.setFont(filesFont);
 		}
 		panel_breadcrumb.add(bread);
 		panel_breadcrumb.add(separator);
@@ -547,9 +567,14 @@ public class View extends JFrame {
 	}
 	
 	public void setBackMain(Color c) {
+		backMain = c;
 		panel_news_content.setBackground(c);
 		panel_files.setBackground(c);
 		panel_links_content.setBackground(c);
+	}
+	
+	public void setBackFilesColor(Color c) {
+		backFilesColor = c;
 	}
 	
 	public void setIniciFontColor(Color c) {
@@ -605,6 +630,103 @@ public class View extends JFrame {
 	
 	public void setVersion(String s) {
 		lblVersion.setText(s);
+	}
+	
+	public void setDefaultFontName(String name) {
+		if (!name.equals("-1")) {
+			defaultFontName = name;
+		}
+	}
+	
+	public void setDefaultFontSize(int size) {
+		if (size != -1) {
+			defaultFontSize = size;
+		}		
+	}
+	
+	public void setDefaultFontStyle(int style) {
+		if (style != -1) {
+			defaultFontStyle = style;
+		}
+	}
+	
+	public void setDefaultFont() {
+		defaultFont = new Font(defaultFontName, defaultFontStyle, defaultFontSize);
+	}
+	
+	public void setNewsFontName(String name) {
+		newsFontName = defaultFontName;
+		if (!name.equals("-1")) {
+			newsFontName = name;
+		}
+	}
+	
+	public void setNewsFontSize(int size) {
+		newsFontSize = defaultFontSize;
+		if (size != -1) {
+			newsFontSize = size;
+		}
+	}
+	
+	public void setNewsFontStyle(int style) {
+		newsFontStyle = defaultFontStyle;
+		if (style != -1) {
+			newsFontStyle = style;
+		}
+	}
+	
+	public void setNewsFont() {
+		newsFont = new Font(newsFontName, newsFontStyle, newsFontSize);
+	}
+	
+	public void setFilesFontName(String name) {
+		filesFontName = defaultFontName;
+		if (!name.equals("-1")) {
+			filesFontName = name;
+		}
+	}
+	
+	public void setFilesFontSize(int size) {
+		filesFontSize = defaultFontSize;
+		if (size != -1) {
+			filesFontSize = size;
+		}
+	}
+	
+	public void setFilesFontStyle(int style) {
+		filesFontStyle = defaultFontStyle;
+		if (style != -1) {
+			filesFontStyle = style;
+		}
+	}
+	
+	public void setFilesFont() {
+		filesFont = new Font(filesFontName, filesFontStyle, filesFontSize);
+	}
+	
+	public void setLinksFontName(String name) {
+		linksFontName = defaultFontName;
+		if (!name.equals("-1")) {
+			linksFontName = name;
+		}
+	}
+	
+	public void setLinksFontSize(int size) {
+		linksFontSize = defaultFontSize;
+		if (size != -1) {
+			linksFontSize = size;
+		}
+	}
+	
+	public void setLinksFontStyle(int style) {
+		linksFontStyle = defaultFontStyle;
+		if (style != -1) {
+			linksFontStyle = style;
+		}
+	}
+	
+	public void setLinksFont() {
+		linksFont = new Font(linksFontName, linksFontStyle, linksFontSize);
 	}
 
 	

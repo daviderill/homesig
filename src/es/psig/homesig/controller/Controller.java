@@ -81,6 +81,7 @@ public class Controller {
 		view.setBackFillAriadnaColor(model.getBackFillAriadnaColor());
 		view.setBackTextBoxColor(model.getBackTextBoxColor());
 		view.setBackMain(model.getBackMain());
+		view.setBackFilesColor(model.getBackFilesColor());
 		
 		view.setTitlesColor(model.getTitlesColor());
 		view.setIniciFontColor(model.getIniciFontColor());
@@ -96,6 +97,23 @@ public class Controller {
 		view.setEmail(model.getEmail());
 		view.setConsultor(model.getConsultor());
 		view.setWebDesign(model.getWebDesign());
+		
+		view.setDefaultFontName(model.getStringParam("defaultFontName"));
+		view.setDefaultFontSize(model.getIntegerParam("defaultFontSize"));
+		view.setDefaultFontStyle(model.getIntegerParam("defaultFontStyle"));
+		view.setDefaultFont();
+		view.setNewsFontName(model.getStringParam("newsFontName"));
+		view.setNewsFontSize(model.getIntegerParam("newsFontSize"));
+		view.setNewsFontStyle(model.getIntegerParam("newsFontStyle"));
+		view.setNewsFont();
+		view.setFilesFontName(model.getStringParam("filesFontName"));
+		view.setFilesFontSize(model.getIntegerParam("filesFontSize"));
+		view.setFilesFontStyle(model.getIntegerParam("filesFontStyle"));
+		view.setFilesFont();
+		view.setLinksFontName(model.getStringParam("linksFontName"));
+		view.setLinksFontSize(model.getIntegerParam("linksFontSize"));
+		view.setLinksFontStyle(model.getIntegerParam("linksFontStyle"));
+		view.setLinksFont();
 		
 	}
 	
