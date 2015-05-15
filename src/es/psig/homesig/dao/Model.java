@@ -506,23 +506,24 @@ public class Model {
 	// Get values from properties table
 	private String getValueOf(String field) {
 		
+		String result = "";
 		Statement stat = null;
 		String sql = "select value from properties where field = \""+field+"\"";
 		try {
 			stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(sql);
 			if (rs.next()) {
-				return rs.getString("value");
+				result = rs.getString("value").trim();
 			}
 			else {
 				// Utils.getLogger().warning(field+": Paràmetre no trobat");
-				return "-1";
+				result = "-1";
 			}
 		}
 		catch (SQLException e) {
 			Utils.showError(e.getMessage(), sql, "");
 		}
-		return "";
+		return result;
 		
 	}
 	
@@ -530,10 +531,25 @@ public class Model {
 	private Color createColor(String s) {
 		
 		Color res = null;
-		if (s.equals("")) {
+		if (s.equals("") || s.equals("-1")) {
 			res = new Color(255, 255, 255);
 		}
 		else {
+			String[] rgb = s.split(",");
+			Float red = Float.valueOf(rgb[0])/255f;
+			Float green = Float.valueOf(rgb[1])/255f;
+			Float blue = Float.valueOf(rgb[2])/255f;
+			res = new Color(red, green, blue);
+		}
+		return res;
+		
+	}
+	
+	
+	private Color getColor(String s) {
+		
+		Color res = null;
+		if (!s.equals("") && !s.equals("-1")) {
 			String[] rgb = s.split(",");
 			Float red = Float.valueOf(rgb[0])/255f;
 			Float green = Float.valueOf(rgb[1])/255f;
@@ -621,6 +637,10 @@ public class Model {
 		return getValueOf("webDesign");
 	}
 	
+	
+	public Color getColorParam(String param) {
+		return getColor(getValueOf(param));
+	}
 	
 	public String getStringParam(String param) {
 		return getValueOf(param);

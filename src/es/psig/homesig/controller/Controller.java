@@ -101,18 +101,24 @@ public class Controller {
 		view.setDefaultFontName(model.getStringParam("defaultFontName"));
 		view.setDefaultFontSize(model.getIntegerParam("defaultFontSize"));
 		view.setDefaultFontStyle(model.getIntegerParam("defaultFontStyle"));
-		view.setDefaultFont();
+		view.setDefaultFontColor(model.getColorParam("defaultFontColor"));
+		
 		view.setNewsFontName(model.getStringParam("newsFontName"));
 		view.setNewsFontSize(model.getIntegerParam("newsFontSize"));
 		view.setNewsFontStyle(model.getIntegerParam("newsFontStyle"));
+		view.setNewsFontColor(model.getColorParam("newsFontColor"));
 		view.setNewsFont();
+		
 		view.setFilesFontName(model.getStringParam("filesFontName"));
 		view.setFilesFontSize(model.getIntegerParam("filesFontSize"));
 		view.setFilesFontStyle(model.getIntegerParam("filesFontStyle"));
+		view.setFilesFontColor(model.getColorParam("filesFontColor"));
 		view.setFilesFont();
+		
 		view.setLinksFontName(model.getStringParam("linksFontName"));
 		view.setLinksFontSize(model.getIntegerParam("linksFontSize"));
 		view.setLinksFontStyle(model.getIntegerParam("linksFontStyle"));
+		view.setLinksFontColor(model.getColorParam("linksFontColor"));
 		view.setLinksFont();
 		
 	}

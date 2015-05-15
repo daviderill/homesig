@@ -88,19 +88,24 @@ public class View extends JFrame {
 	private String defaultFontName = FONT_NAME;
 	private int defaultFontSize = Font.PLAIN;
 	private int defaultFontStyle = FONT_SIZE;
-	private Font defaultFont;
+	private Color defaultFontColor = Color.BLACK;
 	
 	private String newsFontName;
 	private int newsFontSize;
 	private int newsFontStyle;
+	private Color newsFontColor;
 	private Font newsFont;
+	
 	private String filesFontName;
 	private int filesFontSize;
 	private int filesFontStyle;
+	private Color filesFontColor = Color.BLACK;
 	private Font filesFont;
+	
 	private String linksFontName;
 	private int linksFontSize;
 	private int linksFontStyle;
+	private Color linksFontColor = Color.BLACK;
 	private Font linksFont;
 	
 	private static final int LABEL_WIDTH = 150;
@@ -158,7 +163,7 @@ public class View extends JFrame {
 		
 		int index = 1;
 		for (int i=0; i < news.size(); ++i) {
-			createHtmlElement(index, news.get(i), panel_news_content, newsFont);
+			createHtmlElement(index, news.get(i), panel_news_content, newsFont, newsFontColor);
 			++index;
 		}
 		
@@ -179,18 +184,19 @@ public class View extends JFrame {
 				panel_links_content.add(image, constraint);
 				++index;
 			} 
-			createHtmlElement(index, l.getHtmlcode(), panel_links_content, linksFont);
+			createHtmlElement(index, l.getHtmlcode(), panel_links_content, linksFont, linksFontColor);
 			++index;
 		}
 		
 	}
 	
 	
-	private void createHtmlElement(int position, String htmltext, JPanel parent, Font font) {
-		
+	private void createHtmlElement(int position, String htmltext, JPanel parent, Font font, Color foreColor) {
+
+		String auxColor = "color: rgb("+foreColor.getRed()+","+foreColor.getGreen()+","+foreColor.getBlue()+")";
 		JEditorPane element = new JEditorPane();
 		String bodyRule = "body {font-family: "+font.getFamily()+"; " +
-			"font-size: "+font.getSize()+"pt; }";
+			"font-size: "+font.getSize()+"pt; "+auxColor+";}";
 		element.setContentType("text/html");
 		((HTMLDocument)element.getDocument()).getStyleSheet().addRule(bodyRule);
 		element.setText(htmltext);
@@ -220,7 +226,6 @@ public class View extends JFrame {
 			JLabel label_file = new JLabel(file.getName(), SwingConstants.CENTER);
 			label_file.setHorizontalTextPosition(SwingConstants.CENTER);
 			label_file.setVerticalTextPosition(JLabel.BOTTOM);
-			label_file.setFont(defaultFont);
 			
 			String extension = file.getExtension_id();
 			if (extension == null || extension.trim().isEmpty()) {
@@ -240,6 +245,7 @@ public class View extends JFrame {
 			int text_lenght = fontMetrics.stringWidth(label_file.getText());
 			
 			label_file.setFont(filesFont);
+			label_file.setForeground(filesFontColor);
 			if (label_file.getText().equals(selectedLabel)) {
 				label_file.setBackground(backFilesColor);
 				label_file.setOpaque(true);
@@ -650,9 +656,12 @@ public class View extends JFrame {
 		}
 	}
 	
-	public void setDefaultFont() {
-		defaultFont = new Font(defaultFontName, defaultFontStyle, defaultFontSize);
+	public void setDefaultFontColor(Color color) {
+		if (color != null) {
+			defaultFontColor = color;
+		}
 	}
+	
 	
 	public void setNewsFontName(String name) {
 		newsFontName = defaultFontName;
@@ -675,9 +684,17 @@ public class View extends JFrame {
 		}
 	}
 	
+	public void setNewsFontColor(Color color) {
+		newsFontColor = defaultFontColor;
+		if (color != null) {
+			newsFontColor = color;
+		}
+	}
+	
 	public void setNewsFont() {
 		newsFont = new Font(newsFontName, newsFontStyle, newsFontSize);
 	}
+	
 	
 	public void setFilesFontName(String name) {
 		filesFontName = defaultFontName;
@@ -700,9 +717,17 @@ public class View extends JFrame {
 		}
 	}
 	
+	public void setFilesFontColor(Color color) {
+		filesFontColor = defaultFontColor;
+		if (color != null) {
+			filesFontColor = color;
+		}
+	}
+	
 	public void setFilesFont() {
 		filesFont = new Font(filesFontName, filesFontStyle, filesFontSize);
 	}
+	
 	
 	public void setLinksFontName(String name) {
 		linksFontName = defaultFontName;
@@ -722,6 +747,13 @@ public class View extends JFrame {
 		linksFontStyle = defaultFontStyle;
 		if (style != -1) {
 			linksFontStyle = style;
+		}
+	}
+	
+	public void setLinksFontColor(Color color) {
+		linksFontColor = defaultFontColor;
+		if (color != null) {
+			linksFontColor = color;
 		}
 	}
 	
