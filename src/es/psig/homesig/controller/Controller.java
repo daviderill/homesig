@@ -1,5 +1,6 @@
 package es.psig.homesig.controller;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -76,50 +77,66 @@ public class Controller {
 	
 	private void initializeProperties() {
 		
+		Color defaultColor = Color.BLACK;
 		view.setTitleIcon(model.getTitleIcon());
-		view.setBackgroundColor(model.getBackgroundColor());
-		view.setBackFillAriadnaColor(model.getBackFillAriadnaColor());
-		view.setBackTextBoxColor(model.getBackTextBoxColor());
-		view.setBackMain(model.getBackMain());
-		view.setBackFilesColor(model.getBackFilesColor());
+		view.setBackgroundColor(model.getColorParam("backgroundColor", defaultColor));
+		view.setBackFillAriadnaColor(model.getColorParam("backFillAriadnaColor", defaultColor));
+		view.setBackTextBoxColor(model.getColorParam("backTextBoxColor", defaultColor));
+		view.setBackMain(model.getColorParam("backMain", defaultColor));
+		view.setBackFilesColor(model.getColorParam("backFilesColor", defaultColor));
+		view.setBackCreditsColor(model.getColorParam("backCreditsColor", Color.WHITE));
 		
-		view.setTitlesColor(model.getTitlesColor());
-		view.setIniciFontColor(model.getIniciFontColor());
-		view.setBreadcrumbFontColor(model.getBreadcrumbFontColor());	
+		view.setTitlesColor(model.getColorParam("titlesColor", defaultColor));
+		view.setIniciFontColor(model.getColorParam("iniciFontColor", defaultColor));
+		view.setBreadcrumbFontColor(model.getColorParam("breadcrumbFontColor", defaultColor));	
 		view.setUpperLogo(model.getUpperLogo());
 		
+		// Capçalera
 		view.setWindowTitle(model.getWindowTitle());
 		view.setTitle2(model.getTitle());
 		view.setTitle3(model.getSubtitle());
-		view.setAddress(model.getAddress());
-		view.setTelephone(model.getTelephone());
-		view.setFax(model.getFax());
-		view.setEmail(model.getEmail());
-		view.setConsultor(model.getConsultor());
-		view.setWebDesign(model.getWebDesign());
 		
+		// Valors per defecte
 		view.setDefaultFontName(model.getStringParam("defaultFontName"));
 		view.setDefaultFontSize(model.getIntegerParam("defaultFontSize"));
 		view.setDefaultFontStyle(model.getIntegerParam("defaultFontStyle"));
 		view.setDefaultFontColor(model.getColorParam("defaultFontColor"));
 		
+		// Notícies
 		view.setNewsFontName(model.getStringParam("newsFontName"));
 		view.setNewsFontSize(model.getIntegerParam("newsFontSize"));
 		view.setNewsFontStyle(model.getIntegerParam("newsFontStyle"));
 		view.setNewsFontColor(model.getColorParam("newsFontColor"));
 		view.setNewsFont();
 		
+		// Arxius
 		view.setFilesFontName(model.getStringParam("filesFontName"));
 		view.setFilesFontSize(model.getIntegerParam("filesFontSize"));
 		view.setFilesFontStyle(model.getIntegerParam("filesFontStyle"));
 		view.setFilesFontColor(model.getColorParam("filesFontColor"));
 		view.setFilesFont();
 		
+		// Links
 		view.setLinksFontName(model.getStringParam("linksFontName"));
 		view.setLinksFontSize(model.getIntegerParam("linksFontSize"));
 		view.setLinksFontStyle(model.getIntegerParam("linksFontStyle"));
 		view.setLinksFontColor(model.getColorParam("linksFontColor"));
 		view.setLinksFont();
+		
+		// Crèdits
+		view.setCreditsFontName(model.getStringParam("creditsFontName"));
+		view.setCreditsFontSize(model.getIntegerParam("creditsFontSize"));
+		view.setCreditsFontStyle(model.getIntegerParam("creditsFontStyle"));
+		view.setCreditsFontColor(model.getColorParam("creditsFontColor"));
+		view.setCreditsFont();
+		
+		view.setAddress(model.getAddress());
+		view.setTelephone(model.getTelephone());
+		view.setFax(model.getFax());
+		view.setEmail(model.getEmail());
+		view.setConsultor(model.getConsultor());
+		view.setWebDesign(model.getWebDesign());
+		view.setCredits(model.getStringParam("credits"));
 		
 	}
 	

@@ -56,12 +56,19 @@ public class View extends JFrame {
 	private JPanel panel_title;
 	private JPanel panel_top_logo;
 	private JLabel upperLogoLabel;
+	private JPanel panel_info;
 	
-	private JLabel lblNumber;
-	private JLabel lblFaxnumber;
+	private JLabel lblEmailFixed;
 	private JLabel lblEmail;
+	private JLabel lblFaxFixed;
+	private JLabel lblFax;
+	private JLabel lblConsultorFixed;
 	private JLabel lblConsultor;
-	private JLabel lblDissenyWeb;
+	private JLabel lblDissenyFixed;
+	private JLabel lblDisseny;
+	private JLabel lblCredits;
+	private JLabel lblNumberFixed;
+	private JLabel lblNumber;
 	private JLabel lblAdreca;
 	private JLabel lblTitle2;
 	private JLabel lblTitle3;
@@ -81,6 +88,7 @@ public class View extends JFrame {
 	
 	private Color backMain;
 	private Color backFilesColor;
+	private Color backCreditsColor;
 	private Color inici_color = Color.blue;
 	private Color breadcrumb_color = Color.black;
 	private Controller controller;
@@ -108,10 +116,17 @@ public class View extends JFrame {
 	private Color linksFontColor = Color.BLACK;
 	private Font linksFont;
 	
+	private String creditsFontName;
+	private int creditsFontSize;
+	private int creditsFontStyle;
+	private Color creditsFontColor = Color.BLACK;
+	private Font creditsFont;
+	
 	private static final int LABEL_WIDTH = 150;
 	private static final int LABEL_HEIGHT = 88;
 	private static final String FONT_NAME = "Georgia";
 	private static final int FONT_SIZE = 11;
+	private static final String CURRENT_VERSION = "Version 1.2.128";
 	
 	
 	public View() {
@@ -364,7 +379,7 @@ public class View extends JFrame {
 		lblNoticies.setFont(new Font("Georgia", Font.PLAIN, 25));
 		panel_news_title.add(lblNoticies);
 		
-		JPanel panel_info = new JPanel();
+		panel_info = new JPanel();
 		panel_info.setFont(new Font("Georgia", Font.PLAIN, FONT_SIZE-2));
 		
 		panel_news_content = new JPanel();
@@ -439,53 +454,54 @@ public class View extends JFrame {
 		lblAdreca.setFont(new Font("Georgia", Font.PLAIN, 10));
 		panel_info.add(lblAdreca, "cell 0 0 5 1,alignx left,aligny top");
 		
-		JLabel lblTel = new JLabel("Tel: ");
-		lblTel.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblTel, "cell 6 0");
+		lblNumberFixed = new JLabel("Tel: ");
+		lblNumberFixed.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblNumberFixed, "cell 6 0");
 		
 		lblNumber = new JLabel("NUMBER");
 		lblNumber.setFont(new Font("Georgia", Font.PLAIN, 10));
 		panel_info.add(lblNumber, "cell 7 0");
 		
-		JLabel lblFax = new JLabel("Fax: ");
+		lblFaxFixed = new JLabel("Fax: ");
+		lblFaxFixed.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblFaxFixed, "cell 9 0");
+		
+		lblFax = new JLabel("FAX_NUMBER");
 		lblFax.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblFax, "cell 9 0");
+		panel_info.add(lblFax, "cell 10 0");
 		
-		lblFaxnumber = new JLabel("FAX_NUMBER");
-		lblFaxnumber.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblFaxnumber, "cell 10 0");
-		
-		JLabel lblEmailfix = new JLabel("E-mail: ");
-		lblEmailfix.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblEmailfix, "cell 12 0");
+		lblEmailFixed = new JLabel("E-mail: ");
+		lblEmailFixed.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblEmailFixed, "cell 12 0");
 		
 		lblEmail = new JLabel("EMAIL");
 		lblEmail.setFont(new Font("Georgia", Font.PLAIN, 10));
 		panel_info.add(lblEmail, "cell 13 0");
 		
-		JLabel lblConsultorSig = new JLabel("Consultor SIG: ");
-		lblConsultorSig.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblConsultorSig, "cell 15 0");
+		lblConsultorFixed = new JLabel("Consultor SIG: ");
+		lblConsultorFixed.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblConsultorFixed, "cell 15 0");
 		
 		lblConsultor = new JLabel("CONSULTOR");
 		lblConsultor.setFont(new Font("Georgia", Font.PLAIN, 10));
 		panel_info.add(lblConsultor, "cell 16 0");
 		
-		JLabel lblDisseny = new JLabel("Disseny web: ");
+		lblDissenyFixed = new JLabel("Disseny web: ");
+		lblDissenyFixed.setFont(new Font("Georgia", Font.PLAIN, 10));
+		panel_info.add(lblDissenyFixed, "cell 18 0");
+		
+		lblDisseny = new JLabel("DISSENY_WEB");
 		lblDisseny.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblDisseny, "cell 18 0");
+		panel_info.add(lblDisseny, "cell 19 0");
 		
-		lblDissenyWeb = new JLabel("DISSENY_WEB");
-		lblDissenyWeb.setFont(new Font("Georgia", Font.PLAIN, 10));
-		panel_info.add(lblDissenyWeb, "cell 19 0");
+		lblCredits = new JLabel("Cr\u00E8dits");
+		lblCredits.setFont(new Font("Georgia", Font.BOLD, 10));
+		panel_info.add(lblCredits, "flowx,cell 0 1 17 1");
 		
-		JLabel lblNewLabel_7 = new JLabel("Cr\u00E8dits");
-		lblNewLabel_7.setFont(new Font("Georgia", Font.BOLD, 10));
-		panel_info.add(lblNewLabel_7, "flowx,cell 0 1");
-		
-		lblVersion = new JLabel("Version 1.2.111");
+		lblVersion = new JLabel(CURRENT_VERSION);
 		lblVersion.setFont(new Font("Georgia", Font.PLAIN, 10));
 		panel_info.add(lblVersion, "cell 18 1 2 1,alignx right");
+		
 		panel_breadcrumb.setLayout(new MigLayout("", "[4px]", "[14px]"));
 		panel_title.setLayout(new MigLayout("", "[450px]", "[41px][31px]"));
 		
@@ -502,7 +518,6 @@ public class View extends JFrame {
 		panel_title.add(lblTitle3, "cell 0 1,alignx left,aligny top");
 		
 		upperLogoLabel = new JLabel("");
-		//lblNewLabel.setIcon(new ImageIcon("res\\logo2.png"));
 		panel_top_logo.add(upperLogoLabel);
 		getContentPane().setLayout(groupLayout);
 		
@@ -512,9 +527,6 @@ public class View extends JFrame {
 			     closeApp();
 			 }
 		 });	
-		
-		//setTitle("Sistema d'informaci\u00F3 territorial");
-		setVersion("");		
 		
 	}
 
@@ -583,6 +595,10 @@ public class View extends JFrame {
 		backFilesColor = c;
 	}
 	
+	public void setBackCreditsColor(Color c) {
+		backCreditsColor = c;
+	}
+	
 	public void setIniciFontColor(Color c) {
 		inici_color = c;
 	}
@@ -610,6 +626,8 @@ public class View extends JFrame {
 		lblTitle3.setText(s);
 	}
 	
+	
+	// Crèdits
 	public void setAddress(String s) {
 		lblAdreca.setText(s);
 	}
@@ -619,7 +637,7 @@ public class View extends JFrame {
 	}
 	
 	public void setFax(String s) {
-		lblFaxnumber.setText(s);
+		lblFax.setText(s);
 	}
 	
 	public void setEmail(String s) {
@@ -631,12 +649,19 @@ public class View extends JFrame {
 	}
 	
 	public void setWebDesign(String s) {
-		lblDissenyWeb.setText(s);
+		lblDisseny.setText(s);
+	}
+	
+	public void setCredits(String s) {
+		lblCredits.setText(s);
 	}
 	
 	public void setVersion(String s) {
-		lblVersion.setText(s);
+		if (!s.equals("")) {
+			lblVersion.setText(s);
+		}
 	}
+	
 	
 	public void setDefaultFontName(String name) {
 		if (!name.equals("-1")) {
@@ -759,6 +784,71 @@ public class View extends JFrame {
 	
 	public void setLinksFont() {
 		linksFont = new Font(linksFontName, linksFontStyle, linksFontSize);
+	}
+	
+	
+	public void setCreditsFontName(String name) {
+		creditsFontName = defaultFontName;
+		if (!name.equals("-1")) {
+			creditsFontName = name;
+		}
+	}
+	
+	public void setCreditsFontSize(int size) {
+		creditsFontSize = defaultFontSize;
+		if (size != -1) {
+			creditsFontSize = size;
+		}
+	}
+	
+	public void setCreditsFontStyle(int style) {
+		creditsFontStyle = defaultFontStyle;
+		if (style != -1) {
+			creditsFontStyle = style;
+		}
+	}
+	
+	public void setCreditsFontColor(Color color) {
+		creditsFontColor = defaultFontColor;
+		if (color != null) {
+			creditsFontColor = color;
+		}
+	}
+	
+	public void setCreditsFont() {
+		
+		creditsFont = new Font(creditsFontName, creditsFontStyle, creditsFontSize);
+		
+		lblAdreca.setFont(creditsFont);
+		lblNumberFixed.setFont(creditsFont);
+		lblNumber.setFont(creditsFont);
+		lblFaxFixed.setFont(creditsFont);
+		lblFax.setFont(creditsFont);
+		lblEmailFixed.setFont(creditsFont);
+		lblEmail.setFont(creditsFont);
+		lblConsultorFixed.setFont(creditsFont);
+		lblConsultor.setFont(creditsFont);
+		lblDissenyFixed.setFont(creditsFont);
+		lblDisseny.setFont(creditsFont);
+		lblCredits.setFont(creditsFont);
+		lblVersion.setFont(creditsFont);
+		
+		lblAdreca.setForeground(creditsFontColor);
+		lblNumberFixed.setForeground(creditsFontColor);
+		lblNumber.setForeground(creditsFontColor);
+		lblFaxFixed.setForeground(creditsFontColor);
+		lblFax.setForeground(creditsFontColor);
+		lblEmailFixed.setForeground(creditsFontColor);
+		lblEmail.setForeground(creditsFontColor);
+		lblConsultorFixed.setForeground(creditsFontColor);
+		lblConsultor.setForeground(creditsFontColor);
+		lblDissenyFixed.setForeground(creditsFontColor);
+		lblDisseny.setForeground(creditsFontColor);
+		lblCredits.setForeground(creditsFontColor);
+		lblVersion.setForeground(creditsFontColor);
+
+		panel_info.setBackground(backCreditsColor);
+		
 	}
 
 	

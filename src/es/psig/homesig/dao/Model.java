@@ -528,27 +528,9 @@ public class Model {
 	}
 	
 	
-	private Color createColor(String s) {
+	private Color getColor(String s, Color defaultColor) {
 		
-		Color res = null;
-		if (s.equals("") || s.equals("-1")) {
-			res = new Color(255, 255, 255);
-		}
-		else {
-			String[] rgb = s.split(",");
-			Float red = Float.valueOf(rgb[0])/255f;
-			Float green = Float.valueOf(rgb[1])/255f;
-			Float blue = Float.valueOf(rgb[2])/255f;
-			res = new Color(red, green, blue);
-		}
-		return res;
-		
-	}
-	
-	
-	private Color getColor(String s) {
-		
-		Color res = null;
+		Color res = defaultColor;
 		if (!s.equals("") && !s.equals("-1")) {
 			String[] rgb = s.split(",");
 			Float red = Float.valueOf(rgb[0])/255f;
@@ -568,38 +550,6 @@ public class Model {
 	public String getTitleIcon() {
 		return getValueOf("titleIcon");
 	}	
-	
-	public Color getBackgroundColor() {
-		return createColor(getValueOf("backgroundColor"));
-	}
-	
-	public Color getTitlesColor() {
-		return createColor(getValueOf("titlesColor"));
-	}
-	
-	public Color getBackFillAriadnaColor() {
-		return createColor(getValueOf("backFillAriadnaColor"));
-	}
-	
-	public Color getBackTextBoxColor() {
-		return createColor(getValueOf("backTextBoxColor"));
-	}
-	
-	public Color getBackMain() {
-		return createColor(getValueOf("backMain"));
-	}
-	
-	public Color getBackFilesColor() {
-		return createColor(getValueOf("backFilesColor"));
-	}
-	
-	public Color getIniciFontColor() {
-		return createColor(getValueOf("iniciFontColor"));
-	}
-	
-	public Color getBreadcrumbFontColor() {
-		return createColor(getValueOf("breadcrumbFontColor"));
-	}
 	
 	public String getWindowTitle() {
 		return getValueOf("windowTitle");
@@ -638,8 +588,13 @@ public class Model {
 	}
 	
 	
+	
 	public Color getColorParam(String param) {
-		return getColor(getValueOf(param));
+		return getColorParam(param, null);
+	}
+	
+	public Color getColorParam(String param, Color defaultColor) {
+		return getColor(getValueOf(param), defaultColor);
 	}
 	
 	public String getStringParam(String param) {
