@@ -41,7 +41,7 @@ import es.psig.homesig.model.Node;
 import es.psig.homesig.util.Utils;
 
 /**
- * Classe que mostra un explorador de fitxers, i una secció de notícies i una d'enllaços
+ * Classe que mostra un explorador de fitxers, una secciÃ³ de notÃ­cies i una d'enllaÃ§os
  * @author Roger Erill Carrera
  *
  */
@@ -266,7 +266,7 @@ public class View extends JFrame {
 				label_file.setOpaque(true);
 			}
 			
-			// Si és massa llarg, trunquem fent servir html, que trunca pel millor lloc
+			// Si Ã©s massa llarg, trunquem fent servir html, que trunca pel millor lloc
 			int additional_lines;
 			if (text_lenght < LABEL_WIDTH) additional_lines = 0;
 			else additional_lines = ((text_lenght - LABEL_WIDTH) / LABEL_WIDTH) + 1;
@@ -409,8 +409,8 @@ public class View extends JFrame {
 										.addComponent(panel_news_title, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
 									.addGap(18)
 									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(editorScroll, GroupLayout.PREFERRED_SIZE, 795, Short.MAX_VALUE)
-										.addComponent(panel_breadcrumb, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 795, Short.MAX_VALUE)
+										.addComponent(editorScroll, GroupLayout.PREFERRED_SIZE, 800, Short.MAX_VALUE)
+										.addComponent(panel_breadcrumb, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 800, Short.MAX_VALUE)
 										.addGroup(groupLayout.createSequentialGroup()
 											.addComponent(panel_title, GroupLayout.PREFERRED_SIZE, 588, GroupLayout.PREFERRED_SIZE)
 											.addPreferredGap(ComponentPlacement.RELATED)))))))
@@ -418,7 +418,7 @@ public class View extends JFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(panel_links_title, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
 						.addComponent(panel_links_content, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(14, Short.MAX_VALUE))
+					.addContainerGap(19, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -432,18 +432,17 @@ public class View extends JFrame {
 						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 							.addComponent(panel_news_title, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(panel_breadcrumb, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panel_links_title, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(panel_links_title, GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panel_news_content, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(editorScroll, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)))
-							.addGap(27)
-							.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panel_links_content, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE))
+								.addComponent(panel_links_content, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+								.addComponent(editorScroll, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addGap(27)
+					.addComponent(panel_info, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		panel_news_content.setLayout(new MigLayout("", "[3px][165px][3px]", "[5px][50px][50px][50px][50px][50px][50px]"));
@@ -541,7 +540,7 @@ public class View extends JFrame {
 	}
 	
 	public void showErrorFileNotOpeneable(String path) {
-		JOptionPane.showMessageDialog(this, "El fitxer " + path + " no es pot obrir. És possible que no hi hagi cap aplicació configurada " +
+		JOptionPane.showMessageDialog(this, "El fitxer " + path + " no es pot obrir. Ã©s possible que no hi hagi cap aplicaciÃ³ configurada " +
 				"per obrir aquest tipus de fitxer", "Homesig", JOptionPane.WARNING_MESSAGE);
 	}
 	
@@ -626,8 +625,14 @@ public class View extends JFrame {
 		lblTitle3.setText(s);
 	}
 	
+	public void setShowPanelInfo(int value) {
+		if (value == 0) {
+			panel_info.setVisible(false);
+		}
+	}
 	
-	// Crèdits
+	
+	// CrÃ¨dits
 	public void setAddress(String s) {
 		lblAdreca.setText(s);
 	}

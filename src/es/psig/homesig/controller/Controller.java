@@ -23,7 +23,7 @@ import es.psig.homesig.util.Utils;
 
 
 /**
- * Classe que té accés a la vista i al model. Ella crea els listeners, que assigna a la vista
+ * Classe que tÃ© accÃ©s a la vista i al model. Ella crea els listeners, que assigna a la vista
  * @author Roger Erill Carrera
  *
  */
@@ -90,8 +90,9 @@ public class Controller {
 		view.setIniciFontColor(model.getColorParam("iniciFontColor", defaultColor));
 		view.setBreadcrumbFontColor(model.getColorParam("breadcrumbFontColor", defaultColor));	
 		view.setUpperLogo(model.getUpperLogo());
+		view.setShowPanelInfo(model.getIntegerParam("showPanelInfo"));
 		
-		// Capçalera
+		// Capï¿½alera
 		view.setWindowTitle(model.getWindowTitle());
 		view.setTitle2(model.getTitle());
 		view.setTitle3(model.getSubtitle());
@@ -102,7 +103,7 @@ public class Controller {
 		view.setDefaultFontStyle(model.getIntegerParam("defaultFontStyle"));
 		view.setDefaultFontColor(model.getColorParam("defaultFontColor"));
 		
-		// Notícies
+		// Notï¿½cies
 		view.setNewsFontName(model.getStringParam("newsFontName"));
 		view.setNewsFontSize(model.getIntegerParam("newsFontSize"));
 		view.setNewsFontStyle(model.getIntegerParam("newsFontStyle"));
@@ -123,7 +124,7 @@ public class Controller {
 		view.setLinksFontColor(model.getColorParam("linksFontColor"));
 		view.setLinksFont();
 		
-		// Crèdits
+		// CrÃ¨dits
 		view.setCreditsFontName(model.getStringParam("creditsFontName"));
 		view.setCreditsFontSize(model.getIntegerParam("creditsFontSize"));
 		view.setCreditsFontStyle(model.getIntegerParam("creditsFontStyle"));
@@ -151,14 +152,14 @@ public class Controller {
 	
 	private void initializeNews() {
 		model.createNews();
-		ArrayList<String> news = model.createHtlm();
+		ArrayList<String> news = model.createHtml();
 		view.drawNews(news);
 	}
 	
 	
 	private void initializeLinks() {
 		model.createLinks();
-		ArrayList<Links> links = model.createLinksHtlm();
+		ArrayList<Links> links = model.createLinksHtml();
 		view.drawLinks(links);
 	}
 	
@@ -186,14 +187,14 @@ public class Controller {
 	protected void openFile(Node n) {
 		
 		model.insertLog(n.getName(), n.getLink());
-		Utils.getLogger().info("Obrim el node "+n.getName()+" que te enllaç "+n.getLink());
+		Utils.getLogger().info("Obrim el node "+n.getName()+" que te enllaÃ§ "+n.getLink());
 		String filePath = rootPath+n.getLink();
 		System.out.println(filePath);
 		File file = new File(filePath);
 		try {
 			if (isDangerousExtension(file.getName())) {
-				int reply = JOptionPane.showConfirmDialog(null, "Aquest fitxer té una extensió que pot ser perillosa. Obrir el fitxer?"
-					, "Confirmació d'obertura de fitxer", JOptionPane.YES_NO_OPTION);
+				int reply = JOptionPane.showConfirmDialog(null, "Aquest fitxer tÃ© una extensiÃ³ que pot ser perillosa. Obrir el fitxer?"
+					, "ConfirmaciÃ³ d'obertura de fitxer", JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
 					Desktop.getDesktop().open(file);
 				}
@@ -204,7 +205,7 @@ public class Controller {
 		} 
 		catch (IOException e1) {
 			Utils.getLogger().warning("Error al obrir el fitxer: "+e1.getMessage()+"\n" +
-				"Pot ser que no tinguis cap aplicació associada a l'extensió ."+n.getExtension_id()+"?");
+				"Pot ser que no tinguis cap aplicaciÃ³ associada a l'extensiÃ³ ."+n.getExtension_id()+"?");
 			view.showErrorFileNotOpeneable(n.getLink());
 		}
 		catch (IllegalArgumentException e2) {
@@ -212,7 +213,7 @@ public class Controller {
 			view.showErrorFileNotFound(n.getLink());	
 		}
 		catch (UnsupportedOperationException e3) {
-			Utils.getLogger().warning("El sistema no accepta aquesta operació");
+			Utils.getLogger().warning("El sistema no accepta aquesta operaciï¿½");
 		}
 		
 	}
@@ -228,13 +229,13 @@ public class Controller {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			
-			// Doble click amb el botó esquerre
+			// Doble click amb el botÃ³ esquerre
 			if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
 				String source = e.getComponent().getClass().getName();
 				if (source.equals("javax.swing.JLabel")) {
 					JLabel label = (JLabel)e.getSource();		
 					String label_text = label.getText();
-					// Si el label conté html perquè el seu nom s'ha de truncar, li treiem
+					// Si el label contï¿½ html perquï¿½ el seu nom s'ha de truncar, li treiem
 					if (label_text.contains("<html>") && !label_text.contains("<br>")) {
 						label_text = label_text.substring(14, label_text.length() - 16);
 					}
@@ -262,7 +263,7 @@ public class Controller {
 				}
 			}
 			
-			// Un click amb el botó dret, pugem un nivell de directori
+			// Un click amb el botÃ³ dret, pugem un nivell de directori
 			else if (e.getButton() == MouseEvent.BUTTON3) {
 				model.removeLastPathNode();
 				Node newParent = model.getCurrentParent();
@@ -277,13 +278,13 @@ public class Controller {
 				view.drawBreadcrumb(model.drawPath());
 			}
 			
-			// Un clic de botó esquerre, seleccionem el fitxer
+			// Un clic de botÃ³ esquerre, seleccionem el fitxer
 			else if (e.getClickCount() == 1 && e.getButton() == MouseEvent.BUTTON1) {
 				String source = e.getComponent().getClass().getName();
 				if (source.equals("javax.swing.JLabel")) {
 					JLabel label = (JLabel)e.getSource();
 					String label_text = label.getText();
-					// Si el label conté html perquè el seu nom s'ha de truncar, li treiem
+					// Si el label contï¿½ html perquï¿½ el seu nom s'ha de truncar, li treiem
 					if (label_text.contains("<html>") && !label_text.contains("<br>")) {
 						label_text = label_text.substring(14, label_text.length() - 16);
 						label.setText(label_text);
@@ -372,7 +373,7 @@ public class Controller {
 	
 	
 	/**
-	 * Classe que fa de listener pels links dins de les notícies
+	 * Classe que fa de listener pels links dins de les notï¿½cies
 	 * @author Roger Erill Carrera
 	 *
 	 */
@@ -406,7 +407,7 @@ public class Controller {
 					
 					else if (hle.getDescription().contains("http")) {
 						try {
-							Utils.getLogger().info("Considerem "+hle.getDescription()+ " un enllaç extern");
+							Utils.getLogger().info("Considerem "+hle.getDescription()+ " un enllaï¿½ extern");
 							Desktop.getDesktop().browse(hle.getURL().toURI());
 						} catch (URISyntaxException e) {
 							Utils.getLogger().warning("Error en obrir la URL " + hle.getDescription());
@@ -420,7 +421,7 @@ public class Controller {
 							drawDirectory(n);
 						}
 						else {
-							Utils.getLogger().info(file.getName()+"no és un directori, mirem si aconseguim obrir com a fitxer");
+							Utils.getLogger().info(file.getName()+"no ï¿½s un directori, mirem si aconseguim obrir com a fitxer");
 							n = model.getNodeWithLink(hle.getDescription());
 							if (n != null) {
 								view.setSelectedLabel(n.getName());

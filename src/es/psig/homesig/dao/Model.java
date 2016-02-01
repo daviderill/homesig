@@ -47,7 +47,7 @@ public class Model {
 	  * Connecta a una base de dades amb la ruta passada com a argument
 	  * Si el arxiu no existeix, el crea
 	  * @param fileName - La ruta de la DB a connectar.
-	  * @return La connexió a la ruta.
+	  * @return La connexiï¿½ a la ruta.
 	  */
     public boolean setConnection(String fileName) {
 
@@ -202,7 +202,7 @@ public class Model {
 	
 
 	/** 
-	 * Funció principal. Llegim de la base de dades i guardem a memòria els nodes i les seves
+	 * FunciÃ³ principal. Llegim de la base de dades i guardem a memÃ²ria els nodes i les seves
 	 * relacions paterno-filials
 	*/
 	public void createTree() {
@@ -213,7 +213,7 @@ public class Model {
 			stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(sql);
 		    while (rs.next()) {
-		    	// llegim el fitxer i l'afegim a la nostra llista de fitxers
+		    	// Llegim el fitxer i l'afegim a la nostra llista de fitxers
 		    	Node n = new Node(rs.getString("id"),rs.getString("name"),rs.getString("link"),	rs.getString("tooltip"));
 		    	if (n.getTooltip() == null) {
 		    		n.setTooltip(n.getName());
@@ -226,7 +226,7 @@ public class Model {
 		    		assignParent(nodes.get(i));
 		    	}
 		    }
-		    // Ordenem els fills segons la posició
+		    // Ordenem els fills segons la posiciï¿½
 		    sortChildren();
 		    rs.close();
 		} catch (SQLException e1) {
@@ -275,7 +275,7 @@ public class Model {
 	
 	
 	/**
-	 * Ordena els fills segons la posició que han de tenir
+	 * Ordena els fills segons la posiciÃ³ que han de tenir
 	 */
 	private void sortChildren() {
 		Collections.sort(nodes, new NodeComparator());
@@ -460,7 +460,7 @@ public class Model {
 	}
 
 	
-	public ArrayList<String> createHtlm() {
+	public ArrayList<String> createHtml() {
 		
 		ArrayList<String> res = new ArrayList<String>();
 		for (int i=0; i < news.size(); ++i) {
@@ -472,7 +472,7 @@ public class Model {
 			}
 			catch (NullPointerException e) {
 				link = "";
-				//Utils.getLogger().info("El link " + n.getLink() + " de la notícia " + n.getTitle() + " no existeix");
+				//Utils.getLogger().info("El link " + n.getLink() + " de la notÃ­cia " + n.getTitle() + " no existeix");
 			}
 			String htmlNews = null;
 			if (link == null || link.isEmpty()) {
@@ -489,7 +489,7 @@ public class Model {
 	}
 	
 	
-	public ArrayList<Links> createLinksHtlm() {
+	public ArrayList<Links> createLinksHtml() {
 		
 		ArrayList<Links> res = new ArrayList<Links>();
 		for (int i=0; i < links.size(); ++i) {
@@ -516,7 +516,7 @@ public class Model {
 				result = rs.getString("value").trim();
 			}
 			else {
-				// Utils.getLogger().warning(field+": Paràmetre no trobat");
+				// Utils.getLogger().warning(field+": Parï¿½metre no trobat");
 				result = "-1";
 			}
 		}
@@ -607,7 +607,7 @@ public class Model {
 			value = Integer.parseInt(getValueOf(param));
 		}
 		catch (NumberFormatException e) {
-			Utils.getLogger().info(param+": El paràmetre ha de ser numèric");
+			Utils.getLogger().info(param+": El parÃ metre ha de ser numÃ¨ric");
 		}
 		return value;		
 	}
